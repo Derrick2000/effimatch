@@ -26,17 +26,15 @@ interface CardData {
 const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
 
     return (
-        <OverPack playScale={0.3}>
+        <OverPack playScale={0.3} className='home-card-wrapper'>
             <QueueAnim
                 key="queue"
                 type="bottom"
                 leaveReverse
                 interval={50}
-                component={Row}
-                // gutter={24}
-                // className='main-card-block-wrapper'
             >
-                {cardsData.map((item: CardData, i: number) => (
+                <Row justify='space-between'>
+                    {cardsData.map((item: CardData, i: number) => (
                         <Col md={6} xs={24} className='home-card-block' key={i.toString()}>
                             <a className='home-card-block-group'>
                                 <img src={item.image} className='home-card-image' />
@@ -44,7 +42,9 @@ const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
                                 <p className='home-card-content'>{item.content}</p>
                             </a>
                         </Col>
-                ))}
+                    ))}
+                </Row>
+
             </QueueAnim>
         </OverPack>
     )
@@ -67,9 +67,14 @@ const Home: React.FC<Props> = (props: Props) => {
                 isMobile={isMobile}
             />
 
-            <SearchBar />
+            <div className='home-content-wrapper'>
+                <SearchBar />
 
-            {RenderCards(cardData)}
+                {RenderCards(cardData)}
+
+            </div>
+
+            
         </>
     )
 }

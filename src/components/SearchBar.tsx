@@ -38,23 +38,20 @@ const SearchBar: React.FC<Props> = (props:Props) => {
             className='search-bar'
             animation={{ x: 30, type: 'from', ease: 'easeOutQuad' }}
         >
-            <div className='search-bar-content-wrapper'>
-                <h1 className='search-bar-title'>Get your dream job today</h1>
+            <h1 className='search-bar-title'>Get your dream job today</h1>
 
-                <div className='search-bar-input-wrapper'>
-                    <AutoComplete
-                        className='search-bar-autocomplete'
-                        value={value}
-                        options={options}
-                        onSelect={onSelect}
-                        onSearch={onSearch}
-                        onChange={onChange}
-                        placeholder='Search your favorite company'
-                    />
+            <div className='search-bar-input-wrapper'>
+                <AutoComplete
+                    className='search-bar-autocomplete'
+                    value={value}
+                    options={options}
+                    onSelect={onSelect}
+                    onSearch={onSearch}
+                    onChange={onChange}
+                    placeholder='Search your favorite company'
+                />
 
-                    <Button type='primary' className='search-bar-button'>Search</Button>
-                </div>
-
+                <Button type='primary' className='search-bar-button'>Search</Button>
             </div>
             
         </TweenOne>
