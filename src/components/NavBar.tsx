@@ -24,12 +24,11 @@ const NavBar: React.FC<Props> = (props: Props) => {
 
     return (
         <TweenOne
-        component="header"
-        animation={{ opacity: 0, type: 'from' }}
-        // {...dataSource.wrapper}
-        className='navbar'
-        {...props}
-      >
+          component="header"
+          animation={{ opacity: 0, type: 'from' }}
+          className='navbar'
+          {...props}
+        >
         <div
             className={`${'navbar-content-wrapper'}${phoneOpen ? ' open' : ''}`}
         >

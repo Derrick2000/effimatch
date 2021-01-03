@@ -10,6 +10,14 @@
     position: relative;
     top: 0;
 
+    &-content-wrapper {
+      height: 100%;
+      max-width: 1200px;
+      position: relative;
+      margin: auto;
+      will-change: transform;
+  }
+
     &-logo {
         display: inline-block;
         position: relative;
@@ -47,7 +55,7 @@
     &-middle-menu {
         display: inline-block;
         position: absolute;
-        left: 37%; // hard-coded 哈哈
+        left: 40%; // hard-coded 哈哈
         ul {
             line-height: 62px;
             a {
@@ -103,14 +111,6 @@
         }
       }
     }
-}
-
-.@{navbar}-content-wrapper {
-    height: 100%;
-    max-width: 1200px;
-    position: relative;
-    margin: auto;
-    will-change: transform;
 }
 
 @media screen and (max-width: @mobile-width) {
