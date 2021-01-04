@@ -7,7 +7,6 @@ import TweenOne from 'rc-tween-one';
 import Footer from '../components/Footer';
 
 // antd
-import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
 import { Row, Col } from 'antd';
 import { Button } from 'antd/lib'
@@ -34,7 +33,7 @@ interface CardData {
 
 const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
     return (
-        <OverPack playScale={0.3} className='home-card-wrapper'>
+        <div className='home-card-wrapper'>
             <QueueAnim
                 key="queue"
                 type="bottom"
@@ -44,7 +43,7 @@ const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
                 <Row justify='space-between'>
                     {cardsData.map((item: CardData, i: number) => (
                         <Col md={6} xs={24} className='home-card-block' key={i.toString()}>
-                            <a className='home-card-block-group'>
+                            <a className='home-card-block-group' href='/#'>
                                 <div className='home-card-header-wrapper'>
                                     <div className='home-card-header-title'>
                                         <h1>{item.title}</h1>
@@ -65,7 +64,7 @@ const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
                 </Row>
 
             </QueueAnim>
-        </OverPack>
+        </div>
     )
 }
 
@@ -107,7 +106,6 @@ const Home: React.FC<Props> = (props: Props) => {
             </div>
 
             <Footer />
-            
         </>
     )
 }
