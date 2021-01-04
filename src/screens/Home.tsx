@@ -2,12 +2,19 @@ import React from 'react';
 
 // screens and componets 
 import NavBar from '../components/NavBar';
-import SearchBar from '../components/SearchBar'
+import SearchBar from '../components/SearchBar';
+import TweenOne from 'rc-tween-one';
+import Footer from '../components/Footer';
 
 // antd
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
 import { Row, Col } from 'antd';
+import { Button } from 'antd/lib'
+
+// assets (temp)
+import MS_logo from '../images/MS_logo.png';
+import Avatar from '../images/avatar.png';
 
 import { enquireScreen } from 'enquire-js';
 
@@ -16,15 +23,16 @@ interface Props {
 }
 
 interface CardData {
-    image: string,
     title: string,
-    content: string
+    company: string,
+    avatar: string,
+    logo: string,
+    name: string
 }
 
 
 
 const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
-
     return (
         <OverPack playScale={0.3} className='home-card-wrapper'>
             <QueueAnim
@@ -37,9 +45,20 @@ const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
                     {cardsData.map((item: CardData, i: number) => (
                         <Col md={6} xs={24} className='home-card-block' key={i.toString()}>
                             <a className='home-card-block-group'>
-                                <img src={item.image} className='home-card-image' />
-                                <p className='home-card-title'>{item.title}</p>
-                                <p className='home-card-content'>{item.content}</p>
+                                <div className='home-card-header-wrapper'>
+                                    <div className='home-card-header-title'>
+                                        <h1>{item.title}</h1>
+                                        <p>@ {item.company}</p>
+                                    </div>
+                                    <img src={item.logo} alt='logo' />
+                                </div>
+
+                                <div className='home-card-avatar-wrapper'>
+                                    <img src={item.avatar} alt='avatar' />
+                                    <p className='home-card-avatar-text'>{item.name}</p>
+                                </div>
+
+                                <Button type='primary' className='home-card-button'>Get Referral</Button>
                             </a>
                         </Col>
                     ))}
@@ -48,7 +67,15 @@ const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
             </QueueAnim>
         </OverPack>
     )
+}
 
+// 还不知道这一坨card是干嘛的，暂时叫这个名字
+const RenderBigCard: React.FC<any> = () => {
+    return (
+        <div className='home-card-big-card-wrapper'>
+            <h2>Are you a referrer</h2>
+        </div>
+    )
 }
 
 const Home: React.FC<Props> = (props: Props) => {
@@ -70,31 +97,33 @@ const Home: React.FC<Props> = (props: Props) => {
             <div className='home-content-wrapper'>
                 <SearchBar />
 
-                {RenderCards(cardData)}
-
+                {/* 除了searchBar之外的所有内容 */}
+                <TweenOne 
+                    animation={{ x: -30, type: 'from', ease: 'easeOutQuad' }}
+                >
+                    {RenderCards(cardData)}
+                    <RenderBigCard />
+                </TweenOne>
             </div>
 
+            <Footer />
             
         </>
     )
 }
 
-const cardData = [
-    {
-        image: 'https://gw.alipayobjects.com/zos/basement_prod/e339fc34-b022-4cde-9607-675ca9e05231.svg',
-        title: 'card1',
-        content: 'jdpoaijdpweajdiawj'
-    },
-    {
-        image: 'https://gw.alipayobjects.com/zos/basement_prod/e339fc34-b022-4cde-9607-675ca9e05231.svg',
-        title: 'card1',
-        content: 'jdpoaijdpweajdiawj'
-    },
-    {
-        image: 'https://gw.alipayobjects.com/zos/basement_prod/e339fc34-b022-4cde-9607-675ca9e05231.svg',
-        title: 'card1',
-        content: 'jdpoaijdpweajdiawj'
-    }
-]
+const cardData: CardData[] = [];
+
+for (let ii = 0; ii < 3; ii++) {
+    cardData.push(
+        {
+            title: 'Design Positions',
+            company: 'Microsoft',
+            name: 'referer 1',
+            logo: MS_logo,
+            avatar: Avatar
+        }
+    )
+}
 
 export default Home;

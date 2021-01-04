@@ -1,28 +1,54 @@
 @homeCard: home-card;
-@animate-duration: 0.3s;
+@animate-duration: 0.35s;
 
 .@{homeCard} {
   &-wrapper {
-    min-height: 564px;
+    min-height: 300px;
     margin-top: 80px;
   }
 
-  &-title {
-
+  &-header {
     &-wrapper {
-      text-align: center;
-      margin-bottom: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      line-height: 1;
     }
 
-    &-h1 {
-      font-size: 32px;
-      color: @text-color;
+    &-title {
+      h1 {
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      p {
+        display: inline;
+        font-size: 12px;
+        color: black;
+      }
+    }
+  }
+
+  &-avatar {
+    &-wrapper {
+      display: flex;
+      align-items: center;
+      margin-top: 15px;
     }
 
-    &-content {
-      
-      margin-top: 16px;
+    &-text {
+      font-size: 12px;
+      color: black;
+      margin-block-start: 0;
+      margin-block-end: 0;
+      margin-left: 15px;
     }
+  }
+
+  &-button {
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 10px;
   }
 
   &-block {
@@ -33,9 +59,8 @@
       display: block;
       padding: 28px 24px;
       width: 100%;
+      border-radius: 10px;
       box-shadow: 0 2px 16px fade(#000, 8);
-      background-repeat: no-repeat;
-      background-position: 100% 100%;
       transition: box-shadow @animate-duration ease-in, transform @animate-duration ease-in;
 
       &:hover {
@@ -62,11 +87,35 @@
       color: fade(@text-color, 75);
     }
   }
+
+  &-big-card {
+    &-wrapper {
+      will-change: transform;
+      box-shadow: 0 2px 16px fade(#000, 8);
+      border-radius: 10px;
+      transition: box-shadow @animate-duration ease-in, transform @animate-duration ease-in;
+      background-color: #F7F7F7;
+      text-align: center;
+      width: 100%;
+      height: 600px;
+      padding: 20px;
+      margin-bottom: 50px;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 16px fade(#000, 12);
+      }
+
+      h1 {
+        font-size: 18px;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 767px) {
   .@{homeCard}-wrapper {
-    min-height: 1540px;
+    min-height: 700px;
     &.home-page-wrapper {
       .home-page {
         padding: 56px 24px;

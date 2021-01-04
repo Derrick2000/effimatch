@@ -1,0 +1,20 @@
+@footer: footer;
+@template-bg-color: white;
+@template-footer-text-color: black;
+@line-height: 60px;
+
+.@{footer} {
+    &-wrapper {
+        background-color: @template-bg-color;
+        height: @line-height;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    height: 100%;
+    padding: 0 24px;
+    line-height: @line-height;
+    text-align: center;
+    color: @template-footer-text-color;
+    position: relative;
+}
