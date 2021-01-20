@@ -25,6 +25,7 @@ const SearchBar: React.FC<Props> = (props:Props) => {
           !searchText ? [] : [mockVal(searchText), mockVal(searchText, 2), mockVal(searchText, 3)],
         );
     };
+    
     const onSelect = (data: string) => {
         console.log('onSelect', data);
     };
