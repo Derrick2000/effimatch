@@ -2,3 +2,4 @@
 **Technical Stacks:**  
 - Spring Boot
 - Redis
+- Spring Security
