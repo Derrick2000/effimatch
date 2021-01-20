@@ -18,6 +18,7 @@ const NavBar: React.FC<Props> = (props: Props) => {
 
     const [ phoneOpen, setPhoneOpen ] = React.useState<boolean | undefined>(undefined)
 
+    // 手机状态下点击菜单按钮
     const onPhoneClick = () => {
         setPhoneOpen(!phoneOpen);
     }
@@ -31,7 +32,8 @@ const NavBar: React.FC<Props> = (props: Props) => {
         >
         <div
             className={`${'navbar-content-wrapper'}${phoneOpen ? ' open' : ''}`}
-        >
+        > 
+          {/* logo */}
           <TweenOne
             animation={{ x: -30, type: 'from', ease: 'easeOutQuad' }}
             className="navbar-logo"
@@ -39,6 +41,7 @@ const NavBar: React.FC<Props> = (props: Props) => {
             <img height="45px" src={Logo} alt="logo_img" />
           </TweenOne>
 
+          {/* 中间菜单 */}
           <TweenOne
             animation={{ x: -30, type: 'from', ease: 'easeOutQuad' }}
             className="navbar-middle-menu"
@@ -50,7 +53,8 @@ const NavBar: React.FC<Props> = (props: Props) => {
               {middleMenuChildren}
             </Menu>
           </TweenOne>
-
+          
+          {/* 右侧菜单 */}
           {isMobile && (
             <div
                 className="navbar-mobile-menu"
@@ -95,9 +99,10 @@ const NavBar: React.FC<Props> = (props: Props) => {
     )
 }
 
+// 最右侧菜单的data
 const rightMenuData = [
     {
-      name: 'item0',
+      name: 'Join',
       className: 'navbar-item',
       children: {
         href: '#Join',
@@ -105,7 +110,7 @@ const rightMenuData = [
       },
     },
     {
-      name: 'Skills',
+      name: 'Sign In',
       className: 'navbar-item',
       children: {
         href: '#Sign In',
@@ -122,6 +127,7 @@ const rightMenuChildren: React.ReactNode = rightMenuData.map((item) => (
     </Item>
 ))
 
+// 中间menu的data
 const middleMenuData = [
     {
         name: 'item0',

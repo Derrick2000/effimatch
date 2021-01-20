@@ -1,46 +1,66 @@
-# Getting Started with Create React App
+# Referral Project Frontend 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 框架/技术栈
+- React.js
+- Type Script
+- less
+- Ant Design
+- Craco
 
-## Available Scripts
+## 使用
+- 首次运行请先在根目录下运行 ```npm install``` 或 ```yarn install```  
+- 之后在根目录下运行 ```npm start``` 或 ```yarn start```，React App会在 **localhost:3000** 启动  
 
-In the project directory, you can run:
+## 开发注意事项
+**Git:**  
+- 请在每周领到开发任务后，先 ```git pull``` 获取最新代码  
+- 用 ```git chechout -b [branch name]``` 来新建一个git分支，并在你的分支上完成本周的任务。其中 ```[branch name]``` 的命名应概括你本周的工作内容，如：```login-page```
+- 开发任务完成后，我会把你的 branch 给 merge 到 ```master branch``` 
 
-### `yarn start`
+**Type Script:**  
+- 原则是能用尽量用，但是有什么解决不了的问题也可以直接写js
+- 有些npm的package会报Type Script相关的错误，比如 ```Could not find a declaration file for module 'module-name'``` 解决方法可能会有以下两种：
+    - ```npm uninstall [package name]``` 或 ```yarn remove [package name]``` ，  
+    然后 ```npm install @types/[package name]``` 或 ```yarn add @types/[package name]```  
+    举例：```yarn add @types/my-package``` 
+    - 如果上述方法没有解决错误/在安装时报错，可以尝试在使用到这个package的同一目录下新建文件 ```package-name.d.ts```，然后在这个文件里写 ```declare module 'package-name';```  
+    举例：我在 ```src/App.tsx``` 里使用了 ```react-router-dom``` 这个package，直接启动时发现报错，所以我在 ```src``` 这个目录里创建了 ```react-router-dom.d.ts``` 这个文件，解决了报错
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**文件结构:**
+- 整个的页面放在 ```screens``` 这个目录
+- 页面上的部件放在 ```components``` 这个目录
+- 图片放在 ```images```这个目录
+- 所有的 ```less styles``` 放在 ```styles```这个目录
+- 文件结构可能会在后续开发过程中发生细微调整
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+**less:**
+- 最好先把页面上每一个部件的styles ```@import``` 到页面所属的 ```.less```文件里，然后把这个文件 ```@import``` 到 ```index.less```
+- 注意，一定要把 ```@import``` 的styles加在 ```@import '~antd/dist/antd.less';``` 这一行的下面，否则我们的styles可能会被 ant design 的同名 class 覆盖
+- 全局变量，例如 ```@primary-color``` 和 ```@mobile-width``` 等，请在 ```craco.config.js``` 里进行定义，然后可以直接在所有 ```.less``` 文件里使用
+- class命名请加上当前component/screen的名字，避免命名冲突
+    - 举例：在 ```homeCard.less``` 里的所有class应该以 ```home-card``` 开头，详情请见 ```homeCard.less```
 
-### `yarn test`
+**craco:**
+- 是一个 create-react-app 的配置层，详见 [官方介绍](https://github.com/gsoft-inc/craco)
+- 我们可以在 ```craco.config.js``` 里定义 less 需要用到的全局变量
+- 我已经更改了我们app的start, build, 和test script，详见 ```package.json``` 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**代码规范:**
+- 遵循 React 新版本的规范，尽量多写 ```functional component```，少写 ```class component```
+- 逻辑复杂的地方记得写注释
+- js行结尾记得加分号
+- 保持缩进正确。HTML里每向内一层应该多一个缩进
+- 随时检查 ```return()```或 ```render()``` 里的代码是不是太长了，有没有哪些部分是可以拆分成单独的component的 
 
-### `yarn build`
+**国内开发相关:**
+- **最好不要使用 ```cnpm```，这玩意容易出各种问题**
+- 如果 npm 的速度非常慢，可以考虑：
+    - 使用 [yarn](https://yarnpkg.com/)
+    - 给 npm 配置proxy （如果你的电脑上用 shadowsocks 之类的代理）：
+        - ```npm config set proxy http://localhost:1080``` (1080是shadowsocks的默认端口，你可能需要根据你使用的代理软件做出调整)
+        - ```npm config set https-proxy http://localhost:1080``` 
+        - 重启你的 ```terminal``` 或 ```power shell``` 
+        - 如果需要重置 proxy: ```npm config delete proxy``` & ```npm config delete https-proxy```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 其他
+有其他任何问题，请微信与 Tech Lead 联系
