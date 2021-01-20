@@ -89,7 +89,7 @@
 - ROLE 和 权限 (permission) 的定义请见 ```security``` 目录下的 ```ApplicationUserRole``` 和 ```ApplicationUserPermission``` 
 
 ## 开发注意事项：
-- 每一个 service 请像上面的一样，写一个基础的介绍文档，方便前端开发者使用
+- 每一个 api 请像上面的一样，写一个基础的介绍文档，方便前端开发者使用
 - 逻辑复杂的地方，命名不太直白的 function 记得写注释
 - 所有重要信息（如数据库地址，端口等）请放在 application.properties 里面，在使用时用 ```@Value``` 注入
 
