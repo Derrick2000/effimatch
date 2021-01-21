@@ -8,8 +8,9 @@
 - Craco
 
 ## 使用
-- 首次运行请先在根目录下运行 ```npm install``` 或 ```yarn install```  
-- 之后在根目录下运行 ```npm start``` 或 ```yarn start```，React App会在 **localhost:3000** 启动  
+- 本项目的package manager使用 [yarn](https://yarnpkg.com/)，请先自行下载安装
+- 首次运行请先在根目录下运行 ```yarn``` 或 ```yarn install```  
+- 之后在根目录下运行 ```yarn start```，React App会在 **localhost:3000** 启动  
 
 ## 开发注意事项
 **Git:**  
@@ -20,8 +21,8 @@
 **Type Script:**  
 - 原则是能用尽量用，但是有什么解决不了的问题也可以直接写js
 - 有些npm的package会报Type Script相关的错误，比如 ```Could not find a declaration file for module 'module-name'``` 解决方法可能会有以下两种：
-    - ```npm uninstall [package name]``` 或 ```yarn remove [package name]``` ，  
-    然后 ```npm install @types/[package name]``` 或 ```yarn add @types/[package name]```  
+    -  ```yarn remove [package name]``` ，  
+    然后  ```yarn add @types/[package name]```  
     举例：```yarn add @types/my-package``` 
     - 如果上述方法没有解决错误/在安装时报错，可以尝试在使用到这个package的同一目录下新建文件 ```package-name.d.ts```，然后在这个文件里写 ```declare module 'package-name';```  
     举例：我在 ```src/App.tsx``` 里使用了 ```react-router-dom``` 这个package，直接启动时发现报错，所以我在 ```src``` 这个目录里创建了 ```react-router-dom.d.ts``` 这个文件，解决了报错
@@ -52,7 +53,7 @@
 - 保持缩进正确。HTML里每向内一层应该多一个缩进
 - 随时检查 ```return()```或 ```render()``` 里的代码是不是太长了，有没有哪些部分是可以拆分成单独的component的 
 
-**国内开发相关:**
+<!-- **国内开发相关:**
 - **最好不要使用 ```cnpm```，这玩意容易出各种问题**
 - 如果 npm 的速度非常慢，可以考虑：
     - 使用 [yarn](https://yarnpkg.com/)
@@ -60,7 +61,7 @@
         - ```npm config set proxy http://localhost:1080``` (1080是shadowsocks的默认端口，你可能需要根据你使用的代理软件做出调整)
         - ```npm config set https-proxy http://localhost:1080``` 
         - 重启你的 ```terminal``` 或 ```power shell``` 
-        - 如果需要重置 proxy: ```npm config delete proxy``` & ```npm config delete https-proxy```
+        - 如果需要重置 proxy: ```npm config delete proxy``` & ```npm config delete https-proxy``` -->
 
 ## 其他
 有其他任何问题，请微信与 Tech Lead 联系
