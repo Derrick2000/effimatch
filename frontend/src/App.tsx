@@ -4,7 +4,7 @@ import React from 'react';
 import './styles/index.less'
 
 // components
-import Home from './screens/Home'
+import GuestHome from './screens/GuestHome/GuestHome'
 
 // router
 import { BrowserRouter, Route, Switch} from 'react-router-dom';
@@ -16,7 +16,7 @@ function App() {
 				<Route 
 					exact={true}
 					path="/"
-					component={Home}
+					component={GuestHome}
 				/>
 			</Switch>
 			

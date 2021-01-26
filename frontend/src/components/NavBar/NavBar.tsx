@@ -5,7 +5,9 @@ import TweenOne from 'rc-tween-one';
 import { Menu } from 'antd';
 
 // assets
-import Logo from '../images/logo.png'
+import Logo from '../../images/logo.png'
+
+import './navbar.less'
 
 const { Item } = Menu;
 
@@ -39,19 +41,6 @@ const NavBar: React.FC<Props> = (props: Props) => {
             className="navbar-logo"
           >
             <img height="45px" src={Logo} alt="logo_img" />
-          </TweenOne>
-
-          {/* 中间菜单 */}
-          <TweenOne
-            animation={{ x: -30, type: 'from', ease: 'easeOutQuad' }}
-            className="navbar-middle-menu"
-          >
-            <Menu
-              mode='horizontal'
-              theme="light"
-            >
-              {middleMenuChildren}
-            </Menu>
           </TweenOne>
           
           {/* 右侧菜单 */}
@@ -100,13 +89,21 @@ const NavBar: React.FC<Props> = (props: Props) => {
 }
 
 // 最右侧菜单的data
-const rightMenuData = [
+const rightMenuData = [  
     {
-      name: 'Join',
+      name: 'Jobs',
       className: 'navbar-item',
       children: {
-        href: '#Join',
-        text: "Join"
+        href: '#Jobs',
+        text: "Jobs"
+      },
+    },
+    {
+      name: 'Community',
+      className: 'navbar-item',
+      children: {
+        href: '#Community',
+        text: "Community"
       },
     },
     {
@@ -117,6 +114,14 @@ const rightMenuData = [
         text: "Sign In"
       },
     },
+    {
+      name: 'Join',
+      className: 'navbar-item',
+      children: {
+        href: '#Join',
+        text: "Join"
+      },
+    },
 ];
 
 const rightMenuChildren: React.ReactNode = rightMenuData.map((item) => (
@@ -125,34 +130,6 @@ const rightMenuChildren: React.ReactNode = rightMenuData.map((item) => (
         {item.children.text}
         </a>
     </Item>
-))
-
-// 中间menu的data
-const middleMenuData = [
-    {
-        name: 'item0',
-        className: 'navbar-item',
-        children: {
-          href: '#',
-          text: "Jobs"
-        },
-      },
-      {
-        name: 'Skills',
-        className: 'navbar-item',
-        children: {
-          href: '#Skills',
-          text: "Community"
-        },
-      },
-]
-
-const middleMenuChildren: React.ReactNode = middleMenuData.map((item) => (
-    <Item key={item.name} className="navbar-item-a">
-        <a href={item.children.href} className='navbar-item-block-a'>
-        {item.children.text}
-        </a>
-    </Item>  
 ))
 
 export default NavBar;

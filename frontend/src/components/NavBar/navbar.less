@@ -1,10 +1,10 @@
 @navbar: navbar;
 
 .@{navbar} {
-    background: #fff;
+    background:@background-color;
     width: 100%;
     z-index: 1;
-    box-shadow: 0 4px 6px fade(#000, 5);
+    // box-shadow: 0 4px 6px fade(#000, 5);
     position: relative;
     top: 0;
 
@@ -33,9 +33,6 @@
 
     &-menu {
         float: right;
-        // .ant-menu-horizontal {
-        //   border-bottom: none;
-        // }
         .ant-menu {
           line-height: 62px;
           height: 64px;
@@ -45,24 +42,14 @@
             display: block;
             color: black;
           }
-
-          li:nth-child(2) {
+          
+          // 你问我为什么是第八个？
+          // 因为垃圾ant design的源码
+          li:nth-child(8) {
               a {
                 color: @primary-color;
               }
           }
-        }
-    }
-
-    &-middle-menu {
-        display: inline-block;
-        position: absolute;
-        left: 40%; // hard-coded 哈哈
-        ul {
-            line-height: 62px;
-            a {
-                color: black !important;
-            }
         }
     }
 
@@ -137,8 +124,8 @@
             width: ~"calc(100% + 24px)";
             opacity: 0;
             transition: opacity .3s ease-in;
-            background: #fff;
-        
+            background-color: white;
+            overflow: hidden;
             // & li {
             //     padding: 0 24px;
         

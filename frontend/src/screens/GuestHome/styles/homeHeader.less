@@ -1,0 +1,30 @@
+@homeHeader: home-header;
+
+.@{homeHeader} {
+    &-wrapper {
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10vh;
+    }
+
+    &-title {
+        line-height: 1.5em;
+        font-size: 2em;
+        &-orange {
+            color: @primary-color;
+        }
+    }
+
+    @media screen and (max-width: @mobile-width) {
+        &-image {
+            display: none
+        }
+
+        &-title {
+            line-height: 1.5em;
+            font-size: 1.3em;
+        }
+    }
+}
+

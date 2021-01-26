@@ -2,40 +2,31 @@
 @border-radius: 10px;
 
 .@{searchBar} {
-    background: #fff;
-    width: 100%;
-    z-index: 1;
-    // padding: 0 40px;
-    padding-top: 50px;
-    &-content-wrapper {
-        margin-left: 50px;
-        max-width:  1100px;
-        position: relative;
-        margin: auto;
-        will-change: transform;
-    }
-
-    &-title {
-        font-weight: bold;
-        font-size: 48px;
-    }
-
-    &-input-wrapper {
+    &-wrapper {
         display: flex;
         justify-content: space-between;
-        // align-items: center;
         width: 100%;
         .ant-select-selector {
             border-radius: @border-radius !important;
+            height: 3.2em !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+        }
+        .ant-select-selection-search {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
         }
     }
 
     &-autocomplete {
-        width: 85%;
+        width: 70%;
     }
 
     &-button {
-        width: 10%;
+        width: 25%;
+        height: 3.2em;
         border-radius: @border-radius;
     }
 

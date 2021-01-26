@@ -1,12 +1,7 @@
-@homeCard: home-card;
-@animate-duration: 0.35s;
+@card: card;
+@animate-duration: 0.25s;
 
-.@{homeCard} {
-  &-wrapper {
-    min-height: 300px;
-    margin-top: 80px;
-  }
-
+.@{card} {
   &-header {
     &-wrapper {
       display: flex;
@@ -52,11 +47,11 @@
   }
 
   &-block {
-    margin-top: 28px;
-    width: 100%;
 
     &-group {
+      margin-bottom: 4vh;
       display: block;
+      background-color: white;
       padding: 28px 24px;
       width: 100%;
       border-radius: 10px;
@@ -114,12 +109,9 @@
 }
 
 @media screen and (max-width: 767px) {
-  .@{homeCard}-wrapper {
-    min-height: 700px;
-    &.home-page-wrapper {
-      .home-page {
-        padding: 56px 24px;
-      }
+  .@{card} {
+    &-block-group {
+      margin-top: 4vh;
     }
   }
 }

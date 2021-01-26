@@ -1,19 +1,22 @@
 import React from 'react';
 
 // screens and componets 
-import NavBar from '../components/NavBar';
-import SearchBar from '../components/SearchBar';
+import NavBar from '../../components/NavBar/NavBar';
+import Header from './Header';
 import TweenOne from 'rc-tween-one';
-import Footer from '../components/Footer';
+import Footer from '../../components/Footer';
+import Companies from './Companies'
+import Card from '../../components/Card/Card';
 
 // antd
 import QueueAnim from 'rc-queue-anim';
 import { Row, Col } from 'antd';
-import { Button } from 'antd/lib'
 
 // assets (temp)
-import MS_logo from '../images/MS_logo.png';
-import Avatar from '../images/avatar.png';
+import MS_logo from '../../images/MS_logo.png';
+import Avatar from '../../images/avatar.png';
+
+import './styles/home.less';
 
 import { enquireScreen } from 'enquire-js';
 
@@ -29,36 +32,29 @@ interface CardData {
     name: string
 }
 
-
-
 const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
     return (
-        <div className='home-card-wrapper'>
+        <div className='home-cards-wrapper'>
             <QueueAnim
                 key="queue"
                 type="bottom"
                 leaveReverse
                 interval={50}
-            >
+            >   
+                <div className='home-cards-title'>
+                    <h1 className='home-cards-title-h1'>Jobs by Category</h1>
+                    <a className='home-cards-title-link' href='/#'>Explore more</a>
+                </div>
                 <Row justify='space-between'>
                     {cardsData.map((item: CardData, i: number) => (
                         <Col md={6} xs={24} className='home-card-block' key={i.toString()}>
-                            <a className='home-card-block-group' href='/#'>
-                                <div className='home-card-header-wrapper'>
-                                    <div className='home-card-header-title'>
-                                        <h1>{item.title}</h1>
-                                        <p>@ {item.company}</p>
-                                    </div>
-                                    <img src={item.logo} alt='logo' />
-                                </div>
-
-                                <div className='home-card-avatar-wrapper'>
-                                    <img src={item.avatar} alt='avatar' />
-                                    <p className='home-card-avatar-text'>{item.name}</p>
-                                </div>
-
-                                <Button type='primary' className='home-card-button'>Get Referral</Button>
-                            </a>
+                            <Card 
+                                title={item.title}
+                                company={item.company}
+                                logo={item.logo}
+                                avatar={item.avatar}
+                                name={item.name}
+                            />
                         </Col>
                     ))}
                 </Row>
@@ -68,16 +64,7 @@ const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
     )
 }
 
-// 还不知道这一坨card是干嘛的，暂时叫这个名字
-const RenderBigCard: React.FC<any> = () => {
-    return (
-        <div className='home-card-big-card-wrapper'>
-            <h2>Are you a referrer</h2>
-        </div>
-    )
-}
-
-const Home: React.FC<Props> = (props: Props) => {
+const GuestHome: React.FC<Props> = (props: Props) => {
     const [ isMobile, setIsMobile ] = React.useState(false);
 
     React.useEffect(() => {
@@ -88,25 +75,26 @@ const Home: React.FC<Props> = (props: Props) => {
     }, [])
 
     return (
-        <>  
+        <div className='home-wrapper'>  
             <NavBar 
                 isMobile={isMobile}
             />
 
             <div className='home-content-wrapper'>
-                <SearchBar />
+                <Header />
 
                 {/* 除了searchBar之外的所有内容 */}
                 <TweenOne 
-                    animation={{ x: -30, type: 'from', ease: 'easeOutQuad' }}
-                >
+                    animation={{ x: -200, type: 'from', ease: 'easeOutQuad' }}
+                >   
+                    <Companies />
                     {RenderCards(cardData)}
-                    <RenderBigCard />
+                    {/* <RenderBigCard /> */}
                 </TweenOne>
             </div>
 
             <Footer />
-        </>
+        </div>
     )
 }
 
@@ -124,4 +112,4 @@ for (let ii = 0; ii < 3; ii++) {
     )
 }
 
-export default Home;
+export default GuestHome;

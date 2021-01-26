@@ -10,7 +10,8 @@ module.exports = {
             modifyVars: 
               { 
                 '@primary-color': '#EF8354', // orange
-                '@mobile-width' : '767px'
+                '@mobile-width' : '767px',
+                '@background-color': '#EFEFEF' // grey
               }, 
             javascriptEnabled: true,
           },
