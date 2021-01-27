@@ -6,6 +6,9 @@
 - 所有设计都尽量能适配手机显示（目前至少能看起来正常就行）
 - 设计图的link放在READEME里了
 
+## due date:
+- 暂定SD时间下周一之前吧，不过我也不太确定，时间不够的话可以跟我说
+
 ## @ 黄子恒：
 **完成设计图上JS home-signed in-sent, JS home-signed in-viewed, 和 JS home-signed in-accepted, 这三个页面 （其实是一个页面）**
 ### 要求：
