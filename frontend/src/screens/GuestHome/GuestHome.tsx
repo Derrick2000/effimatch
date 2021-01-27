@@ -1,10 +1,9 @@
 import React from 'react';
 
 // screens and componets 
-import NavBar from '../../components/NavBar/NavBar';
 import Header from './Header';
 import TweenOne from 'rc-tween-one';
-import Footer from '../../components/Footer';
+import Footer from '../../components/Footer/Footer';
 import Companies from './Companies'
 import Card from '../../components/Card/Card';
 

@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-const JsSent: React.FC<any> = () => {
+const JsHome: React.FC<any> = () => {
     return (
-        <div>js sent page</div>
+        <div>js home page</div>
     )
 }
 
-export default JsSent;
+export default JsHome;

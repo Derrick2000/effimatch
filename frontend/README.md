@@ -7,6 +7,9 @@
 - Ant Design
 - Craco
 
+## 设计图
+[Link to figma](https://www.figma.com/file/1lfjwrjZ6SMgCcB9oge1rQ/Referral-Project?node-id=132%3A0)
+
 ## 使用
 - 本项目的package manager使用 [yarn](https://yarnpkg.com/)，请先自行下载安装
 - 首次运行请先在根目录下运行 ```yarn``` 或 ```yarn install```  

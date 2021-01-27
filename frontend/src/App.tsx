@@ -6,7 +6,7 @@ import './styles/index.less';
 // components
 import GuestHome from './screens/GuestHome/GuestHome';
 import NavBar from './components/NavBar/NavBar';
-import JsSent from './screens/JsSent/JsSent';
+import JsHome from './screens/JsHome/JsHome';
 import Search from './screens/Search/Search';
 
 import { enquireScreen } from 'enquire-js';
@@ -42,8 +42,8 @@ function App() {
 				<Switch>
 					<Route 
 						exact={true}
-						path="/js-sent"
-						component={JsSent}
+						path="/js-home"
+						component={JsHome}
 					/>
 				</Switch>
 
