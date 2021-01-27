@@ -31,12 +31,12 @@
 - 整个的页面放在 ```screens``` 这个目录
 - 页面上的部件放在 ```components``` 这个目录
 - 图片放在 ```images```这个目录
-- 所有的 ```less styles``` 放在 ```styles```这个目录
+- 每个 ```screen``` / ```component``` 都要有自己的文件夹，该 screen / componet 最外层的wrapper命名最好与它文件夹的名字相同
 - 文件结构可能会在后续开发过程中发生细微调整
 
 **less:**
-- 最好先把页面上每一个部件的styles ```@import``` 到页面所属的 ```.less```文件里，然后把这个文件 ```@import``` 到 ```index.less```
-- 注意，一定要把 ```@import``` 的styles加在 ```@import '~antd/dist/antd.less';``` 这一行的下面，否则我们的styles可能会被 ant design 的同名 class 覆盖
+<!-- - 最好先把页面上每一个部件的styles ```@import``` 到页面所属的 ```.less```文件里，然后把这个文件 ```@import``` 到 ```index.less```
+- 注意，一定要把 ```@import``` 的styles加在 ```@import '~antd/dist/antd.less';``` 这一行的下面，否则我们的styles可能会被 ant design 的同名 class 覆盖 -->
 - 全局变量，例如 ```@primary-color``` 和 ```@mobile-width``` 等，请在 ```craco.config.js``` 里进行定义，然后可以直接在所有 ```.less``` 文件里使用
 - class命名请加上当前component/screen的名字，避免命名冲突
     - 举例：在 ```homeCard.less``` 里的所有class应该以 ```home-card``` 开头，详情请见 ```homeCard.less```

@@ -1,26 +1,62 @@
 import React from 'react';
 
 // style
-import './styles/index.less'
+import './styles/index.less';
 
 // components
-import GuestHome from './screens/GuestHome/GuestHome'
+import GuestHome from './screens/GuestHome/GuestHome';
+import NavBar from './components/NavBar/NavBar';
+import JsSent from './screens/JsSent/JsSent';
+import Search from './screens/Search/Search';
+
+import { enquireScreen } from 'enquire-js';
 
 // router
 import { BrowserRouter, Route, Switch} from 'react-router-dom';
 
 function App() {
+	const [ isMobile, setIsMobile ] = React.useState(false);
+
+	React.useEffect(() => {
+			// responsive to mobile screen
+			enquireScreen((mobileState: boolean) => {
+					setIsMobile(mobileState);
+				});
+	}, [])
+
   return (
-    <BrowserRouter>
-			<Switch>
-				<Route 
-					exact={true}
-					path="/"
-					component={GuestHome}
-				/>
-			</Switch>
-			
-    </BrowserRouter>
+		<>
+			<NavBar 
+				isMobile={isMobile}
+			/>
+			<BrowserRouter>
+
+				<Switch>
+					<Route 
+						exact={true}
+						path="/"
+						component={GuestHome}
+					/>
+				</Switch>
+
+				<Switch>
+					<Route 
+						exact={true}
+						path="/js-sent"
+						component={JsSent}
+					/>
+				</Switch>
+
+				<Switch>
+					<Route 
+						exact={true}
+						path="/search"
+						component={Search}
+					/>
+				</Switch>
+
+			</BrowserRouter>
+		</>
   );
 }
 

@@ -18,8 +18,6 @@ import Avatar from '../../images/avatar.png';
 
 import './styles/home.less';
 
-import { enquireScreen } from 'enquire-js';
-
 interface Props {
 
 }
@@ -65,34 +63,20 @@ const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
 }
 
 const GuestHome: React.FC<Props> = (props: Props) => {
-    const [ isMobile, setIsMobile ] = React.useState(false);
 
-    React.useEffect(() => {
-        // responsive to mobile screen
-        enquireScreen((mobileState: boolean) => {
-            setIsMobile(mobileState);
-          });
-    }, [])
 
     return (
         <div className='home-wrapper'>  
-            <NavBar 
-                isMobile={isMobile}
-            />
-
             <div className='home-content-wrapper'>
                 <Header />
 
-                {/* 除了searchBar之外的所有内容 */}
                 <TweenOne 
                     animation={{ x: -200, type: 'from', ease: 'easeOutQuad' }}
                 >   
                     <Companies />
                     {RenderCards(cardData)}
-                    {/* <RenderBigCard /> */}
                 </TweenOne>
             </div>
-
             <Footer />
         </div>
     )

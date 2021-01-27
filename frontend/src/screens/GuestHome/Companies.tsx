@@ -6,10 +6,6 @@ import {ReactComponent as GoogleLogo} from '../../images/google.svg';
 import {ReactComponent as LinkedInLogo} from '../../images/LinkedIn.svg';
 import {ReactComponent as FacebookLogo} from '../../images/facebook.svg';
 
-
-
-
-
 const Companies: React.FC<any> = () => {
     return (
         <div className='companies-wrapper'>
