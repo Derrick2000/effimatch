@@ -6,10 +6,11 @@ import React from 'react';
 import TweenOne from 'rc-tween-one';
 import Footer from '../../components/Footer/Footer';
 import Card from '../../components/Card/Card';
+import ApplicationCard from '../../components/Card/ApplicationCard';
 
 // antd
 import QueueAnim from 'rc-queue-anim';
-import {Row, Col, Button} from 'antd';
+import {Row, Col, Button,Divider} from 'antd';
 
 // assets (temp)
 import MS_logo from '../../images/MS_logo.png';
@@ -31,32 +32,11 @@ interface CardData {
 
 interface applicationData {
     title: string,
-    avatar: string,
     logo: string,
     name: string,
     date: string
 }
 
-const applicationCard:React.FC<applicationData> = (props: applicationData) => {
-    return (
-        <a className='card-block-group' href='/#'>
-            <div className='card-header-wrapper'>
-                <div className='card-header-title'>
-                    <h1>{props.title}</h1>
-                    <p>{props.name}</p>
-                </div>
-                <img src={props.logo} alt='logo' />
-            </div>
-
-            <div className='card-avatar-wrapper'>
-                <img src={props.avatar} alt='avatar' />
-                <p className='card-avatar-text'>{props.name}</p>
-            </div>
-
-            <Button type='primary' className='card-button'>Get Referral</Button>
-        </a>
-    )
-}
 
 
 const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
@@ -83,22 +63,25 @@ const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
         </div>
     )
 }
-const RenderApplicationCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
+
+// title: string,
+//     avatar: string,
+//     logo: string,
+//     name: string,
+//     date: string
+
+const RenderApplicationCards: React.FC<applicationData[]> = (cardsData: applicationData[]) => {
     return (
         <div className='home-cards-wrapper'>
 
-            <div className='home-cards-title'>
-                <h1 className='home-cards-title-h1'>Positions you might be interested in</h1>
-            </div>
             <Row justify='space-between'>
-                {cardsData.map((item: CardData, i: number) => (
-                    <Col md={6} xs={24} className='home-card-block' key={i.toString()}>
-                        <Card
+                {cardsData.map((item: applicationData, i: number) => (
+                    <Col md={11} xs={24} className='home-card-block' key={i.toString()}>
+                        <ApplicationCard
                             title={item.title}
-                            company={item.company}
                             logo={item.logo}
-                            avatar={item.avatar}
                             name={item.name}
+                            date={item.date}
                         />
                     </Col>
                 ))}
@@ -111,7 +94,7 @@ const RenderApplicationCards: React.FC<CardData[]> = (cardsData: CardData[]) => 
 
 
 const JsHome: React.FC<Props> = (props: Props) => {
-
+    const [renderdata, setrenderdata] = React.useState(sentCardData);
 
     return (
         <div className='home-wrapper'>
@@ -121,6 +104,20 @@ const JsHome: React.FC<Props> = (props: Props) => {
                     animation={{ x: -200, type: 'from', ease: 'easeOutQuad' }}
                 >
                     {RenderCards(referralCardData)}
+                    <div>
+                        <div className='home-cards-title'>
+                            <h1 className='home-cards-title-h1'>Your Applications</h1>
+                        </div>
+                        {/*<Divider orientation="left"></Divider>*/}
+
+                        <Row justify='start'>
+                            <Col><Button type='text' className='card-button' onClick={() => setrenderdata(sentCardData)}>sent</Button></Col>
+                            <Col><Button type='text' className='card-button' onClick={() => setrenderdata(viewedCardData)}>viewed</Button></Col>
+                            <Col><Button type='text' className='card-button' onClick={() => setrenderdata(acceptedCardData)}>accepted</Button></Col>
+                        </Row>
+
+                    {RenderApplicationCards(renderdata)}
+                    </div>
                 </TweenOne>
             </div>
             <Footer />
@@ -156,7 +153,6 @@ for (let ii = 0; ii < 2; ii++) {
     sentCardData.push(
         {
             title: 'Frontend Engineer',
-            avatar: Avatar,
             logo: MS_logo,
             name: 'referer 2',
             date: 'Jan 23'
@@ -170,7 +166,6 @@ for (let ii = 0; ii < 1; ii++) {
     viewedCardData.push(
         {
             title: 'Software Engineer',
-            avatar: Avatar,
             logo: MS_logo,
             name: 'referer 1',
             date: 'Jan 23'
@@ -183,7 +178,6 @@ for (let ii = 0; ii < 1; ii++) {
     acceptedCardData.push(
         {
             title: 'Software Engineer',
-            avatar: Avatar,
             logo: MS_logo,
             name: 'referer 3',
             date: 'Jan 23'
