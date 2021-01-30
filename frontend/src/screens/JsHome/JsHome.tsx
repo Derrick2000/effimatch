@@ -16,7 +16,7 @@ import {Row, Col, Button,Divider} from 'antd';
 import MS_logo from '../../images/MS_logo.png';
 import Avatar from '../../images/avatar.png';
 
-import '../GuestHome/styles/home.less';
+import './styles/JsHome.less';
 
 interface Props {
 
@@ -72,11 +72,11 @@ const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
 
 const RenderApplicationCards: React.FC<applicationData[]> = (cardsData: applicationData[]) => {
     return (
-        <div className='home-cards-wrapper'>
+        <div className='application-cards-wrapper'>
 
-            <Row justify='space-between'>
+            <Row justify='space-between' gutter={[16,16]}>
                 {cardsData.map((item: applicationData, i: number) => (
-                    <Col md={11} xs={24} className='home-card-block' key={i.toString()}>
+                    <Col md={12} xs={24} className='home-card-block' key={i.toString()}>
                         <ApplicationCard
                             title={item.title}
                             logo={item.logo}
@@ -95,6 +95,7 @@ const RenderApplicationCards: React.FC<applicationData[]> = (cardsData: applicat
 
 const JsHome: React.FC<Props> = (props: Props) => {
     const [renderdata, setrenderdata] = React.useState(sentCardData);
+    const [underlineButton, setUnderlineButton] = React.useState(1);
 
     return (
         <div className='home-wrapper'>
@@ -104,20 +105,48 @@ const JsHome: React.FC<Props> = (props: Props) => {
                     animation={{ x: -200, type: 'from', ease: 'easeOutQuad' }}
                 >
                     {RenderCards(referralCardData)}
-                    <div>
+
                         <div className='home-cards-title'>
-                            <h1 className='home-cards-title-h1'>Your Applications</h1>
+                            <h1 className='home-cards-title-h1' >Your Applications</h1>
                         </div>
-                        {/*<Divider orientation="left"></Divider>*/}
-
+                        <div className='application-button-row'>
                         <Row justify='start'>
-                            <Col><Button type='text' className='card-button' onClick={() => setrenderdata(sentCardData)}>sent</Button></Col>
-                            <Col><Button type='text' className='card-button' onClick={() => setrenderdata(viewedCardData)}>viewed</Button></Col>
-                            <Col><Button type='text' className='card-button' onClick={() => setrenderdata(acceptedCardData)}>accepted</Button></Col>
-                        </Row>
+                            <Col>
+                              <div className='application-button'
+                                style={{textDecoration: underlineButton==1 ? 'underline' : 'none'}}
+                                onClick={() => {
+                                  setrenderdata(sentCardData);
+                                  setUnderlineButton(1);
+                                }}>
+                              Sent
+                              </div>
+                            </Col>
 
+                            <Col>
+                              <div className='application-button'
+                                style={{textDecoration: underlineButton==2 ? 'underline' : 'none'}}
+                                onClick={() => {
+                                  setrenderdata(viewedCardData);
+                                  setUnderlineButton(2);
+                                }}>
+                              Viewed
+                              </div>
+                            </Col>
+
+                            <Col>
+                              <div className='application-button'
+                                style={{textDecoration: underlineButton==3 ? 'underline' : 'none'}}
+                                onClick={() => {
+                                  setrenderdata(acceptedCardData);
+                                  setUnderlineButton(3);
+                                }}>
+                              Accepted
+                              </div>
+                            </Col>
+                        </Row>
+                        </div>
                     {RenderApplicationCards(renderdata)}
-                    </div>
+
                 </TweenOne>
             </div>
             <Footer />
@@ -162,7 +191,7 @@ for (let ii = 0; ii < 2; ii++) {
 }
 // dummy data for viewed:
 const viewedCardData: applicationData[] = [];
-for (let ii = 0; ii < 1; ii++) {
+for (let ii = 0; ii < 3; ii++) {
     viewedCardData.push(
         {
             title: 'Software Engineer',
@@ -174,7 +203,7 @@ for (let ii = 0; ii < 1; ii++) {
 }
 // dummy data for accepted:
 const acceptedCardData: applicationData[] = [];
-for (let ii = 0; ii < 1; ii++) {
+for (let ii = 0; ii < 4; ii++) {
     acceptedCardData.push(
         {
             title: 'Software Engineer',

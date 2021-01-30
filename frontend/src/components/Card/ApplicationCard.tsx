@@ -10,15 +10,19 @@ interface applicationData {
 
 const ApplicationCard:React.FC<applicationData> = (props: applicationData) => {
     return (
-        <a className='card-block-group' href='/#'>
-            <div className='card-header-wrapper'>
-                <img src={props.logo} alt='logo' />
+        <a className='appcard-block-group' href='/#'>
+            <div className='appcard-header-wrapper'>
 
-                <div className='card-header-title'>
-                    <h1>{props.title}</h1>
-                    <p>{props.name}</p>
+
+                <div className='appcard-header-block'>
+                    <img src={props.logo} alt='logo' />
+                    <div className='appcard-header-block-title'>
+                      <h1>{props.title}</h1>
+                      <p>{props.name}</p>
+                    </div>
                 </div>
-                <p>{props.date}</p>
+
+                <p className='appcard-header-date'>{props.date}</p>
             </div>
 
         </a>
