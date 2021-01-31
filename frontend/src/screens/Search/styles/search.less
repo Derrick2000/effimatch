@@ -1,0 +1,58 @@
+@search: search;
+
+.@{search} {
+    &-wrapper{
+        padding-top: 10vh;
+    }
+    &-content-wrapper{
+        height: 100%;
+        max-width: 1200px;
+        position: relative;
+        margin: auto;
+        padding: 0 60px;
+        will-change: transform;
+    }
+}
+
+.@{search}-cards {
+    &-wrapper {
+        margin-top: 12vh;
+    }
+    &-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        
+        &-h1 {
+            font-size: 2.7em;
+        }
+
+        &-link {
+            color: black;
+        }
+    }
+}
+
+.@{search}-tags{
+    &-wrapper {
+        margin-top: 1vh;
+    }
+    &-tag{
+        margin-right: 1ch;
+        display: block;
+        background: #FCEBE6;
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+        font-size: 1.2em;
+    }
+    &-remote-tag{
+        display: block;
+        background: #FFFFFF;
+        padding: 10px;
+        text-align: center;
+        border-radius: 3px;
+        border-color: black;
+        font-size: 1.2em;
+    }
+}
