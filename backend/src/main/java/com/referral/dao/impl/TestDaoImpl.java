@@ -1,5 +1,6 @@
-package com.referral.dao;
+package com.referral.dao.impl;
 
+import com.referral.dao.TestDao;
 import com.referral.model.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
