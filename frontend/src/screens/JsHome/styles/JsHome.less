@@ -5,9 +5,9 @@
 @application: application;
 .@{home}-content-wrapper {
     height: 100%;
+    width: 100%;
     max-width: 1200px;
     position: relative;
-    margin: auto;
     padding: 0 60px;
     will-change: transform;
     background-color: transparent;
@@ -32,7 +32,9 @@
 
 .@{home}-wrapper {
   height: 100%;
-    background-color: @background-color;
+  display: flex;
+  flex-direction: column;
+  background-color: @background-color;
 }
 
 .@{home}-cards {

@@ -26,13 +26,13 @@ function App() {
 
   return (
 		<>
-			<NavBar 
+			<NavBar
 				isMobile={isMobile}
 			/>
 			<BrowserRouter>
 
 				<Switch>
-					<Route 
+					<Route
 						exact={true}
 						path="/"
 						component={GuestHome}
@@ -40,7 +40,7 @@ function App() {
 				</Switch>
 
 				<Switch>
-					<Route 
+					<Route
 						exact={true}
 						path="/js-home"
 						component={JsHome}
@@ -48,7 +48,7 @@ function App() {
 				</Switch>
 
 				<Switch>
-					<Route 
+					<Route
 						exact={true}
 						path="/search"
 						component={Search}

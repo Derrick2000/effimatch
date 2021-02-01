@@ -2,7 +2,7 @@
 @animate-duration: 0.25s;
 
 .@{card} {
-  &-header {
+  &-info {
     &-wrapper {
       display: flex;
       justify-content: space-between;
@@ -11,6 +11,11 @@
     }
     &-block {
       display:flex;
+    }
+    &-block-image {
+      float: left;
+      width: 35px;
+      height: 35px;
     }
 
     &-block-title {
@@ -51,24 +56,17 @@
       }
     }
 
-    &-image {
-      float: left;
-      width: 35px;
-      height: 35px;
-    }
 
-    &-title {
-      font-size: 14px;
-      float: left;
-      margin-left: 8px;
-      margin-bottom: 16px;
-      color: @primary-color;
-    }
 
-    &-content {
-      clear: both;
-      color: fade(@primary-color, 75);
-    }
+    // &-title {
+    //   font-size: 14px;
+    //   float: left;
+    //   margin-left: 8px;
+    //   margin-bottom: 16px;
+    //   color: @primary-color;
+    // }
+
+
   }
 }
 
