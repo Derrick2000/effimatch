@@ -17,12 +17,8 @@ public class JobService {
 	public List<Job> getAllJobs(){
 		return jobDao.getAllJobs();
 	}
-	
-	public Job addJob1(String jobTitle, UUID companyId, String publisherEmail) {
-		return jobDao.addJob1(jobTitle,companyId,publisherEmail);
-	}
-	
-	public Job addJob2(String jobTitle, String companyName, String logoUrl, String publisherEmail) {
-		return jobDao.addJob2(jobTitle, companyName, logoUrl, publisherEmail);
+
+	public Job addJob(Job job) {
+		return jobDao.addJob(job);
 	}
 }

@@ -3,8 +3,12 @@ package com.referral.controller;
 import java.util.List;
 import java.util.UUID;
 
+import com.referral.model.Company;
+import com.referral.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,27 +35,15 @@ public class JobController {
             return ResponseEntity.badRequest().build();
         }
     }
-	
-	 @PostMapping
-//   @PreAuthorize("hasAuthority('test:write')")
-   public ResponseEntity<Job> addTest1(String jobTitle, UUID companyId, String publisherEmail) {
-       try {
-           return ResponseEntity.ok(jobService.addJob1(jobTitle,companyId,publisherEmail));
-       }
-       catch (Exception e) {
-           return ResponseEntity.badRequest().build();
-       }
-   }
-	 
-	 //@PostMapping
-//   @PreAuthorize("hasAuthority('test:write')")
-   public ResponseEntity<Job> addTest2(String jobTitle, String companyName, String logoUrl, String publisherEmail) {
-       try {
-           return ResponseEntity.ok(jobService.addJob2(jobTitle,companyName,logoUrl,publisherEmail));
-       }
-       catch (Exception e) {
-           return ResponseEntity.badRequest().build();
-       }
-   }
-	
+
+    @PostMapping
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    public ResponseEntity<Job> addJob(@RequestBody Job job) {
+        try {
+            return ResponseEntity.ok(jobService.addJob(job));
+        }
+        catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

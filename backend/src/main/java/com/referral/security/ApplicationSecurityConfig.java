@@ -20,7 +20,6 @@ import javax.crypto.SecretKey;
 
 import static com.referral.security.ApplicationUserRole.*;
 
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -58,7 +57,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/v1/jobs").permitAll()
                 .antMatchers("/v1/companies").permitAll()
                 .antMatchers("/login").permitAll()
-                
+
                 .anyRequest()
                 .authenticated();
     }

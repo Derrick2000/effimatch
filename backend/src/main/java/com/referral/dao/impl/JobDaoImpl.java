@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import com.referral.dao.JobDao;
@@ -15,42 +16,28 @@ import com.referral.model.Test;
 
 @Repository
 public class JobDaoImpl implements JobDao {
-	
-	 @Autowired
-	    private RedisTemplate<String, Object> redisTemplate;
 
-	    private static final String KEY = "JOB";
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
+    private static final String KEY = "JOB";
 
-	@Override
-	public List<Job> getAllJobs() {
-		return (List) redisTemplate.opsForHash().values(KEY);
-	}
+    @Override
+    public List<Job> getAllJobs() {
+        return (List) redisTemplate.opsForHash().values(KEY);
+    }
 
+    @Override
+    public Job addJob(Job job) {
 
-	@Override
-	public Job addJob1(@Param("jobTitile")String jobTitle,
-			   @Param("companyId")UUID companyId,
-			   @Param("publisherEmail")String publisherEmail) {
-		
-		List<Job> jobs= (List)redisTemplate.opsForHash().values(KEY);
-		Company company=null;
-		for(Job job:jobs) {
-			if(job.getCompany().getId()==companyId) {
-				company = job.getCompany();
-				break;
-			}
-		}
-		Job newJob = new Job(jobTitle, publisherEmail,company);
-	    return newJob;
-	}
+        // get the current username
+        String currentUserName = (String) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
 
-
-	@Override
-	public Job addJob2(String jobTitle, String companyName, String logoUrl, String publisherEmail) {
-		Company newCompany = new Company(companyName,publisherEmail);
-		Job newJob = new Job(jobTitle,jobTitle,newCompany);
-		return newJob;
-	}
-	
+        Job jobToAdd = new Job(job.getJobTitle(), currentUserName, job.getCompanyName());
+        redisTemplate.opsForHash().put(KEY, job.getId(), jobToAdd);
+        return jobToAdd;
+    }
 }

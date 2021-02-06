@@ -9,5 +9,4 @@ public interface CompanyDao {
 	List<Company> getAllCompanies();
 	
 	boolean addCompany(Company company);
-	//Company addCompany(Company company);
 }
