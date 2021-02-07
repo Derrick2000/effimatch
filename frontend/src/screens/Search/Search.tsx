@@ -5,6 +5,7 @@ import React from 'react';
 
 // componenet
 import Card from '../../components/Card/Card';
+import LoadCard from '../../components/LoadCard/LoadCard';
 import SearchBar from '../../components/SearchBar/SearchBar';
 
 // antd
@@ -31,28 +32,32 @@ interface CardData {
 
 const { CheckableTag } = Tag;
 
-const RenderCards = (cardsData: CardData[], search: boolean, load: boolean) => {
+const RenderCards = (cardsData: CardData[], header: boolean, load: boolean) => {
 
     return (
         <div className='search-cards-wrapper'>
             
-            {!search && <div className='search-cards-title'>
+            {header && <div className='search-cards-title'>
                 <h1 className='search-cards-title-h1'>Recent Jobs</h1>
             </div>}
             <Row justify='space-between'>
                 {cardsData.map((item: CardData, i: number) => 
                 (
-                    <Col md={8} xs={24} className='search-card-block' key={i.toString()}>
+                    <Col md={6} xs={24} className='search-cards-block' key={i.toString()}>
 
-                        <Skeleton active loading={load} paragraph={{width:1}}>
+                        
+                        {!load ? 
                             <Card 
-                                title={item.title}
-                                company={item.company}
-                                logo={item.logo}
-                                avatar={item.avatar}
-                                name={item.name}
+                            title={item.title}
+                            company={item.company}
+                            logo={item.logo}
+                            avatar={item.avatar}
+                            name={item.name}
                             />
-                        </Skeleton>
+                        :
+                            <LoadCard></LoadCard>
+                        }
+                        
                     </Col>
                     
                 ))}
@@ -97,11 +102,13 @@ const RenderTags: React.FC<String[]> = (jobTag: String[]) => {
 
 const Search: React.FC<any> = () => {
     const [search, setSearch] = React.useState(false);
+    const [header, setHeader] = React.useState(true);
     const [load, setLoad] = React.useState(false);
 
     const wait=(ms:number)=>new Promise(resolve => setTimeout(resolve, ms)); 
 
     const onClickSearch = async () => {
+        setHeader(false);
         setLoad(true);
         setSearch(false);
         await wait(2000);
@@ -122,7 +129,7 @@ const Search: React.FC<any> = () => {
                 {search &&
                 RenderTags(jobTag)}
                 
-                {RenderCards(cardData, search, load)}
+                {RenderCards(cardData, header, load)}
                 </TweenOne>
             </div>
 
