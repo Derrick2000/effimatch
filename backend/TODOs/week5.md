@@ -11,7 +11,7 @@
 -   ```
     /v1/jobs?num=[number]
     ```
-    向上面这个URL发送GET请求，获取到特定数量的 ```Job```s
+    向上面这个URL发送GET请求，获取到特定数量的 ```Job```s  
     举例：
     ```
     /v1/jobs?num=5
