@@ -10,7 +10,6 @@ import lombok.Data;
 @Data
 public class Company implements Serializable {
 
-    //TODO: 看看这个serialVersionUID是干什么的 不需要删的话写一下注释
     private static final long serialVersionUID = -2784896358654617303L;
 
     private UUID id;
