@@ -1,0 +1,65 @@
+@import '../../GuestHome/styles/homeHeader.less';
+@import '../../GuestHome/styles/companies.less';
+
+@home: home;
+@application: application;
+.@{home}-content-wrapper {
+    height: 100%;
+    width: 100%;
+    max-width: 1200px;
+    position: relative;
+    padding: 0 60px;
+    will-change: transform;
+    background-color: transparent;
+}
+
+.application-button-row {
+  .application-button{
+    margin-top: 0px;
+    padding: 8px 8px;
+    font-size: 18px;
+  }
+  .application-button:hover{
+    background-color: white;
+    border-radius: 5px;
+  }
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  align-items: baseline;
+}
+
+
+
+.@{home}-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: @background-color;
+}
+
+.@{home}-cards {
+    &-wrapper {
+        margin-top: 10vh;
+    }
+
+    &-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+
+        &-h1 {
+            font-size: 2.7em;
+        }
+
+        &-link {
+            color: black;
+        }
+    }
+}
+
+.@{application}-cards{
+  &-wrapper{
+    margin-top: 15px;
+  }
+
+}
