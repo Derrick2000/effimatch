@@ -2,7 +2,12 @@ import React from 'react';
 import './searchBar.less'
 import { AutoComplete, Button } from 'antd';
 
-const SearchBar: React.FC<any> = (props) => {
+interface Props {
+    buttonWidth?: number | string,
+    search?: Function
+}
+
+const SearchBar: React.FC<Props> = (props: Props) => {
 
     const [value, setValue] = React.useState('');
     const [options, setOptions] = React.useState<{ value: string }[]>([]);
@@ -29,7 +34,8 @@ const SearchBar: React.FC<any> = (props) => {
     };
 
     const onClick = () => {
-        props.search();
+        // to avoid exception when 'search()' is undefined
+        if (props.search) props.search();
     };
 
 
@@ -46,7 +52,7 @@ const SearchBar: React.FC<any> = (props) => {
                 placeholder='Search your favorite company'
             />
 
-            <Button type='primary' className='search-bar-button' onClick={onClick}>Search</Button>
+            <Button style={{width: props.buttonWidth}} type='primary' className='search-bar-button' onClick={onClick}>Search</Button>
         </div>
     )
 }   

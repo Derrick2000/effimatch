@@ -122,7 +122,8 @@ const Search: React.FC<any> = () => {
                 <TweenOne 
                     animation={{ x: 400, type: 'from', ease: 'linear' }}
                 >
-                <SearchBar 
+                <SearchBar
+                    buttonWidth={150}
                     search={onClickSearch}
                 />
 
