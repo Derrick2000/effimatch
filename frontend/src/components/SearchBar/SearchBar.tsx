@@ -2,7 +2,7 @@ import React from 'react';
 import './searchBar.less'
 import { AutoComplete, Button } from 'antd';
 
-const SearchBar: React.FC<any> = () => {
+const SearchBar: React.FC<any> = (props) => {
 
     const [value, setValue] = React.useState('');
     const [options, setOptions] = React.useState<{ value: string }[]>([]);
@@ -28,6 +28,12 @@ const SearchBar: React.FC<any> = () => {
         setValue(data);
     };
 
+    const onClick = () => {
+        props.search();
+    };
+
+
+
     return (
         <div className='search-bar-wrapper'>
             <AutoComplete
@@ -40,7 +46,7 @@ const SearchBar: React.FC<any> = () => {
                 placeholder='Search your favorite company'
             />
 
-            <Button type='primary' className='search-bar-button'>Search</Button>
+            <Button type='primary' className='search-bar-button' onClick={onClick}>Search</Button>
         </div>
     )
 }   

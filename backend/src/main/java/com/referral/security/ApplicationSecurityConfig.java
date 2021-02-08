@@ -20,7 +20,6 @@ import javax.crypto.SecretKey;
 
 import static com.referral.security.ApplicationUserRole.*;
 
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -52,9 +51,13 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
                 .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig), JwtUsernameAndPasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/v1/tests").hasAnyRole(USER.name())
+                //.antMatchers("/v1/tests").hasAnyRole(USER.name())
+                .antMatchers("/v1/tests").permitAll()
                 .antMatchers("/v1/users").permitAll()
-                .antMatchers("/v1/login").permitAll()
+                .antMatchers("/v1/jobs").permitAll()
+                .antMatchers("/v1/companies").permitAll()
+                .antMatchers("/login").permitAll()
+
                 .anyRequest()
                 .authenticated();
     }

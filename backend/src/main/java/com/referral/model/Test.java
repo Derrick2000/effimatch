@@ -9,7 +9,10 @@ import java.util.UUID;
 
 @Data
 public class Test implements Serializable {
-    @JsonProperty("title")
+    
+	private static final long serialVersionUID = -5426515093048253118L;
+
+	@JsonProperty("title")
     private String title;
 
     @JsonProperty("content")
@@ -38,4 +41,13 @@ public class Test implements Serializable {
     public void setContent(String content) {
         this.content = content;
     }
+
+	public UUID getId() {
+		return id;
+	}
+
+	public void setId(UUID id) {
+		this.id = id;
+	}
+    
 }
