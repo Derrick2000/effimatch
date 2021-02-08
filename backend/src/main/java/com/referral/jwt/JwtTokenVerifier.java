@@ -77,4 +77,41 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
+
+//    public String getCurrentUserName(HttpServletRequest request) {
+//        String authorizationHeader = request.getHeader(jwtConfig.getAuthorizationHeader());
+//
+//        // if does not have authorization header
+//        if (Strings.isNullOrEmpty(authorizationHeader) || !authorizationHeader.startsWith(jwtConfig.getTokenPrefix())) {
+//            return null;
+//        }
+//
+//        try {
+//
+//            Jws<Claims> claimsJws = Jwts.parser()
+//                    .setSigningKey(secretKey)
+//                    .parseClaimsJws(token);
+//
+//            Claims body = claimsJws.getBody();
+//
+//            String username = body.getSubject();
+//
+//            var authorities = (List<Map<String, String>>) body.get("authorities");
+//
+//            Set<SimpleGrantedAuthority> simpleGrantedAuthorities = authorities.stream()
+//                    .map(m -> new SimpleGrantedAuthority(m.get("authority")))
+//                    .collect(Collectors.toSet());
+//
+//            Authentication authentication = new UsernamePasswordAuthenticationToken(
+//                    username,
+//                    null,
+//                    simpleGrantedAuthorities
+//            );
+//
+//            SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//        } catch (JwtException e) {
+//            throw new IllegalStateException(String.format("Token %s cannot be trusted", token));
+//        }
+//    }
 }
