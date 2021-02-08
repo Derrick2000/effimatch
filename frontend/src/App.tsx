@@ -3,11 +3,12 @@ import React from 'react';
 // style
 import './styles/index.less';
 
-// components
+// screens
 import GuestHome from './screens/GuestHome/GuestHome';
 import NavBar from './components/NavBar/NavBar';
 import JsHome from './screens/JsHome/JsHome';
 import Search from './screens/Search/Search';
+import Referers from './screens/Referers/Referers'
 
 import { enquireScreen } from 'enquire-js';
 
@@ -52,6 +53,14 @@ function App() {
 						exact={true}
 						path="/search"
 						component={Search}
+					/>
+				</Switch>
+
+				<Switch>
+					<Route
+						exact={true}
+						path="/referers"
+						component={Referers}
 					/>
 				</Switch>
 

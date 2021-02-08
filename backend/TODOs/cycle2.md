@@ -1,12 +1,15 @@
 # week5 后端组任务
 
-**!记得先在本地 ```git pull``` 一下**
-
-**注意事项：**  
-现在 ```Jobs``` 和 ```Companies``` 这两个 service 要实现的东西和 week 4 文档里的不同了，记得去看一下最新代码里 ```Jobs``` 和 ```Companies``` 对应的 model 和逻辑，如果哪里看不懂的话可以问我  
+## 注意事项：
+- 现在 ```Jobs``` 和 ```Companies``` 这两个 service 要实现的东西和 week 4 文档里的不同了，记得去看一下最新代码里 ```Jobs``` 和 ```Companies``` 对应的 model 和逻辑，如果哪里看不懂的话可以问我  
 现在的模型和逻辑都更加简单直白  
+- 之前除了master branch外，所有其他branches都被merge并删除了
+- 还是先在master branch上pull一下，然后再新开branch工作
 
-**本周任务：**  
+## due date:
+- 暂定SD时间下周一之前
+
+## 本周任务：  
 - 查看代码里的 // TODO 注释，根据 TODO 完成内容。（可以查看你使用的IDE如何查看代码里的所有 TODO 注释的位置在哪里，比如说如果用的是 IntelliJIDEA 的话可以在右下角查看）  
 -   ```
     /v1/jobs?num=[number]
