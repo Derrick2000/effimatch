@@ -10,6 +10,9 @@ import JsHome from './screens/JsHome/JsHome';
 import Search from './screens/Search/Search';
 import Referers from './screens/Referers/Referers'
 
+// testing-screens
+import Popup from './screens/PopUpTest/PopUpTest';
+
 import { enquireScreen } from 'enquire-js';
 
 // router
@@ -62,6 +65,14 @@ function App() {
 						path="/referers"
 						component={Referers}
 					/>
+				</Switch>
+
+				<Switch>
+					<Route
+						exact={true}
+						path="/popup-test"
+						component={Popup}
+					/>	
 				</Switch>
 
 			</BrowserRouter>
