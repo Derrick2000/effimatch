@@ -37,7 +37,7 @@ public class JobController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ROLE_USER')")
+   // @PreAuthorize("hasAnyRole('ROLE_USER')")
     public ResponseEntity<Job> addJob(@RequestBody Job job) {
         try {
             return ResponseEntity.ok(jobService.addJob(job));
