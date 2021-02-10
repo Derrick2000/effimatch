@@ -32,22 +32,27 @@ public class JobDaoImpl implements JobDao {
     @Override
     public List<Job> getAllJobs() {
     	List<Job> list = (List) redisTemplate.opsForHash().values(KEY);
-    	List<LocalDateTime> time = new ArrayList<>();
-    	List<Job> answerList = new ArrayList<>();
-    	for(Job t:list) {
-    		time.add(t.getCreatedTime());
-    	}
-    	Collections.sort(time);	//根据时间排序
-    	int pos = 0;
-    	while(time.get(pos) != null) {
-    		for(Job jb: list) {
-    			if(time.get(pos) == jb.getCreatedTime()) {
-    				answerList.add(jb);
-    			}
-    		}
-    		pos++;
-    	}
-        return answerList;
+    	list.sort((a, b) -> {
+			if (a.getCreatedTime().isEqual(b.getCreatedTime())) return 0;
+			else return a.getCreatedTime().isBefore(b.getCreatedTime()) ? -1 : 1;
+		});
+    	return list;
+//    	List<LocalDateTime> time = new ArrayList<>();
+//    	List<Job> answerList = new ArrayList<>();
+//    	for(Job t:list) {
+//    		time.add(t.getCreatedTime());
+//    	}
+//    	Collections.sort(time);	//根据时间排序
+//    	int pos = 0;
+//    	while(time.get(pos) != null) {
+//    		for(Job jb: list) {
+//    			if(time.get(pos) == jb.getCreatedTime()) {
+//    				answerList.add(jb);
+//    			}
+//    		}
+//    		pos++;
+//    	}
+//        return answerList;
     }
 
     @Override

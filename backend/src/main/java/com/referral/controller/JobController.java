@@ -32,12 +32,13 @@ public class JobController {
             return ResponseEntity.ok(jobService.getAllJobs());
         }
         catch (Exception e) {
+            System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }
 
     @PostMapping
-   // @PreAuthorize("hasAnyRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     public ResponseEntity<Job> addJob(@RequestBody Job job) {
         try {
             return ResponseEntity.ok(jobService.addJob(job));
