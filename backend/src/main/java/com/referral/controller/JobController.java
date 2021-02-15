@@ -1,5 +1,6 @@
 package com.referral.controller;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,7 +33,7 @@ public class JobController {
 	private JobService jobService;
 	
 	@GetMapping
-    public ResponseEntity<List<Job>> getAllJobs(@RequestParam(value="num", required = false) Integer num) {
+    public ResponseEntity<LinkedHashSet<Job>> getAllJobs(@RequestParam(value="num", required = false) Integer num) {
         try {
         	if(num != null) {
         		return ResponseEntity.ok(jobService.getSomeJobs(num));
@@ -59,7 +60,7 @@ public class JobController {
     }
     
     @PutMapping(value = "/{id}")
-    @PreAuthorize("hasAnyRole('ROLE_USER')")//这个可以讨论一下必要性
+    @PreAuthorize("hasAnyRole('ROLE_USER')")//这个可以讨论一下必要性: 必须。只有登录用户才可以改
     public ResponseEntity<String> UpdateJob(@PathVariable(value="id") UUID id, @RequestBody Job job) {
      	try {
             if(jobService.updateJob(id, job)) {
