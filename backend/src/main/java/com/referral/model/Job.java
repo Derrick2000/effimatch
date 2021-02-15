@@ -1,7 +1,6 @@
 package com.referral.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
@@ -16,9 +15,10 @@ public class Job implements Serializable {
     //TODO: 看看这个serialVersionUID是干什么的 不需要删的话写一下注释
 	//如果不自动生成此序列化UID, 在解析时会使用一个默认的值，而这个默认的值有小概率
 	//造成InvalidClassExceptions, this variable merely serves as an insurance.
-    private static final long serialVersionUID = -5145054486093906259L;
+    
+	private static final long serialVersionUID = -5145054486093906259L;
 
-    private UUID id;
+	private UUID id;
 
     @JsonProperty("jobTitle")
     private String jobTitle;
@@ -30,13 +30,13 @@ public class Job implements Serializable {
     private String companyName;
     
     @JsonProperty("createdTime")
-    private LocalDateTime createdTime;
+    private Date createdTime;
     @JsonProperty("modifiedTime")
-	private LocalDateTime modifiedTime;
+	private  Date modifiedTime;
 	
 	
 
-    public Job(String jobTitle, String publisherEmail, String companyName, LocalDateTime createdTime, LocalDateTime modifiedTime) {
+    public Job(String jobTitle, String publisherEmail, String companyName, Date createdTime, Date modifiedTime) {
 		super();
 		this.id = UUID.randomUUID();
 		this.jobTitle = jobTitle;
@@ -46,19 +46,19 @@ public class Job implements Serializable {
 		this.modifiedTime = modifiedTime;
 	}
 
-	public LocalDateTime getCreatedTime() {
+	public Date getCreatedTime() {
 		return createdTime;
 	}
 
-	public void setCreatedTime(LocalDateTime createdTime) {
+	public void setCreatedTime(Date createdTime) {
 		this.createdTime = createdTime;
 	}
 
-	public LocalDateTime getModifiedTime() {
+	public Date getModifiedTime() {
 		return modifiedTime;
 	}
 
-	public void setModifiedTime(LocalDateTime modifiedTime) {
+	public void setModifiedTime(Date modifiedTime) {
 		this.modifiedTime = modifiedTime;
 	}
 

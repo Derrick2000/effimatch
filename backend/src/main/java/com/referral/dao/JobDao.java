@@ -10,6 +10,14 @@ import com.referral.model.Job;
 public interface JobDao {
 	
 	List<Job> getAllJobs();
+	List<Job> getSomeJobs(Integer num);
 
 	Job addJob(Job job);
+	
+	Job findJobById(UUID id);
+	boolean updateJob(UUID id, Job job);
+	
+	boolean deleteJob(UUID id);
+	
+	
 }

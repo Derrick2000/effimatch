@@ -17,8 +17,20 @@ public class JobService {
 	public List<Job> getAllJobs(){
 		return jobDao.getAllJobs();
 	}
+	public List<Job> getSomeJobs(Integer num){
+		return jobDao.getSomeJobs(num);
+	}
+	
 
 	public Job addJob(Job job) {
 		return jobDao.addJob(job);
+	}
+	
+	public boolean updateJob(UUID id, Job job) {
+		return jobDao.updateJob(id,job);
+	}
+	
+	public boolean deleteJob(UUID id) {
+		return jobDao.deleteJob(id);
 	}
 }

@@ -9,10 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -27,15 +32,20 @@ public class JobController {
 	private JobService jobService;
 	
 	@GetMapping
-    public ResponseEntity<List<Job>> getAllJobs() {
+    public ResponseEntity<List<Job>> getAllJobs(@RequestParam(value="num", required = false) Integer num) {
         try {
-            return ResponseEntity.ok(jobService.getAllJobs());
+        	if(num != null) {
+        		return ResponseEntity.ok(jobService.getSomeJobs(num));
+        	}else {
+                return ResponseEntity.ok(jobService.getAllJobs());
+        	}
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }
+	
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_USER')")
@@ -47,4 +57,38 @@ public class JobController {
             return ResponseEntity.badRequest().build();
         }
     }
+    
+    @PutMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_USER')")//这个可以讨论一下必要性
+    public ResponseEntity<String> UpdateJob(@PathVariable(value="id") UUID id, @RequestBody Job job) {
+     	try {
+            if(jobService.updateJob(id, job)) {
+                return ResponseEntity.ok("Job with this id has been updated");
+            }else {
+            	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Update failed");
+            }
+        }
+        catch (Exception e) {
+        	e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    
+    @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_USER')")//这个可以讨论一下必要性
+    public ResponseEntity<String> DeleteJob(@PathVariable(value="id") UUID id) {
+    	try {
+            if(jobService.deleteJob(id)) {
+                return ResponseEntity.ok("Job with this id has been deleted");
+            }else {
+            	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Job id doesn't exist");
+            }
+        }
+        catch (Exception e) {
+        	e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    
+    
 }
