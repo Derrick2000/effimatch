@@ -38,11 +38,11 @@ const RenderReferSection: React.FC<ReferSectionData[]> = (allSectionData: ReferS
     return (
         <div className=''>
 
-                <Col>
-                    <Row><h1 className=''>Hi, I'm Jake Rotmil</h1></Row>
-                    <Row><p>I work at Google as a data scientist</p></Row>
-                    <Row><h1 className=''>I can refer</h1></Row>
-                </Col>
+                <div>
+                    <h1 className='title-header'>Hi, I'm Jake Rotmil</h1>
+                    <h3 className='title-description'>I work at <span className='referer-header-bold'>Google</span> as a <span className='referer-header-bold'>data scientist</span></h3>
+                    <h1 >I can refer:</h1>
+                </div>
 
 
                 {allSectionData.map((section: ReferSectionData, i: number) => (
@@ -60,11 +60,11 @@ const RenderReferSection: React.FC<ReferSectionData[]> = (allSectionData: ReferS
 
 const RenderCommentSection: React.FC<ReferCommentData> = (commentData: ReferCommentData) => {
     return (
-        <div className=''>
+        <div className='comment-wrapper'>
 
-                <div className=''>
+                <div className='review-header'>
                     <p className='reviewTitle'>Reviews from other job seekers</p>
-                    <Button>Add a Review</Button>
+                    <Button className='primaryButton' style={{borderRadius: '10px'}}>Add a Review</Button>
                 </div>
                 <Comment
                   author={commentData.name}
@@ -98,13 +98,13 @@ const Referers: React.FC<any> = (props) => {
                   <div className="side">
                   <Card
                     className="side-card"
-                    hoverable
                     style={{ width: '37%',height: '15%', float:"right"}}
                     cover={<img alt="avatar" src={icon} style={{borderRadius: "50px"}}/>}
                     bordered={false}
+                    hoverable={false}
                     bodyStyle={{padding: '0 10'}}
                   >
-                    <Button className="sideButton" style={{borderRadius: '10px',width: '100%'}}>Get Refered</Button>
+                    <Button className="sideButton primaryButton" style={{borderRadius: '10px',width: '100%'}}>Get Refered</Button>
                     <Button className="sideButton" style={{borderRadius: '10px',width: '100%'}}>View my Linkedin</Button>
                   </Card>
                   </div>

@@ -1,5 +1,5 @@
 import React from 'react'
-//import './ApplicationCardStyle.less';
+import './ReferPositionCardStyle.less';
 import {Card} from 'antd';
 const { Meta } = Card
 interface ReferPositionData {
@@ -12,19 +12,17 @@ interface ReferPositionData {
 const ReferPositionCard:React.FC<ReferPositionData> = (props: ReferPositionData) => {
     return (
         <a className='' href='/#'>
-            <div className=''>
 
-                <div className=''>
-                    <Card style={{width: '300', padding: '0'}} bodyStyle={{padding: '0'}} bordered={false}>
+                <div className='cardWrapper'>
+                    <Card style={{width: '250px', padding: '0px 0px 10px 0px'}} bodyStyle={{padding: '0'}} bordered={false} hoverable={false}>
 
-                      <Meta title={props.jobTitle}/>
+                      <Meta title={props.jobTitle} className='primaryText'/>
                       <div className=''>
                         <p>{props.localtion} | {props.graduationDate} | {props.postDate}</p>
                       </div>
                     </Card>
                 </div>
 
-            </div>
         </a>
     )
 }

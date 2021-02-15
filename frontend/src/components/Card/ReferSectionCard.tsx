@@ -19,10 +19,10 @@ interface ReferSectionData {
 const ReferSectionData:React.FC<ReferSectionData> = (props: ReferSectionData) => {
     return (
         <div className='ReferSectionWrapper'>
-            <Row justify='space-between' >
-                <h1 className="sectionTitle">{props.sectionTitle}</h1>
+            <Row justify='space-between' style={{width: '90%'}}>
+                <h2 className="sectionTitle">{props.sectionTitle}</h2>
                 {props.jobs.map((item: ReferPositionData, i: number) => (
-                    <Col md={12} xs={24} className='home-card-block' key={i.toString()}>
+                    <Col md={12} xs={24} className='home-card-block' span={12} key={i.toString()}>
                         <ReferPositionCard
                             jobTitle={item.jobTitle}
                             localtion={item.localtion}

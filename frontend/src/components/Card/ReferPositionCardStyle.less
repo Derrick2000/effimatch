@@ -1,0 +1,35 @@
+@animate-duration: 0.25s;
+
+.cardWrapper{
+  width: 250px;
+}
+
+// .primaryText{
+//   color: @primary-color;
+// }
+
+.cardWrapper {
+
+  & {
+    // margin-bottom: 4vh;
+    // display: block;
+    // background-color: white;
+    // width: 80%;
+    // border-radius: 10px;
+    // box-shadow: 0 2px 16px fade(#000, 8);
+    // transition: box-shadow @animate-duration ease-in, transform @animate-duration ease-in;
+
+    &:hover {
+      //transform: translateY(-5px);
+      
+      //box-shadow: 0 6px 16px fade(#000, 12);
+      .ant-card-meta-title{
+        color: black;
+      }
+
+    }
+    & .ant-card-meta-title{
+      color: @primary-color;
+    }
+  }
+}
