@@ -64,7 +64,7 @@ const RenderCommentSection: React.FC<ReferCommentData> = (commentData: ReferComm
 
                 <div className='review-header'>
                     <p className='reviewTitle'>Reviews from other job seekers</p>
-                    <Button className='primaryButton' style={{borderRadius: '10px'}}>Add a Review</Button>
+                    <Button type='primary' className='primaryButton' style={{borderRadius: '10px'}}>Add a Review</Button>
                 </div>
                 <Comment
                   author={commentData.name}
@@ -104,7 +104,7 @@ const Referers: React.FC<any> = (props) => {
                     hoverable={false}
                     bodyStyle={{padding: '0 10'}}
                   >
-                    <Button className="sideButton primaryButton" style={{borderRadius: '10px',width: '100%'}}>Get Refered</Button>
+                    <Button type='primary' className="sideButton primaryButton" style={{borderRadius: '10px',width: '100%'}}>Get Refered</Button>
                     <Button className="sideButton" style={{borderRadius: '10px',width: '100%'}}>View my Linkedin</Button>
                   </Card>
                   </div>
