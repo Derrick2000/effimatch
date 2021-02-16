@@ -21,7 +21,7 @@ public class JobDaoImpl implements JobDao {
 
     @Override
     public LinkedHashSet<Job> getAllJobs() {
-        return (LinkedHashSet<Job>) (LinkedHashSet) redisTemplate.opsForZSet().range(KEY, 0, -1);
+        return (LinkedHashSet<Job>) (LinkedHashSet) redisTemplate.opsForZSet().range(KEY, 0,-1);
     }
 
     @Override
@@ -40,7 +40,8 @@ public class JobDaoImpl implements JobDao {
 
         Date now = new Date(System.currentTimeMillis());
         Job jobToAdd = new Job(job.getJobTitle(), currentUserEmail, job.getCompanyName(), now, now);
-        redisTemplate.opsForZSet().add(KEY, jobToAdd, jobToAdd.getCreatedTime().getTime());
+     
+        redisTemplate.opsForZSet().add(KEY, jobToAdd, -now.getTime());
         return jobToAdd;
     }
 
@@ -70,7 +71,7 @@ public class JobDaoImpl implements JobDao {
         if (deleteJob(id) == false) {
             return false;
         }
-        redisTemplate.opsForHash().put(KEY, id, newJob);
+        redisTemplate.opsForZSet().add(KEY, newJob, -newJob.getCreatedTime().getTime());
         return true;
     }
 

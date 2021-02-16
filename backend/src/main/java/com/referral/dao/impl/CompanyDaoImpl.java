@@ -27,7 +27,7 @@ public class CompanyDaoImpl implements CompanyDao {
 
         String companyName = company.getCompanyName();
 
-        // TODO: 去掉不必要的 print
+
         Company companyWithThisName = (Company) redisTemplate.opsForHash().get(KEY, company.getCompanyName());
         if(companyWithThisName != null) {
             return false;
