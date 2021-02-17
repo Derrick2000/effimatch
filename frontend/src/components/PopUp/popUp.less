@@ -1,0 +1,55 @@
+@pop: pop;
+@border-radius: 8px;
+
+.@{pop} {
+
+    &-content-wrapper{
+        padding-top: 60px;
+        text-align: center;
+    }
+
+    &-content-text{
+        margin-top: 2vh;
+        font-family: Avenir;
+        color: black;
+        font-size: 24px;
+        line-height: 28px;
+    }
+
+    &-content-button{
+        margin: 0;
+        margin-top: 8px;
+        position: absolute;
+        top: 75%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        border-radius: @border-radius;
+        width: 156px;
+        height: 35px;
+
+
+        &-text{
+            font-family: Work Sans;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 19px;
+            /* identical to box height */
+
+
+            color: #FFFFFF;
+
+
+            /* Inside Auto Layout */
+
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+            margin: 0px 10px;
+        }
+    }
+
+    
+
+}
