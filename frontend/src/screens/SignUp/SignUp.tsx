@@ -38,7 +38,7 @@ const Signup: React.FC<any> = (props) => {
                 value={email}
             />
             <p>password</p>
-            <Input 
+            <Input.Password 
                 onChange={e => setPassword(e.target.value)}
                 value={password}
             />

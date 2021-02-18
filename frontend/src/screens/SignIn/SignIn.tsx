@@ -13,7 +13,7 @@ const SignIn: React.FC<any> = (props) => {
             email: email,
             password: password
         }
-        const URL = 'http://localhost:8080/login'
+        const URL = 'http://localhost:8080/login' // this is the login URL of our backend
         axios.post(URL, userInfo)
         .then(r => {
             const jwtToken = r.headers.authorization // the jwt token
@@ -29,7 +29,7 @@ const SignIn: React.FC<any> = (props) => {
                 value={email}
             />
             <p>password</p>
-            <Input 
+            <Input.Password 
                 onChange={e => setPassword(e.target.value)}
                 value={password}
             />
