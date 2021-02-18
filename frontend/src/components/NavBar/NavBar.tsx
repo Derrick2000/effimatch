@@ -97,7 +97,7 @@ const rightMenuData = [
       name: 'Jobs',
       className: 'navbar-item',
       children: {
-        href: '#Jobs',
+        href: '/search',
         text: "Jobs"
       },
     },

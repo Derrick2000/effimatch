@@ -120,17 +120,21 @@ const Search: React.FC<any> = () => {
         <div className="search-wrapper">
             <div className="search-content-wrapper">
                 <TweenOne 
-                    animation={{ x: 400, type: 'from', ease: 'linear' }}
+                    animation={{ x: 200, type: 'from', ease: 'linear' }}
                 >
                 <SearchBar
                     buttonWidth={150}
                     search={onClickSearch}
                 />
-
-                {search &&
-                RenderTags(jobTag)}
+                </TweenOne>
                 
-                {RenderCards(cardData, header, load)}
+                <TweenOne
+                    animation={{ x: -200, type: 'from', ease: 'linear' }}
+                >
+                    {search &&
+                    RenderTags(jobTag)}
+                    
+                    {RenderCards(cardData, header, load)}
                 </TweenOne>
             </div>
 
