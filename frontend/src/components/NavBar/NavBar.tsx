@@ -5,7 +5,8 @@ import TweenOne from 'rc-tween-one';
 import { Menu } from 'antd';
 
 // assets
-import Logo from '../../images/logo.png'
+// import Logo from '../../images/logo.png'
+import {ReactComponent as Logo} from '../../images/logo.svg';
 
 import './navbar.less'
 
@@ -39,8 +40,10 @@ const NavBar: React.FC<Props> = (props: Props) => {
           <TweenOne
             animation={{ x: -30, type: 'from', ease: 'easeOutQuad' }}
             className="navbar-logo"
+            onClick={() => {window.location.href = '/'}}
           >
-            <img height="45px" src={Logo} alt="logo_img" />
+            {/* <img height="45px" src={Logo} alt="logo_img" /> */}
+            <Logo/>
           </TweenOne>
           
           {/* 右侧菜单 */}
@@ -110,7 +113,7 @@ const rightMenuData = [
       name: 'Sign In',
       className: 'navbar-item',
       children: {
-        href: '#Sign In',
+        href: '/sign-in',
         text: "Sign In"
       },
     },
@@ -118,7 +121,7 @@ const rightMenuData = [
       name: 'Join',
       className: 'navbar-item',
       children: {
-        href: '#Join',
+        href: '/sign-up',
         text: "Join"
       },
     },

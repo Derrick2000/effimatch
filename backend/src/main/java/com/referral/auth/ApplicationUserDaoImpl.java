@@ -41,6 +41,7 @@ public class ApplicationUserDaoImpl implements ApplicationUserDao {
         ApplicationUser newUser = new ApplicationUser(
                 user.getUsername(),
                 passwordEncoder.encode(user.getPassword()),
+                user.getTheName(),
                 USER.getGrantedAuthorities(),
                 true,
                 true,

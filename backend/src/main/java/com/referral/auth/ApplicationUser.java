@@ -9,10 +9,19 @@ import java.util.Set;
 
 public class ApplicationUser implements UserDetails {
 
+    // the user's unique identifier
+    // in our case, it is the user's email
     @JsonProperty("email")
     private final String username;
+
     @JsonProperty("password")
     private final String password;
+
+    // the user's custom name （昵称）
+    // 我知道这一坨命名看起来很垃圾，但因为必须implement UserDetails所以没办法
+    @JsonProperty("username")
+    private final String theName;
+
     private final Set<? extends GrantedAuthority> grantedAuthorities;
     private final boolean isAccountNonExpired;
     private final boolean isAccountNonLocked;
@@ -22,6 +31,7 @@ public class ApplicationUser implements UserDetails {
     public ApplicationUser(
             String username,
             String password,
+            String theName,
             Set<? extends GrantedAuthority> grantedAuthorities,
             boolean isAccountNonExpired,
             boolean isAccountNonLocked,
@@ -29,6 +39,7 @@ public class ApplicationUser implements UserDetails {
             boolean isEnabled) {
         this.username = username;
         this.password = password;
+        this.theName = theName;
         this.grantedAuthorities = grantedAuthorities;
         this.isAccountNonExpired = isAccountNonExpired;
         this.isAccountNonLocked = isAccountNonLocked;
@@ -49,6 +60,10 @@ public class ApplicationUser implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public String getTheName() {
+        return theName;
     }
 
     @Override

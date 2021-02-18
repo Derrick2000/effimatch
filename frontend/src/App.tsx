@@ -10,6 +10,7 @@ import JsHome from './screens/JsHome/JsHome';
 import Search from './screens/Search/Search';
 import Referers from './screens/Referers/Referers';
 import SignIn from './screens/SignIn/SignIn';
+import SignUp from './screens/SignUp/SignUp';
 
 // testing-screens
 import Popup from './screens/PopUpTest/PopUpTest';
@@ -18,6 +19,7 @@ import { enquireScreen } from 'enquire-js';
 
 // router
 import { BrowserRouter, Route, Switch} from 'react-router-dom';
+import Signup from './screens/SignUp/SignUp';
 
 function App() {
 	const [ isMobile, setIsMobile ] = React.useState(false);
@@ -81,6 +83,14 @@ function App() {
 						exact={true}
 						path="/sign-in"
 						component={SignIn}
+					/>	
+				</Switch>
+
+				<Switch>
+					<Route
+						exact={true}
+						path="/sign-up"
+						component={SignUp}
 					/>	
 				</Switch>
 
