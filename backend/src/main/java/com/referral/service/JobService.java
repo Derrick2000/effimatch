@@ -1,5 +1,6 @@
 package com.referral.service;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,11 +15,23 @@ public class JobService {
 	@Autowired
 	private JobDao jobDao;
 	
-	public List<Job> getAllJobs(){
+	public LinkedHashSet<Job> getAllJobs(){
 		return jobDao.getAllJobs();
 	}
+	public LinkedHashSet<Job> getSomeJobs(Integer num){
+		return jobDao.getSomeJobs(num);
+	}
+	
 
 	public Job addJob(Job job) {
 		return jobDao.addJob(job);
+	}
+	
+	public boolean updateJob(UUID id, Job job) {
+		return jobDao.updateJob(id,job);
+	}
+	
+	public boolean deleteJob(UUID id) {
+		return jobDao.deleteJob(id);
 	}
 }

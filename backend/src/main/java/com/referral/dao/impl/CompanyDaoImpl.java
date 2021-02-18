@@ -27,16 +27,13 @@ public class CompanyDaoImpl implements CompanyDao {
 
         String companyName = company.getCompanyName();
 
-        // TODO: 去掉不必要的 print
-        System.out.println(companyName);
+
         Company companyWithThisName = (Company) redisTemplate.opsForHash().get(KEY, company.getCompanyName());
         if(companyWithThisName != null) {
-            System.out.println("false");
             return false;
         }
         Company newCompany = new Company(company.getCompanyName(),company.getLogoUrl());
         redisTemplate.opsForHash().put(KEY, newCompany.getCompanyName(),newCompany);
-        System.out.println("true");
         return true;
     }
 

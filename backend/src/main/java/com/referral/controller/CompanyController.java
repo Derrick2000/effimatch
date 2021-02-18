@@ -30,6 +30,9 @@ public class CompanyController {
             return ResponseEntity.badRequest().build();
         }
     }
+    
+    //@GetMapping
+    
 
     @PostMapping
 //	    @PreAuthorize("hasAuthority('test:write')")

@@ -1,18 +1,15 @@
 package com.referral.dao.impl;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import com.referral.dao.JobDao;
-import com.referral.model.Company;
 import com.referral.model.Job;
-import com.referral.model.Test;
 
 @Repository
 public class JobDaoImpl implements JobDao {
@@ -23,21 +20,68 @@ public class JobDaoImpl implements JobDao {
     private static final String KEY = "JOB";
 
     @Override
-    public List<Job> getAllJobs() {
-        return (List) redisTemplate.opsForHash().values(KEY);
+    public LinkedHashSet<Job> getAllJobs() {
+        return (LinkedHashSet<Job>) (LinkedHashSet) redisTemplate.opsForZSet().range(KEY, 0,-1);
+    }
+
+    @Override
+    public LinkedHashSet<Job> getSomeJobs(Integer num) {
+        return (LinkedHashSet) redisTemplate.opsForZSet().range(KEY, 0, num - 1);
     }
 
     @Override
     public Job addJob(Job job) {
 
-        // get the current username
-        String currentUserName = (String) SecurityContextHolder
+        // get the current currentUserEmail
+        String currentUserEmail = (String) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
 
-        Job jobToAdd = new Job(job.getJobTitle(), currentUserName, job.getCompanyName());
-        redisTemplate.opsForHash().put(KEY, job.getId(), jobToAdd);
+        Date now = new Date(System.currentTimeMillis());
+        Job jobToAdd = new Job(job.getJobTitle(), currentUserEmail, job.getCompanyName(), now, now);
+     
+        redisTemplate.opsForZSet().add(KEY, jobToAdd, -now.getTime());
         return jobToAdd;
+    }
+
+    @Override
+    public Job findJobById(UUID id) {
+        //这边可能要throw exception 吧,还是我们可以保证update是在确认job存在的情况下执行。: 可以throw exception
+        LinkedHashSet<Job> list = getAllJobs();
+        return list.stream()
+                .filter(j -> j.getId().equals(id))
+                .findAny()
+                .orElse(null);
+    }
+
+    @Override
+    public boolean updateJob(UUID id, Job job) {
+        // TODO: fix this (change corresponding functions to opsForZSet)
+
+        Job newJob = findJobById(id);
+        if (newJob == null) {
+            return false;
+        }
+        if (job.getJobTitle() != null) {
+            newJob.setJobTitle(job.getJobTitle());
+        }
+        Date modifiedTime = new Date(System.currentTimeMillis());
+        newJob.setModifiedTime(modifiedTime);
+        if (deleteJob(id) == false) {
+            return false;
+        }
+        redisTemplate.opsForZSet().add(KEY, newJob, -newJob.getCreatedTime().getTime());
+        return true;
+    }
+
+    @Override
+    public boolean deleteJob(UUID id) {
+        var toDelete = findJobById(id);
+
+        // if remove failed, removed == 0
+        Long removed = redisTemplate.opsForZSet().remove(KEY, 1, toDelete);
+
+        return removed != null && removed != 0;
     }
 }
