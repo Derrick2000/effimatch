@@ -1,4 +1,4 @@
-# week 4 前端组任务
+# 前端组任务 Cycle 2
 
 ## 注意事项：
 - 之前除了master branch外，所有其他branches都被merge并删除了
