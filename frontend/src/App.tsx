@@ -8,7 +8,8 @@ import GuestHome from './screens/GuestHome/GuestHome';
 import NavBar from './components/NavBar/NavBar';
 import JsHome from './screens/JsHome/JsHome';
 import Search from './screens/Search/Search';
-import Referers from './screens/Referers/Referers'
+import Referers from './screens/Referers/Referers';
+import SignIn from './screens/SignIn/SignIn';
 
 // testing-screens
 import Popup from './screens/PopUpTest/PopUpTest';
@@ -72,6 +73,14 @@ function App() {
 						exact={true}
 						path="/popup-test"
 						component={Popup}
+					/>	
+				</Switch>
+
+				<Switch>
+					<Route
+						exact={true}
+						path="/sign-in"
+						component={SignIn}
 					/>	
 				</Switch>
 

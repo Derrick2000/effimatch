@@ -12,6 +12,7 @@
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
     "antd": "^4.9.4",
+    "axios": "^0.21.1",
     "craco-less": "^1.17.1",
     "enquire-js": "^0.2.1",
     "rc-queue-anim": "^1.8.5",
