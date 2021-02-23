@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/v1/users")
+@RequestMapping("/register")
 public class ApplicationUserController {
 
     @Autowired
