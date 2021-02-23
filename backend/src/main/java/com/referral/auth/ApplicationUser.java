@@ -1,6 +1,7 @@
 package com.referral.auth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,15 +13,18 @@ public class ApplicationUser implements UserDetails {
     // the user's unique identifier
     // in our case, it is the user's email
     @JsonProperty("email")
+    @Getter
     private final String username;
 
     @JsonProperty("password")
+    @Getter
     private final String password;
 
     // the user's custom name （昵称）
     // 我知道这一坨命名看起来很垃圾，但因为必须implement UserDetails所以没办法
     @JsonProperty("username")
-    private final String theName;
+    @Getter
+    private final String nickname;
 
     private final Set<? extends GrantedAuthority> grantedAuthorities;
     private final boolean isAccountNonExpired;
@@ -31,7 +35,7 @@ public class ApplicationUser implements UserDetails {
     public ApplicationUser(
             String username,
             String password,
-            String theName,
+            String nickname,
             Set<? extends GrantedAuthority> grantedAuthorities,
             boolean isAccountNonExpired,
             boolean isAccountNonLocked,
@@ -39,7 +43,7 @@ public class ApplicationUser implements UserDetails {
             boolean isEnabled) {
         this.username = username;
         this.password = password;
-        this.theName = theName;
+        this.nickname = nickname;
         this.grantedAuthorities = grantedAuthorities;
         this.isAccountNonExpired = isAccountNonExpired;
         this.isAccountNonLocked = isAccountNonLocked;
@@ -47,23 +51,23 @@ public class ApplicationUser implements UserDetails {
         this.isEnabled = isEnabled;
     }
 
+    public ApplicationUser(
+            String username,
+            String password,
+            String theName) {
+        this.username = username;
+        this.password = password;
+        this.nickname = theName;
+        this.grantedAuthorities = null;
+        this.isAccountNonExpired = true;
+        this.isAccountNonLocked = true;
+        this.isCredentialsNonExpired = true;
+        this.isEnabled = true;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return grantedAuthorities;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    public String getTheName() {
-        return theName;
     }
 
     @Override
