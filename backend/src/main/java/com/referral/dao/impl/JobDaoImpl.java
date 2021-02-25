@@ -39,7 +39,7 @@ public class JobDaoImpl implements JobDao {
                 .getPrincipal();
 
         Date now = new Date(System.currentTimeMillis());
-        Job jobToAdd = new Job(job.getJobTitle(), currentUserEmail, job.getCompanyName(), now, now);
+        Job jobToAdd = new Job(job.getJobTitle(), currentUserEmail, job.getCompanyName(), now, now,job.getLocation(),job.getStudentType());
      
         redisTemplate.opsForZSet().add(KEY, jobToAdd, -now.getTime());
         return jobToAdd;
@@ -47,7 +47,6 @@ public class JobDaoImpl implements JobDao {
 
     @Override
     public Job findJobById(UUID id) {
-        //这边可能要throw exception 吧,还是我们可以保证update是在确认job存在的情况下执行。: 可以throw exception
         LinkedHashSet<Job> list = getAllJobs();
         return list.stream()
                 .filter(j -> j.getId().equals(id))
@@ -63,9 +62,18 @@ public class JobDaoImpl implements JobDao {
         if (newJob == null) {
             return false;
         }
+        newJob.setId(UUID.randomUUID());
+        
         if (job.getJobTitle() != null) {
             newJob.setJobTitle(job.getJobTitle());
         }
+        if(job.getLocation() != null) {
+        	newJob.setLocation(job.getLocation());
+        }
+        if(job.getStudentType() != null) {
+        	newJob.setStudentType(job.getStudentType());
+        }
+        
         Date modifiedTime = new Date(System.currentTimeMillis());
         newJob.setModifiedTime(modifiedTime);
         if (deleteJob(id) == false) {
@@ -84,4 +92,41 @@ public class JobDaoImpl implements JobDao {
 
         return removed != null && removed != 0;
     }
+
+	@Override
+	public LinkedHashSet<Job> getSkipJobs(Integer skip) {
+		long size = redisTemplate.opsForZSet().size(KEY);
+		if(skip >= size) {
+			return null;
+		}else {
+	        return (LinkedHashSet) redisTemplate.opsForZSet().range(KEY, skip, size-1);
+
+		}
+	}
+
+	@Override
+	public LinkedHashSet<Job> getSearchJobs(String search) {
+		 LinkedHashSet<Job> list = getAllJobs();
+		 LinkedHashSet<Job> searchedJobs = new LinkedHashSet<>();
+		 for(Job j:list) {
+			 if(j.getJobTitle().equals(search) || j.getCompanyName().equals(search)) {
+				 searchedJobs.add(j);
+			 }
+		 }
+	     return searchedJobs;
+	}
+
+	@Override
+	public LinkedHashSet<Job> getSearchWithNumJobs(String search, Integer num) {
+		LinkedHashSet<Job> list = getSearchJobs(search);
+		LinkedHashSet<Job> searchWithNumJobs = new LinkedHashSet<>();
+		int temp = num;
+		for(Job j:list) {
+			if(temp <= 0)
+				break;
+			searchWithNumJobs.add(j);
+			temp--;
+		}
+		return searchWithNumJobs;
+	}
 }
