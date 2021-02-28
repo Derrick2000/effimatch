@@ -99,7 +99,7 @@ const JsHome: React.FC<Props> = (props: Props) => {
 
     return (
 
-        <div className='home-wrapper'>
+        <div className='JsHome-wrapper'>
             <div className='home-content-wrapper'>
 
                 <TweenOne
