@@ -33,20 +33,52 @@ public class JobController {
 	private JobService jobService;
 	
 	@GetMapping
-    public ResponseEntity<LinkedHashSet<Job>> getAllJobs(@RequestParam(value="num", required = false) Integer num) {
-        try {
-        	if(num != null) {
-        		return ResponseEntity.ok(jobService.getSomeJobs(num));
-        	}else {
-                return ResponseEntity.ok(jobService.getAllJobs());
-        	}
-        }
+    public ResponseEntity<LinkedHashSet<Job>> getAllJobs(@RequestParam(value="num", required = false) Integer num,
+    													 @RequestParam(value="search", required = false) String search,
+    													 @RequestParam(value="skip", required = false) Integer skip){
+//        try {
+//        	if(num != null) {
+//        		return ResponseEntity.ok(jobService.getSomeJobs(num));
+//        	}else {
+//                return ResponseEntity.ok(jobService.getAllJobs());
+//        	}
+//        }
+		try {
+			if(skip != null) {
+				return ResponseEntity.ok(jobService.getSkipJobs(skip));
+			}else if(search != null){
+				if(num == null) {
+					return ResponseEntity.ok(jobService.getSearchJobs(search));
+				}else {
+					return ResponseEntity.ok(jobService.getSearchWithNumJobs(search,num));
+				}
+			}else if(num != null){
+				return ResponseEntity.ok(jobService.getSomeJobs(num));
+			}else {
+				return ResponseEntity.ok(jobService.getAllJobs());
+			}
+		}
         catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }
 	
+//	@GetMapping
+//	public ResponseEntity<LinkedHashSet<Job>> getAllJobs(@RequestParam(value="num", required = false) Integer num){
+//													
+//	    try {
+//	    	if(num != null) {
+//	    		return ResponseEntity.ok(jobService.getSomeJobs(num));
+//	    	}else {
+//	            return ResponseEntity.ok(jobService.getAllJobs());
+//	    	}
+//	    }
+//	    catch (Exception e) {
+//	        System.out.println(e.getMessage());
+//	        return ResponseEntity.badRequest().build();
+//	    }
+//	}
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_USER')")
@@ -60,7 +92,7 @@ public class JobController {
     }
     
     @PutMapping(value = "/{id}")
-    @PreAuthorize("hasAnyRole('ROLE_USER')")//这个可以讨论一下必要性: 必须。只有登录用户才可以改
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     public ResponseEntity<String> UpdateJob(@PathVariable(value="id") UUID id, @RequestBody Job job) {
      	try {
             if(jobService.updateJob(id, job)) {
@@ -76,7 +108,7 @@ public class JobController {
     }
     
     @DeleteMapping(value = "/{id}")
-    @PreAuthorize("hasAnyRole('ROLE_USER')")//这个可以讨论一下必要性
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     public ResponseEntity<String> DeleteJob(@PathVariable(value="id") UUID id) {
     	try {
             if(jobService.deleteJob(id)) {

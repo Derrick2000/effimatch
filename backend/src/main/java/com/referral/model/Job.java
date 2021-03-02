@@ -11,8 +11,13 @@ import lombok.Data;
 
 @Data
 public class Job implements Serializable {
+    //New
+	@JsonProperty("location")
+    private String location;
+	@JsonProperty("studentType")
+    private String studentType;
 
-    //TODO: 看看这个serialVersionUID是干什么的 不需要删的话写一下注释
+   
 	//如果不自动生成此序列化UID, 在解析时会使用一个默认的值，而这个默认的值有小概率
 	//造成InvalidClassExceptions, this variable merely serves as an insurance.
     
@@ -33,10 +38,12 @@ public class Job implements Serializable {
     private Date createdTime;
     @JsonProperty("modifiedTime")
 	private  Date modifiedTime;
+    
+
 	
 	
 
-    public Job(String jobTitle, String publisherEmail, String companyName, Date createdTime, Date modifiedTime) {
+    public Job(String jobTitle, String publisherEmail, String companyName, Date createdTime, Date modifiedTime, String location, String studentType) {
 		super();
 		this.id = UUID.randomUUID();
 		this.jobTitle = jobTitle;
@@ -44,6 +51,8 @@ public class Job implements Serializable {
 		this.companyName = companyName;
 		this.createdTime = createdTime;
 		this.modifiedTime = modifiedTime;
+		this.location = location;
+		this.studentType = studentType;
 	}
 
 	public Date getCreatedTime() {
@@ -95,6 +104,24 @@ public class Job implements Serializable {
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getStudentType() {
+		return studentType;
+	}
+
+	public void setStudentType(String studentType) {
+		this.studentType = studentType;
+	}
+	
+	
     
     
 }

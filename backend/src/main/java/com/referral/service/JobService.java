@@ -19,8 +19,29 @@ public class JobService {
 		return jobDao.getAllJobs();
 	}
 	public LinkedHashSet<Job> getSomeJobs(Integer num){
+		if(num < 0) {
+			throw new IllegalArgumentException();
+		}
 		return jobDao.getSomeJobs(num);
 	}
+	
+	public LinkedHashSet<Job> getSkipJobs(Integer skip){
+		if(skip < 0) {
+			throw new IllegalArgumentException();
+		}
+		return jobDao.getSkipJobs(skip);
+	}
+	public LinkedHashSet<Job> getSearchJobs(String search){
+		return jobDao.getSearchJobs(search);
+	}
+	public LinkedHashSet<Job> getSearchWithNumJobs(String search, Integer num){
+		if(num < 0) {
+			throw new IllegalArgumentException();
+		}
+		return jobDao.getSearchWithNumJobs(search,num);
+	}
+	
+	
 	
 
 	public Job addJob(Job job) {
