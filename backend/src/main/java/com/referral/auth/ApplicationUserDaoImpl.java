@@ -41,7 +41,7 @@ public class ApplicationUserDaoImpl implements ApplicationUserDao {
         ApplicationUser newUser = new ApplicationUser(
                 user.getUsername(),
                 passwordEncoder.encode(user.getPassword()),
-                user.getTheName(),
+                user.getNickname(),
                 USER.getGrantedAuthorities(),
                 true,
                 true,
@@ -52,8 +52,8 @@ public class ApplicationUserDaoImpl implements ApplicationUserDao {
         return true;
     }
 
-    private List<ApplicationUser> getApplicationUsers() {
+    @Override
+    public List<ApplicationUser> getApplicationUsers() {
         return (List) redisTemplate.opsForHash().values(KEY);
     }
-
 }

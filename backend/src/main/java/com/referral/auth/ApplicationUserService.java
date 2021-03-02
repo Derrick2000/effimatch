@@ -7,6 +7,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ApplicationUserService implements UserDetailsService {
 
@@ -21,12 +23,14 @@ public class ApplicationUserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return applicationUserDao
                 .selectApplicationUserByUsername(username)
-                .orElseThrow(() ->
-                        new UsernameNotFoundException(String.format("Username %s not found", username))
-                );
+                .orElse(null);
     }
 
     public boolean addUser(ApplicationUser user) {
         return applicationUserDao.addUser(user);
+    }
+
+    public List<ApplicationUser> getAllUsers() {
+        return applicationUserDao.getApplicationUsers();
     }
 }

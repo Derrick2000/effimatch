@@ -61,10 +61,12 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //.antMatchers("/v1/tests").hasAnyRole(USER.name())
                 .antMatchers("/v1/tests").permitAll()
-                .antMatchers("/v1/users").permitAll()
+                .antMatchers("/register").permitAll()
                 .antMatchers("/v1/jobs").permitAll()
                 .antMatchers("/v1/companies").permitAll()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/v1/send-verification").permitAll()
+                .antMatchers("/v1/users").permitAll()
 
                 .anyRequest()
                 .authenticated();
