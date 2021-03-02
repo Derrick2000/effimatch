@@ -4,7 +4,6 @@ import {CheckOutlined,SmileOutlined,SmileTwoTone,CheckCircleTwoTone } from '@ant
 import './JSHomeOnBoarding.less';
 // logos
 import {ReactComponent as ScooterWithBackpack} from '../../images/ScooterWithBackpack.svg';
- import logo from '../../images/ScooterWithBackpack2.png';
 
  const useViewport = () => {
    const [width, setWidth] = React.useState(window.innerWidth);
