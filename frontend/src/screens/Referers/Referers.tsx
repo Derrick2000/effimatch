@@ -85,6 +85,62 @@ const RenderCommentSection: React.FC<ReferCommentData> = (commentData: ReferComm
     )
 }
 
+const useViewport = () => {
+  const [width, setWidth] = React.useState(window.innerWidth);
+
+  React.useEffect(() => {
+    const handleWindowResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleWindowResize);
+    return () => window.removeEventListener("resize", handleWindowResize);
+  }, []);
+
+  // Return the width so we can use it in our components
+  return { width };
+}
+
+const MyComponent: React.FC<any> = () => {
+ const { width } = useViewport();
+ const breakpoint = 900;
+
+ return width < breakpoint ? <SideSmallScreen /> : <SideFullScreen />;
+}
+
+const SideFullScreen: React.FC<any> = () => {
+    return (
+      <div className="side">
+      <Card
+        className="side-card"
+        style={{ width: '37%',height: '15%', float:"right"}}
+        cover={<img alt="avatar" src={icon} style={{borderRadius: "50px", width:'140px'}}/>}
+        bordered={false}
+        hoverable={false}
+        bodyStyle={{padding: '0 10'}}
+      >
+        <Button type='primary' className="sideButton primaryButton" style={{borderRadius: '10px',width: '140px'}}>Get Refered</Button>
+        <Button className="sideButton" style={{borderRadius: '10px',width: '140px'}}>View my Linkedin</Button>
+      </Card>
+      </div>
+    )
+}
+
+const SideSmallScreen: React.FC<any> = () => {
+    return (
+      <div className="side">
+      <Card
+        className="side-card"
+        style={{ width: '37%',height: '15%', float:"left",paddingLeft:'15px'}}
+        cover={<img alt="avatar" src={icon} style={{borderRadius: "50px", width:'140px'}}/>}
+        bordered={false}
+        hoverable={false}
+        bodyStyle={{padding: '0 10'}}
+      >
+        <Button type='primary' className="sideButton primaryButton" style={{borderRadius: '10px',width: '140px'}}>Get Refered</Button>
+        <Button className="sideButton" style={{borderRadius: '10px',width: '140px'}}>View my Linkedin</Button>
+      </Card>
+      </div>
+    )
+}
+
 
 
 const Referers: React.FC<any> = (props) => {
@@ -95,20 +151,8 @@ const Referers: React.FC<any> = (props) => {
                   animation={{ x: -200, type: 'from', ease: 'easeOutQuad' }}
               >
 
-                  <div className="side">
-                  <Card
-                    className="side-card"
-                    style={{ width: '37%',height: '15%', float:"right"}}
-                    cover={<img alt="avatar" src={icon} style={{borderRadius: "50px"}}/>}
-                    bordered={false}
-                    hoverable={false}
-                    bodyStyle={{padding: '0 10'}}
-                  >
-                    <Button type='primary' className="sideButton primaryButton" style={{borderRadius: '10px',width: '100%'}}>Get Refered</Button>
-                    <Button className="sideButton" style={{borderRadius: '10px',width: '100%'}}>View my Linkedin</Button>
-                  </Card>
-                  </div>
 
+                  <MyComponent/>
                   <div className='main'>
                     {RenderReferSection(sectionData)}
                     {RenderCommentSection(CommentData)}

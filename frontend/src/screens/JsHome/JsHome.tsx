@@ -7,10 +7,10 @@ import TweenOne from 'rc-tween-one';
 import Footer from '../../components/Footer/Footer';
 import Card from '../../components/Card/Card';
 import ApplicationCard from '../../components/Card/ApplicationCard';
-
+import JSHomeOnBoarding from '../../components/JSHomeOnBoarding/JSHomeOnBoarding'
 // antd
 import QueueAnim from 'rc-queue-anim';
-import {Row, Col, Button,Divider} from 'antd';
+import {Row, Col, Button,Divider,Modal} from 'antd';
 
 // assets (temp)
 import MS_logo from '../../images/MS_logo.png';
@@ -98,7 +98,8 @@ const JsHome: React.FC<Props> = (props: Props) => {
     const [underlineButton, setUnderlineButton] = React.useState(1);
 
     return (
-        <div className='home-wrapper'>
+
+        <div className='JsHome-wrapper'>
             <div className='home-content-wrapper'>
 
                 <TweenOne
@@ -150,7 +151,9 @@ const JsHome: React.FC<Props> = (props: Props) => {
                 </TweenOne>
             </div>
             <Footer />
+            <JSHomeOnBoarding/>
         </div>
+
     )
 }
 
