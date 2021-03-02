@@ -44,8 +44,7 @@ const RenderCards = (cardsData: CardData[], header: boolean, load: boolean) => {
                 {cardsData.map((item: CardData, i: number) => 
                 (
                     <Col md={6} xs={24} className='search-cards-block' key={i.toString()}>
-
-                        
+                
                         {!load ? 
                             <Card 
                             title={item.title}
