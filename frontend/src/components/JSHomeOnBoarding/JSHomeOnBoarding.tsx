@@ -19,7 +19,7 @@ import {ReactComponent as ScooterWithBackpack} from '../../images/ScooterWithBac
    return { width };
  }
 
- const MyComponent: React.FC<any> = () => {
+ const OnBoardingWrapper: React.FC<any> = () => {
   const { width } = useViewport();
   const breakpoint = 620;
 
@@ -118,7 +118,7 @@ const OnBoardingFull: React.FC<any> = () => {
 
 const JSHomeOnBoarding: React.FC<any> = () => {
     return (
-      <MyComponent/>
+      <OnBoardingWrapper/>
     )
 }
 
