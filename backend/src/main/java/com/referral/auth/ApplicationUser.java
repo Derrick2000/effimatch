@@ -89,4 +89,22 @@ public class ApplicationUser implements UserDetails {
     public boolean isEnabled() {
         return isEnabled;
     }
+
+	public String getUsername() {
+		return username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public Set<? extends GrantedAuthority> getGrantedAuthorities() {
+		return grantedAuthorities;
+	}
+    
+    
 }
