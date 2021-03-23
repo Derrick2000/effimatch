@@ -10,6 +10,8 @@ import JsHome from './screens/JsHome/JsHome';
 import Search from './screens/Search/Search';
 import Referers from './screens/Referers/Referers';
 import postDetails from './screens/post-details/post-details';
+import getReferredSingle from './screens/get-referred-single/get-referred-single';
+
 import SignIn from './screens/SignIn/SignIn';
 import SignUp from './screens/SignUp/SignUp';
 
@@ -76,6 +78,14 @@ function App() {
 						exact={true}
 						path="/post-details"
 						component={postDetails}
+					/>
+				</Switch>
+
+				<Switch>
+					<Route
+						exact={true}
+						path="/get-referred-single"
+						component={getReferredSingle}
 					/>
 				</Switch>
 
