@@ -69,8 +69,9 @@ const Signup: React.FC<any> = (props) => {
             email: email,
         }
         const URL = 'http://localhost:8080/v1/send-verification'
-        axios.post(URL, emailInfo)
+        axios.post(URL, emailInfo, {withCredentials:true})
         .then(r => {
+            console.log('send verification res', r)
             console.log('sign up success: ', r.data)
             openCodeNotification('bottomLeft');
         })
@@ -95,7 +96,7 @@ const Signup: React.FC<any> = (props) => {
             code: Number(code)
         }
         console.log(Number(code))
-        axios.post(URL, userInfo)
+        axios.post(URL, userInfo, {withCredentials:true})
         .then(r => {
             console.log('sign up success: ', r.data)
             openSuccessNotification('bottomLeft');
@@ -103,8 +104,8 @@ const Signup: React.FC<any> = (props) => {
             window.location.href = '/';
         })
         .catch(e => {
-            console.error('sign up error: ', e)
-            openErrorNotification('bottomLeft', e);
+            console.error('sign up error: ', e.response.data)
+            openErrorNotification('bottomLeft', e.response.data);
             setLoading(false);
         })
     }
