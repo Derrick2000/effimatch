@@ -18,17 +18,17 @@
 
         &-person{
             position: absolute;
-            left: -500px;
+            left: -530px;
             bottom: 100px;
             width: 100vw;
-            height: 80vh;
+            height: 85vh;
             z-index: 1;
         }
 
     }
 
     &-box{
-        padding: 40px 85px 40px;
+        padding: 20px 50px 20px;
         position: absolute;
         width: 550px;
         height: 580px;
@@ -50,7 +50,7 @@
         &-form{
 
           &-text{
-              margin-left:60px;
+              margin-left: 80px;
 
               padding-top: 10px;
               font-family: Work Sans;
@@ -60,13 +60,20 @@
               line-height: 19px;
           }
           &-input{
-            margin-left:60px;
-            width:265px;
+            margin-left: 80px;
+            width:290px;
             border-radius: @border-radius;
+          }
+
+          &-code{
+            padding-top: 15px;
+            margin-left: 80px;
+            width:290px;
+            
           }
         }
 
-        & Button{
+        &-signupBut,&-linkedinBut{
           margin: 0 auto;
           display: block;
           margin-top: 15px;
@@ -77,6 +84,13 @@
 
         &-linkedinBut{
           background-color: #0A66C2;
+          color:white;
+        }
+
+        &-linkedinBut:hover{
+          background-color: rgb(37, 133, 229);
+          color:white;
+          border-color: white;
         }
         
     }

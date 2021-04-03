@@ -4,26 +4,52 @@ import axios from 'axios'
 import {ReactComponent as SignUpBackGround} from '../../images/sign_bg.svg';
 import {ReactComponent as SignInPerson} from '../../images/sign_in_person.svg';
 
-import { Input, Button } from 'antd';
+import { Input, Button, notification } from 'antd';
 
 import './styles/signin.less';
+
+const openErrorNotification = (placement: any, errorMsg: string) => {
+    notification.info({
+      message: 'Sign In',
+      description:
+        'An error has occured.\n' + errorMsg,
+      placement,
+    });
+};
+
+const openSuccessNotification = (placement: any) => {
+    notification.info({
+      message: 'Sign In',
+      description:
+        'Signed in successfully.',
+      placement,
+    });
+};
 
 const SignIn: React.FC<any> = (props) => {
 
     const [ email, setEmail ] = React.useState('');
     const [ password, setPassword ] = React.useState('')
+    const [ loading, setLoading ] = React.useState(false);
 
     const login = () => {
         const userInfo = {
             email: email,
             password: password
         }
+        setLoading(true);
         const URL = 'http://localhost:8080/login' // this is the login URL of our backend
         axios.post(URL, userInfo)
         .then(r => {
             const jwtToken = r.headers.authorization // the jwt token
             localStorage.setItem('jwtToken', jwtToken) // store token in browser local storage
-        })
+            openSuccessNotification('bottomLeft');
+            setLoading(false);
+            window.location.href = '/';
+        }).catch(e => {
+            openErrorNotification('bottomLeft', e);
+            setLoading(false);
+        });
     }
 
     const signWithLinkedIn = () => {
@@ -53,8 +79,8 @@ const SignIn: React.FC<any> = (props) => {
                         value={password}
                         className="signin-box-form-input"
                     />
-                    <Button type="primary" className="signin-box-signinBut" onClick={e => login()}>Log In</Button>
-                    <Button type="primary" className="signin-box-linkedinBut" onClick={e=> signWithLinkedIn()}>Continue with LinkedIn</Button>
+                    <Button type="primary" className="signin-box-signinBut" onClick={e => login()} loading={loading}>Log In</Button>
+                    <Button className="signin-box-linkedinBut" onClick={e=> signWithLinkedIn()}>Continue with LinkedIn</Button>
                 </div>
             </div>
 
