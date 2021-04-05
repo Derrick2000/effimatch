@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,26 +38,23 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-//@PropertySource(value = "classpath:config.properties")
 public final class AwsS3Util {
-	//private static final Logger logger = LoggerFactory.getLogger(PostController.class);
 
-//	@Value("${aws.endpointUrl}")
-//    private String endpointUrl;
-	@Value("AKIAIMXO3F3CDYMHF26Q")
-    private String accessKeyID;
-    @Value("sFiTsek93fA+044TzYniA4gMFpiXumha+793pFm/")
+    @Value("${cloud.aws.accessKey}")
+    private String accessKey;
+
+    @Value("${cloud.aws.secretKey}")
     private String secretKey;
-	@Value("effimatch2")
+
+    @Value("${cloud.aws.bucketName}")
     private String bucketName;
-	
-    private AWSCredentials credentials ;
-	private AmazonS3 s3Client;
+
+    private AmazonS3 s3Client;
 	
     private void getInit() {
 		// TODO Auto-generated constructor stub
     	if(s3Client == null) {
-    		credentials = new BasicAWSCredentials(accessKeyID, secretKey);
+            AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
     		s3Client = AmazonS3ClientBuilder
     				.standard()
     				.withCredentials(new AWSStaticCredentialsProvider(credentials))
