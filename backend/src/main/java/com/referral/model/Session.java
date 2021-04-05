@@ -38,5 +38,47 @@ public class Session implements Serializable {
         this.createdAt = new Date();
         this.expiredBy = new Date(createdAt.getTime() + TOKEN_EXPIRES_TIME);
     }
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public Date getExpiredBy() {
+		return expiredBy;
+	}
+
+	public void setExpiredBy(Date expiredBy) {
+		this.expiredBy = expiredBy;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public static int getTokenExpiresTime() {
+		return TOKEN_EXPIRES_TIME;
+	}
+    
+    
 }
 
