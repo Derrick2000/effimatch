@@ -34,7 +34,6 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 
 import lombok.extern.slf4j.Slf4j;
-//import com.triplec.treehole.controller.PostController;
 
 @Slf4j
 @Component
@@ -79,7 +78,6 @@ public final class AwsS3Util {
  
     /**
      * 查看bucket下所有的object
-     * @param bucketName 存储桶
      */
     public void getAllBucketObject(AmazonS3 s3Client){
     	getInit();
@@ -94,8 +92,6 @@ public final class AwsS3Util {
  
     /**
      * amazonS3文件上传
-     * @param s3Client 
-     * @param bucketName 保存到某个存储桶
      * @param key 保存文件的key （以key-value形式保存）其实就是一个url路劲
      * @param file 上传文件
      */
@@ -123,10 +119,6 @@ public final class AwsS3Util {
     
     /**
      * amazonS3文件下载
-     * @param s3Client
-     * @param bucketName 下载某个存储桶的数据
-     * @param key 下载文件的key
-     * @param targetFilePath 下载文件保存地址
      */
     public void amazonS3Downloading(String filePath, String fileName, HttpServletResponse response){
       	getInit();

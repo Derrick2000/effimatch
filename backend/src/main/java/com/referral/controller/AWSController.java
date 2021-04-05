@@ -15,7 +15,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.referral.utils.AwsS3Util;
 
 @RestController
-@RequestMapping("/file")
+@RequestMapping("/v1/file")
 public class AWSController {
 	
 	@Autowired
