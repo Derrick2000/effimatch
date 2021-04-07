@@ -40,7 +40,6 @@ const openCodeNotification = (placement: any) => {
 
 
 
-
 const Signup: React.FC<any> = (props) => {
 
     const [ email, setEmail ] = React.useState('');
@@ -49,6 +48,9 @@ const Signup: React.FC<any> = (props) => {
     const [ confirmPassword, setConfirmPW ] = React.useState('');
     const [ code, setCode ] = React.useState('');
     const [ loading, setLoading ] = React.useState(false);
+    const [ sendVal, setSendVal ] = React.useState('Send Code');
+    const [ codeSent, setSent ] = React.useState(false);
+
 
     const invalid = (mail: string, username: string, password: string, confirmPassword: string) => {
         return !(new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(mail)) ||
@@ -58,6 +60,22 @@ const Signup: React.FC<any> = (props) => {
                 !password.match(/^[0-9a-z]+$/) || 
                 password.length < 8 ||
                 code === '';
+    }
+
+
+    const sendCodeSeccess = () => {
+        var timer = 60;
+        setSent(true);
+        console.log(codeSent);
+        var downloadTimer = setInterval(function(){
+            setSendVal(timer+'');
+            timer--;
+            if(timer <= 0){
+                clearInterval(downloadTimer);
+                setSent(false);
+                setSendVal('Send Code');
+            }
+        },1000);
     }
 
     const sendCode = () => {
@@ -74,6 +92,7 @@ const Signup: React.FC<any> = (props) => {
         .then(r => {
             console.log('send verification res', r)
             console.log('sign up success: ', r.data)
+            sendCodeSeccess();
             openCodeNotification('bottomLeft');
         })
         .catch(e => {
@@ -157,7 +176,7 @@ const Signup: React.FC<any> = (props) => {
                     />
                     <Search
                         placeholder="Enter Code Here"
-                        enterButton="Send Code"
+                        enterButton={<Button type="primary" onClick={sendCode} disabled={codeSent} >{sendVal}</Button>}
                         size="small"
                         value={code}
                         onChange={e => setCode(e.target.value)}
