@@ -12,7 +12,7 @@ import './styles/signup.less';
 const { Search } = Input;
 
 const openErrorNotification = (placement: any, errorMsg: string) => {
-    notification.info({
+    notification.error({
       message: "Sign Up",
       description:
         'An error has occured.\n' + errorMsg,
