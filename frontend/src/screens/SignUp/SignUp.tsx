@@ -83,6 +83,10 @@ const Signup: React.FC<any> = (props) => {
     }
 
     const signUp = () => {
+        if(confirmPassword !== password){
+            openErrorNotification('bottomLeft', 'The two passwords you entered are not identical.');
+            return;
+        }
         if(invalid(email, username, password, confirmPassword)) {
             openErrorNotification('bottomLeft', 'Invalid input.');
             return;
