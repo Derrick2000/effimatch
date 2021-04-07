@@ -21,7 +21,7 @@ const openErrorNotification = (placement: any, errorMsg: string) => {
 };
 
 const openSuccessNotification = (placement: any) => {
-    notification.info({
+    notification.success({
       message: "Sign Up",
       description:
         'Signed up successfully.',
@@ -30,13 +30,15 @@ const openSuccessNotification = (placement: any) => {
 };
 
 const openCodeNotification = (placement: any) => {
-    notification.info({
+    notification.success({
       message: "Code",
       description:
         'Send code successfully.',
       placement,
     });
 };
+
+
 
 
 const Signup: React.FC<any> = (props) => {
@@ -55,8 +57,7 @@ const Signup: React.FC<any> = (props) => {
                 password === '' ||
                 !password.match(/^[0-9a-z]+$/) || 
                 password.length < 8 ||
-                code === '' ||
-                confirmPassword !== password;
+                code === '';
     }
 
     const sendCode = () => {
@@ -83,9 +84,10 @@ const Signup: React.FC<any> = (props) => {
 
     const signUp = () => {
         if(invalid(email, username, password, confirmPassword)) {
-            openErrorNotification('bottomLeft', 'Invalid input');
+            openErrorNotification('bottomLeft', 'Invalid input.');
             return;
         }
+
         setLoading(true);
         const URL = 'http://localhost:8080/register'
 
