@@ -24,7 +24,14 @@ public class AWSController {
 	@PostMapping("/upload")
 	public ResponseEntity<String> uploadFile(MultipartHttpServletRequest multipartRequest){
 		List<MultipartFile> files = multipartRequest.getFiles("uploadFile");
+		if(files.size() == 0) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No file selected");
+		}
 		String fileName = UUID.randomUUID().toString() + "_" + files.get(0).getOriginalFilename(); // 避免命名重复问题
-		return new ResponseEntity<> (s3Utils.amazonS3Upload(fileName,  files.get(0)),HttpStatus.OK);
+		try{
+			return new ResponseEntity<> (s3Utils.amazonS3Upload(fileName,files.get(0)),HttpStatus.OK);
+	    }catch (Exception e) {
+	        return ResponseEntity.badRequest().build();
+	    }
 	}
 }

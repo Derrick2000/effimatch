@@ -112,7 +112,8 @@ public final class AwsS3Util {
       	}
     	//System.out.println("upload");
       	System.out.println("Uploaded file " + key + " to S3");
-      	return  key;
+      	String downloadUrl = "http://"+bucketName+".s3.amazonaws.com/"+key;
+      	return downloadUrl;
     }
     
     /**
