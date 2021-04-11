@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios'
 
-import { RadiusBottomleftOutlined } from '@ant-design/icons';
 import {ReactComponent as SignUpBackGround} from '../../images/sign_bg.svg';
 import {ReactComponent as SignUpPerson} from '../../images/sign_up_person.svg';
 
@@ -87,16 +86,14 @@ const Signup: React.FC<any> = (props) => {
         const emailInfo = {
             email: email,
         }
+
+        // 后端发送email的服务延迟太长，为了避免用户产生焦虑，点了发送button之后直接显示发送成功
+        sendCodeSeccess();
+        openCodeNotification('bottomLeft');
+
         const URL = 'http://localhost:8080/v1/send-verification'
         axios.post(URL, emailInfo, {withCredentials:true})
-        .then(r => {
-            console.log('send verification res', r)
-            console.log('sign up success: ', r.data)
-            sendCodeSeccess();
-            openCodeNotification('bottomLeft');
-        })
         .catch(e => {
-            console.error('send code error: ', e)
             openErrorNotification('bottomLeft', e);
         })
     }
