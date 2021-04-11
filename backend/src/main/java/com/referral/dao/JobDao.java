@@ -11,10 +11,7 @@ import com.referral.model.Job;
 public interface JobDao {
 
 	LinkedHashSet<Job> getAllJobs();
-	LinkedHashSet<Job> getSomeJobs(Integer num);
-	LinkedHashSet<Job> getSkipJobs(Integer skip);
 	LinkedHashSet<Job> getSearchJobs(String search);
-	LinkedHashSet<Job> getSearchWithNumJobs(String search,Integer num);
 
 	Job addJob(Job job);
 	

@@ -1,7 +1,6 @@
 package com.referral.dao.impl;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -25,11 +24,6 @@ public class JobDaoImpl implements JobDao {
     }
 
     @Override
-    public LinkedHashSet<Job> getSomeJobs(Integer num) {
-        return (LinkedHashSet) redisTemplate.opsForZSet().range(KEY, 0, num - 1);
-    }
-
-    @Override
     public Job addJob(Job job) {
 
         // get the current currentUserEmail
@@ -38,10 +32,21 @@ public class JobDaoImpl implements JobDao {
                 .getAuthentication()
                 .getPrincipal();
 
+        // get current time
         Date now = new Date(System.currentTimeMillis());
-        Job jobToAdd = new Job(job.getJobTitle(), currentUserEmail, job.getCompanyName(), now, now,job.getLocation(),job.getStudentType());
-     
-        redisTemplate.opsForZSet().add(KEY, jobToAdd, -now.getTime());
+
+        Job jobToAdd = new Job(job.getJobTitle(),
+                job.getJobDescription(),
+                job.getRequiredExperience(),
+                job.getJobLink(),
+                job.getLocation(),
+                job.getCompanyName(),
+                job.getApplicationDeadline(),
+                currentUserEmail,
+                now,
+                now);
+
+        redisTemplate.opsForZSet().add(KEY, jobToAdd, now.getTime());
         return jobToAdd;
     }
 
@@ -70,10 +75,7 @@ public class JobDaoImpl implements JobDao {
         if(job.getLocation() != null) {
         	newJob.setLocation(job.getLocation());
         }
-        if(job.getStudentType() != null) {
-        	newJob.setStudentType(job.getStudentType());
-        }
-        
+
         Date modifiedTime = new Date(System.currentTimeMillis());
         newJob.setModifiedTime(modifiedTime);
         if (deleteJob(id) == false) {
@@ -94,17 +96,11 @@ public class JobDaoImpl implements JobDao {
     }
 
 	@Override
-	public LinkedHashSet<Job> getSkipJobs(Integer skip) {
-		long size = redisTemplate.opsForZSet().size(KEY);
-		if(skip >= size) {
-			return null;
-		}else {
-	        return (LinkedHashSet) redisTemplate.opsForZSet().range(KEY, skip, size-1);
-
-		}
-	}
-
-	@Override
+    /**
+     * TODO: improve this
+     * title 或者 name 部分包含 search string 也算 match
+     * case-insensitive
+     */
 	public LinkedHashSet<Job> getSearchJobs(String search) {
 		 LinkedHashSet<Job> list = getAllJobs();
 		 LinkedHashSet<Job> searchedJobs = new LinkedHashSet<>();
@@ -114,19 +110,5 @@ public class JobDaoImpl implements JobDao {
 			 }
 		 }
 	     return searchedJobs;
-	}
-
-	@Override
-	public LinkedHashSet<Job> getSearchWithNumJobs(String search, Integer num) {
-		LinkedHashSet<Job> list = getSearchJobs(search);
-		LinkedHashSet<Job> searchWithNumJobs = new LinkedHashSet<>();
-		int temp = num;
-		for(Job j:list) {
-			if(temp <= 0)
-				break;
-			searchWithNumJobs.add(j);
-			temp--;
-		}
-		return searchWithNumJobs;
 	}
 }

@@ -1,11 +1,9 @@
 package com.referral.controller;
 
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
-import com.referral.model.Company;
-import com.referral.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,49 +33,32 @@ public class JobController {
     public ResponseEntity<LinkedHashSet<Job>> getAllJobs(@RequestParam(value="num", required = false) Integer num,
     													 @RequestParam(value="search", required = false) String search,
     													 @RequestParam(value="skip", required = false) Integer skip){
-//        try {
-//        	if(num != null) {
-//        		return ResponseEntity.ok(jobService.getSomeJobs(num));
-//        	}else {
-//                return ResponseEntity.ok(jobService.getAllJobs());
-//        	}
-//        }
 		try {
-			if(skip != null) {
-				return ResponseEntity.ok(jobService.getSkipJobs(skip));
-			}else if(search != null){
-				if(num == null) {
-					return ResponseEntity.ok(jobService.getSearchJobs(search));
-				}else {
-					return ResponseEntity.ok(jobService.getSearchWithNumJobs(search,num));
-				}
-			}else if(num != null){
-				return ResponseEntity.ok(jobService.getSomeJobs(num));
-			}else {
-				return ResponseEntity.ok(jobService.getAllJobs());
-			}
+//			if(skip != null) {
+//				return ResponseEntity.ok(jobService.getSkipJobs(skip));
+//			}else if(search != null){
+//				if(num == null) {
+//					return ResponseEntity.ok(jobService.getSearchJobs(search));
+//				}else {
+//					return ResponseEntity.ok(jobService.getSearchWithNumJobs(search,num));
+//				}
+//			}else if(num != null){
+//				return ResponseEntity.ok(jobService.getSomeJobs(num));
+//			}else {
+//				return ResponseEntity.ok(jobService.getAllJobs());
+//			}
+
+            LinkedHashSet<Job> allJobs = jobService.getAllJobs();
+            if (search != null) allJobs = jobService.getSearchJobs(search);
+            if (skip != null) allJobs = allJobs.stream().skip(skip).collect(Collectors.toCollection(LinkedHashSet::new));
+            if (num != null) allJobs = allJobs.stream().limit(num).collect(Collectors.toCollection(LinkedHashSet::new));
+            return ResponseEntity.ok(allJobs);
 		}
         catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }
-	
-//	@GetMapping
-//	public ResponseEntity<LinkedHashSet<Job>> getAllJobs(@RequestParam(value="num", required = false) Integer num){
-//													
-//	    try {
-//	    	if(num != null) {
-//	    		return ResponseEntity.ok(jobService.getSomeJobs(num));
-//	    	}else {
-//	            return ResponseEntity.ok(jobService.getAllJobs());
-//	    	}
-//	    }
-//	    catch (Exception e) {
-//	        System.out.println(e.getMessage());
-//	        return ResponseEntity.badRequest().build();
-//	    }
-//	}
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ROLE_USER')")
@@ -93,7 +73,7 @@ public class JobController {
     
     @PutMapping(value = "/{id}")
     @PreAuthorize("hasAnyRole('ROLE_USER')")
-    public ResponseEntity<String> UpdateJob(@PathVariable(value="id") UUID id, @RequestBody Job job) {
+    public ResponseEntity<String> updateJob(@PathVariable(value="id") UUID id, @RequestBody Job job) {
      	try {
             if(jobService.updateJob(id, job)) {
                 return ResponseEntity.ok("Job with this id has been updated");
@@ -109,7 +89,7 @@ public class JobController {
     
     @DeleteMapping(value = "/{id}")
     @PreAuthorize("hasAnyRole('ROLE_USER')")
-    public ResponseEntity<String> DeleteJob(@PathVariable(value="id") UUID id) {
+    public ResponseEntity<String> deleteJob(@PathVariable(value="id") UUID id) {
     	try {
             if(jobService.deleteJob(id)) {
                 return ResponseEntity.ok("Job with this id has been deleted");
