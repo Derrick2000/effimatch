@@ -24,6 +24,7 @@ import {ReactComponent as ScooterWithBackpack} from '../../images/ScooterWithBac
 
   return width < breakpoint ? <OnBoardingPart /> : <OnBoardingFull />;
 }
+
 const OnBoardingPart: React.FC<any> = () => {
  const [showOnBoard, setShowOnBoard] = React.useState(true);
 
@@ -40,25 +41,25 @@ const OnBoardingPart: React.FC<any> = () => {
 
      }}
    >
-    <Row className="row">
-           <div className='info-block' >
-               <h1 className="info-block-title">Welcome to Effimatch</h1>
-               <p className="info-block-desc">Effimatch is your go-to streamlined referral platform</p>
-             <div className='card-avatar-wrapper-check'>
+    <Row className="onboard-row">
+           <div >
+               <h1 className="onboard-info-block-title">Welcome to Effimatch</h1>
+               <p className="onboard-info-block-desc">Effimatch is your go-to streamlined referral platform</p>
+             <div className='onboard-card-avatar-wrapper-check'>
                  <CheckOutlined style={{color:'#EF8354',fontSize: '25px'}}/>
                  <div>
                    <p className='card-avatar-text'>Get Referred</p>
                    <p className='card-avatar-text'>Description Text</p>
                  </div>
              </div>
-             <div className='card-avatar-wrapper-smile'>
+             <div className='onboard-card-avatar-wrapper-smile'>
                  <SmileOutlined style={{color:'#EF8354',fontSize: '25px'}}/>
                  <div>
                    <p className='card-avatar-text'>Build Your Network</p>
                    <p className='card-avatar-text'>Description Text</p>
                  </div>
              </div>
-             <Button type='primary' className='onBoard-button' onClick={() => {setShowOnBoard(false)}}>Start</Button>
+             <Button type='primary' className='onboard-button' onClick={() => {setShowOnBoard(false)}}>Start</Button>
              </div>
     </Row>
    </Modal>
@@ -81,31 +82,31 @@ const OnBoardingFull: React.FC<any> = () => {
 
      }}
    >
-    <Row className="row">
-           <Col span={13} className='info-block' style={{backgroundColor : 'white',height:'450px'}}>
-           <div className='info-block' >
-               <h1 className="info-block-title">Welcome to Effimatch</h1>
-               <p className="info-block-desc">Effimatch is your go-to streamlined referral platform</p>
-             <div className='card-avatar-wrapper-check'>
+    <Row className="onboard-row">
+           <Col span={13} style={{backgroundColor : 'white',height:'450px'}}>
+           <div>
+               <h1 className="onboard-info-block-title">Welcome to Effimatch</h1>
+               <p className="onboard-info-block-desc">Effimatch is your go-to streamlined referral platform</p>
+             <div className='onboard-card-avatar-wrapper-check'>
                  <CheckOutlined style={{color:'#EF8354',fontSize: '25px'}}/>
                  <div>
                    <p className='card-avatar-text'>Get Referred</p>
                    <p className='card-avatar-text'>Description Text</p>
                  </div>
              </div>
-             <div className='card-avatar-wrapper-smile'>
+             <div className='onboard-card-avatar-wrapper-smile'>
                  <SmileOutlined style={{color:'#EF8354',fontSize: '25px'}}/>
                  <div>
                    <p className='card-avatar-text'>Build Your Network</p>
                    <p className='card-avatar-text'>Description Text</p>
                  </div>
              </div>
-             <Button type='primary' className='onBoard-button' onClick={() => {setShowOnBoard(false)}}>Start</Button>
-             </div>
+             <Button type='primary' className='onboard-button' onClick={() => {setShowOnBoard(false)}}>Start</Button>
+           </div>
            </Col>
-           <Col span={11} className="img-wrapper">
+           <Col span={11} >
              <div >
-               <ScooterWithBackpack className="scooter"/>
+               <ScooterWithBackpack />
              </div>
            </Col>
 
