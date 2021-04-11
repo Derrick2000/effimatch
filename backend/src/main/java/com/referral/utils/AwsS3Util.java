@@ -10,11 +10,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -93,7 +89,6 @@ public final class AwsS3Util {
      * @param key 保存文件的key （以key-value形式保存）其实就是一个url路劲
      * @param file 上传文件
      */
-//    public String amazonS3Upload(String key, MultipartFile file){      
     public String amazonS3Upload(String key,MultipartFile file){    
       	getInit();	
     	try {
@@ -110,10 +105,8 @@ public final class AwsS3Util {
       		e.printStackTrace();
       		return null;
       	}
-    	//System.out.println("upload");
       	System.out.println("Uploaded file " + key + " to S3");
-      	String downloadUrl = "http://"+bucketName+".s3.amazonaws.com/"+key;
-      	return downloadUrl;
+        return "https://"+bucketName+".s3.amazonaws.com/" + key;
     }
     
     /**
