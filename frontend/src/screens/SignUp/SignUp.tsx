@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios'
 
-import { RadiusBottomleftOutlined } from '@ant-design/icons';
 import {ReactComponent as SignUpBackGround} from '../../images/sign_bg.svg';
 import {ReactComponent as SignUpPerson} from '../../images/sign_up_person.svg';
 
@@ -12,7 +11,7 @@ import './styles/signup.less';
 const { Search } = Input;
 
 const openErrorNotification = (placement: any, errorMsg: string) => {
-    notification.info({
+    notification.error({
       message: "Sign Up",
       description:
         'An error has occured.\n' + errorMsg,
@@ -21,7 +20,7 @@ const openErrorNotification = (placement: any, errorMsg: string) => {
 };
 
 const openSuccessNotification = (placement: any) => {
-    notification.info({
+    notification.success({
       message: "Sign Up",
       description:
         'Signed up successfully.',
@@ -30,13 +29,14 @@ const openSuccessNotification = (placement: any) => {
 };
 
 const openCodeNotification = (placement: any) => {
-    notification.info({
+    notification.success({
       message: "Code",
       description:
         'Send code successfully.',
       placement,
     });
 };
+
 
 
 const Signup: React.FC<any> = (props) => {
@@ -47,6 +47,9 @@ const Signup: React.FC<any> = (props) => {
     const [ confirmPassword, setConfirmPW ] = React.useState('');
     const [ code, setCode ] = React.useState('');
     const [ loading, setLoading ] = React.useState(false);
+    const [ sendVal, setSendVal ] = React.useState('Send Code');
+    const [ codeSent, setSent ] = React.useState(false);
+
 
     const invalid = (mail: string, username: string, password: string, confirmPassword: string) => {
         return !(new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(mail)) ||
@@ -55,8 +58,23 @@ const Signup: React.FC<any> = (props) => {
                 password === '' ||
                 !password.match(/^[0-9a-z]+$/) || 
                 password.length < 8 ||
-                code === '' ||
-                confirmPassword !== password;
+                code === '';
+    }
+
+
+    const sendCodeSeccess = () => {
+        var timer = 60;
+        setSent(true);
+        console.log(codeSent);
+        var downloadTimer = setInterval(function(){
+            setSendVal(timer+'');
+            timer--;
+            if(timer <= 0){
+                clearInterval(downloadTimer);
+                setSent(false);
+                setSendVal('Send Code');
+            }
+        },1000);
     }
 
     const sendCode = () => {
@@ -68,24 +86,28 @@ const Signup: React.FC<any> = (props) => {
         const emailInfo = {
             email: email,
         }
+
+        // 后端发送email的服务延迟太长，为了避免用户产生焦虑，点了发送button之后直接显示发送成功
+        sendCodeSeccess();
+        openCodeNotification('bottomLeft');
+
         const URL = 'http://localhost:8080/v1/send-verification'
         axios.post(URL, emailInfo, {withCredentials:true})
-        .then(r => {
-            console.log('send verification res', r)
-            console.log('sign up success: ', r.data)
-            openCodeNotification('bottomLeft');
-        })
         .catch(e => {
-            console.error('send code error: ', e)
             openErrorNotification('bottomLeft', e);
         })
     }
 
     const signUp = () => {
-        if(invalid(email, username, password, confirmPassword)) {
-            openErrorNotification('bottomLeft', 'Invalid input');
+        if(confirmPassword !== password){
+            openErrorNotification('bottomLeft', 'The two passwords you entered are not identical.');
             return;
         }
+        if(invalid(email, username, password, confirmPassword)) {
+            openErrorNotification('bottomLeft', 'Invalid input.');
+            return;
+        }
+
         setLoading(true);
         const URL = 'http://localhost:8080/register'
 
@@ -151,7 +173,7 @@ const Signup: React.FC<any> = (props) => {
                     />
                     <Search
                         placeholder="Enter Code Here"
-                        enterButton="Send Code"
+                        enterButton={<Button type="primary" onClick={sendCode} disabled={codeSent} >{sendVal}</Button>}
                         size="small"
                         value={code}
                         onChange={e => setCode(e.target.value)}
