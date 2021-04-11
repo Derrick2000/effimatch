@@ -69,7 +69,7 @@ public class Job implements Serializable {
 	@Getter
 	@Setter
 	private Date modifiedTime;
-    
+
     public Job(String jobTitle,
 			   String jobDescription,
 			   String requiredExperience,
