@@ -34,20 +34,6 @@ public class JobController {
     													 @RequestParam(value="search", required = false) String search,
     													 @RequestParam(value="skip", required = false) Integer skip){
 		try {
-//			if(skip != null) {
-//				return ResponseEntity.ok(jobService.getSkipJobs(skip));
-//			}else if(search != null){
-//				if(num == null) {
-//					return ResponseEntity.ok(jobService.getSearchJobs(search));
-//				}else {
-//					return ResponseEntity.ok(jobService.getSearchWithNumJobs(search,num));
-//				}
-//			}else if(num != null){
-//				return ResponseEntity.ok(jobService.getSomeJobs(num));
-//			}else {
-//				return ResponseEntity.ok(jobService.getAllJobs());
-//			}
-
             LinkedHashSet<Job> allJobs = jobService.getAllJobs();
             if (search != null) allJobs = jobService.getSearchJobs(search);
             if (skip != null) allJobs = allJobs.stream().skip(skip).collect(Collectors.toCollection(LinkedHashSet::new));

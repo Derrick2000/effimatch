@@ -7,7 +7,6 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -93,10 +92,4 @@ public class Job implements Serializable {
 		this.createdTime = createdTime;
 		this.modifiedTime = modifiedTime;
 	}
-
-//	// 不需要
-//	public void setCreatedTime(Date createdTime) {
-//		this.createdTime = createdTime;
-//	}
-//
 }
