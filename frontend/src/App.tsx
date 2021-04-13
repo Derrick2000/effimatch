@@ -114,6 +114,14 @@ function App() {
 					/>
 				</Switch>
 
+				<Switch>
+					<Route
+						exact={true}
+						path="/onboard"
+						component={OnBoard}
+					/>
+				</Switch>
+
 			</BrowserRouter>
 		</>
   );
