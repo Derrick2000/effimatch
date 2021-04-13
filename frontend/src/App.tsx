@@ -23,6 +23,7 @@ import { enquireScreen } from 'enquire-js';
 // router
 import { BrowserRouter, Route, Switch} from 'react-router-dom';
 import Signup from './screens/SignUp/SignUp';
+import OnBoard from './screens/OnBoard/OnBoard';
 
 function App() {
 	const [ isMobile, setIsMobile ] = React.useState(false);
