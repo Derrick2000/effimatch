@@ -1,7 +1,110 @@
 @onboard: onboard;
 
 .@{onboard} {
-    &-wrapper{
+    &-wrapper{        
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        // padding-top: 3vh;
         background-color: @background-color;
+        overflow: hidden;
+    }
+
+    &-button{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        &-button{
+            text-align: center;
+            border-radius: 10px;
+            display: block;
+            width: 195px;
+            height: 32px;
+            margin: 0 auto;
+        }
+    }
+
+
+
+    &-content{
+        
+        position: relative;
+        margin: auto;
+        padding: 0px 40px 0px;
+        width: 100%;
+        max-width: 800px;
+
+        &-header{
+            font-family: Avenir;
+            font-size: 20px;
+            
+            color: #000000;
+        }
+
+        &-question{
+            font-family: Avenir;
+            font-size: 20px;
+            padding-top: 10px;
+            color: #000000;
+        }
+
+        &-radio{
+            margin-right: 50px;
+        }
+
+        &-tags-wrapper{
+            margin-top: 1vh;
+        }
+
+        &-tag{
+            font-family: Avenir;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 15px;
+
+            background: #DDF0FB;
+            border-radius: 6px; 
+            justify-content: center;
+            align-items: center;
+            padding: 7px;
+        }
+        
+
+        &-uploadbox{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 150px;
+
+            background: #FFFFFF;
+            border: 2px dashed #000000;
+            box-sizing: border-box;
+
+            &-header{
+                // font-family: Work Sans;
+                font-family: Avenir;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 20px;
+                line-height: 28px;
+
+                color: #000000;
+            }
+
+            &-text{
+                font-family: Avenir;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 16px;
+                line-height: 19px;
+                color: #000000;
+            }
+                        
+        }
+
     }
 }

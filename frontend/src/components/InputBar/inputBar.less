@@ -1,0 +1,41 @@
+@inputbar: inputbar;
+@border-radius: 10px;
+
+.@{inputbar} {
+    &-wrapper{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        .ant-select-selector {
+            border-radius: @border-radius !important;
+            height: 3.2em !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+        }
+        .ant-select-selection-search {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+        }
+    }
+    &-text{
+        align-items: center;
+        padding: 8px;
+
+        border: 1px solid white;
+        box-sizing: border-box;
+        border-radius: 4px;
+
+        font-style: normal;
+        font-weight: normal;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        
+    }
+
+    &-autocomplete{
+        width: 100%;
+        border: 0px solid white;
+    }
+}
