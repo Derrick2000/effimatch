@@ -12,6 +12,8 @@ import {Row, Col, Button, Divider, Comment, Avatar, Card} from 'antd';
 import MS_logo from '../../images/MS_logo.png';
 import icon from '../../images/avatar.png';
 
+import Grid from '@material-ui/core/Grid';
+
 
 interface Props {}
 
@@ -39,8 +41,8 @@ const RenderReferSection: React.FC<ReferSectionData[]> = (allSectionData: ReferS
         <div className=''>
 
                 <div>
-                    <h1 className='title-header'>Hi, I'm Jake Rotmil</h1>
-                    <h3 className='title-description'>I work at <span className='referer-header-bold'>Google</span> as a <span className='referer-header-bold'>data scientist</span></h3>
+                    <h1>Hi, I'm Jake Rotmil</h1>
+                    <h3 className='referers-title-description'>I work at <span className='referers-header-bold'>Google</span> as a <span className='referer-header-bold'>data scientist</span></h3>
                     <h1 >I can refer:</h1>
                 </div>
 
@@ -60,11 +62,11 @@ const RenderReferSection: React.FC<ReferSectionData[]> = (allSectionData: ReferS
 
 const RenderCommentSection: React.FC<ReferCommentData> = (commentData: ReferCommentData) => {
     return (
-        <div className='comment-wrapper'>
+        <div className='referers-comment-wrapper'>
 
-                <div className='review-header'>
+                <div className='referers-review-header'>
                     <p className='reviewTitle'>Reviews from other job seekers</p>
-                    <Button type='primary' className='primaryButton' style={{borderRadius: '10px'}}>Add a Review</Button>
+                    <Button type='primary' className='referers-primary-button' style={{borderRadius: '10px'}}>Add a Review</Button>
                 </div>
                 <Comment
                   author={commentData.name}
@@ -85,78 +87,45 @@ const RenderCommentSection: React.FC<ReferCommentData> = (commentData: ReferComm
     )
 }
 
-const useViewport = () => {
-  const [width, setWidth] = React.useState(window.innerWidth);
 
-  React.useEffect(() => {
-    const handleWindowResize = () => setWidth(window.innerWidth);
-    window.addEventListener("resize", handleWindowResize);
-    return () => window.removeEventListener("resize", handleWindowResize);
-  }, []);
 
-  // Return the width so we can use it in our components
-  return { width };
-}
-
-const MyComponent: React.FC<any> = () => {
- const { width } = useViewport();
- const breakpoint = 900;
-
- return width < breakpoint ? <SideSmallScreen /> : <SideFullScreen />;
-}
-
-const SideFullScreen: React.FC<any> = () => {
-    return (
-      <div className="side">
+const AvatarAndButtons: React.FC<any> = () => (
+  <div className="referers-side">
       <Card
-        className="side-card"
-        style={{ width: '37%',height: '15%', float:"right"}}
+        className="referers-side-card"
         cover={<img alt="avatar" src={icon} style={{borderRadius: "50px", width:'140px'}}/>}
         bordered={false}
         hoverable={false}
         bodyStyle={{padding: '0 10'}}
-      >
-        <Button type='primary' className="sideButton primaryButton" style={{borderRadius: '10px',width: '140px'}}>Get Refered</Button>
-        <Button className="sideButton" style={{borderRadius: '10px',width: '140px'}}>View my Linkedin</Button>
-      </Card>
-      </div>
-    )
-}
+      />
 
-const SideSmallScreen: React.FC<any> = () => {
-    return (
-      <div className="side">
-      <Card
-        className="side-card"
-        style={{ width: '37%',height: '15%', float:"left",paddingLeft:'15px'}}
-        cover={<img alt="avatar" src={icon} style={{borderRadius: "50px", width:'140px'}}/>}
-        bordered={false}
-        hoverable={false}
-        bodyStyle={{padding: '0 10'}}
-      >
-        <Button type='primary' className="sideButton primaryButton" style={{borderRadius: '10px',width: '140px'}}>Get Refered</Button>
-        <Button className="sideButton" style={{borderRadius: '10px',width: '140px'}}>View my Linkedin</Button>
-      </Card>
-      </div>
-    )
-}
+        <Button type='primary' className="referers-side-button referers-primary-button" style={{borderRadius: '10px',width: '140px'}}>Get Referred</Button>
+        <br/>
+        <Button className="referers-side-button" style={{borderRadius: '10px',width: '140px'}}>View my Linkedin</Button>
+  </div>
+)
 
 
 
 const Referers: React.FC<any> = (props) => {
   return (
-      <div className='pagewrapper'>
+      <div className='post-details-pagewrapper'>
 
               <TweenOne
                   animation={{ x: -200, type: 'from', ease: 'easeOutQuad' }}
               >
+                  <Grid container>
+                    <Grid item md={4} className="referers-side-wrapper">
+                      <AvatarAndButtons />
+                    </Grid>
 
-
-                  <MyComponent/>
-                  <div className='main'>
-                    {RenderReferSection(sectionData)}
-                    {RenderCommentSection(CommentData)}
-                  </div>
+                    <Grid item md={8}>
+                      <div className='className="post-details-main-wrapper"'>
+                        {RenderReferSection(sectionData)}
+                        {RenderCommentSection(CommentData)}
+                        </div>
+                    </Grid>
+                  </Grid>
 
               </TweenOne>
       </div>
