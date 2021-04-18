@@ -65,18 +65,6 @@ const RenderCards = (cardsData: CardData[], header: boolean, load: boolean) => {
     )
 }
 
-// const RenderTags: React.FC<String[]> = (jobTag: String[]) => {
-
-//     const handleCLose = (removedItem: String, jobTag: String[]) => {
-//         var alternJobTag = jobTag.filter(word => word !== removedItem);
-//         setJob(alternJobTag);
-//     }
-
-//     return (
-
-//     )
-// }
-
 
 const Search: React.FC<any> = () => {
     const [search, setSearch] = React.useState(false);
@@ -89,9 +77,9 @@ const Search: React.FC<any> = () => {
 
     const onClickSearch = async (value : string) => {
         
+        // if not empty, add input as job tag
         if(value !== ''){
-            jobTag.push(value);
-            setJob(jobTag);
+            setJob(jobTag => [...jobTag, value]);
         }
 
         setHeader(false);

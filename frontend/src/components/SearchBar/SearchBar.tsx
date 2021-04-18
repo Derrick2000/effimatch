@@ -42,6 +42,7 @@ const SearchBar: React.FC<Props> = (props: Props) => {
         }
     };
     
+    // detect user key down input
     const onDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
         if(e.key === 'Enter'){
             onClick();
