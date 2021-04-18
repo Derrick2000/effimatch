@@ -47,7 +47,7 @@ const SignIn: React.FC<any> = (props) => {
             setLoading(false);
             window.location.href = '/';
         }).catch(e => {
-            openErrorNotification('bottomLeft', e);
+            openErrorNotification('bottomLeft', 'Invalid login');
             setLoading(false);
         });
     }
