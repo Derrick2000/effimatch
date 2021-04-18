@@ -82,7 +82,7 @@ const Search: React.FC<any> = () => {
     const [search, setSearch] = React.useState(false);
     const [header, setHeader] = React.useState(true);
     const [load, setLoad] = React.useState(false);
-    const [jobTag, setJob] = React.useState(["Internship", "San Diego"]);
+    const [jobTag, setJob] = React.useState(new Array<string>()); // edited by William. The initial jobTab array should be empty
 
 
     const wait=(ms:number)=>new Promise(resolve => setTimeout(resolve, ms)); 
@@ -125,27 +125,23 @@ const Search: React.FC<any> = () => {
                 <TweenOne
                     animation={{ x: -200, type: 'from', ease: 'linear' }}
                 >
-                    {search && //RenderTags(jobTag)}
-                        <div className='search-tags-wrapper'>
+                    {/* Edited by William. Also need to display tags when search is in progress */}
+                    <div className='search-tags-wrapper'>
 
-                            <Row justify='start'>
-                                {jobTag.map((item: String, i: number) => (
-                                    <Col className='search-tags-block' key={i.toString()}>
-                                        <Tag closable 
-                                              onClose={() => handleClose(item, jobTag)}
-                                              className='search-tags-tag'
-                                        >
-                                            {item}
-                                        </Tag>
-                                    </Col>
-                                ))}
-                            </Row>
+                        <Row justify='start'>
+                            {jobTag.map((item: String, i: number) => (
+                                <Col className='search-tags-block' key={i.toString()}>
+                                    <Tag closable 
+                                            onClose={() => handleClose(item, jobTag)}
+                                            className='search-tags-tag'
+                                    >
+                                        {item}
+                                    </Tag>
+                                </Col>
+                            ))}
+                        </Row>
 
-                
-                        </div>
-                    
-                    
-                    }
+                    </div>            
                     
                     {RenderCards(cardData, header, load)}
                 </TweenOne>
