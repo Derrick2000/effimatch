@@ -1,0 +1,63 @@
+@import '../../GuestHome/styles/homeHeader.less';
+@import '../../GuestHome/styles/companies.less';
+
+@home: RHome-Signed-In;
+@application: application;
+.@{home}{
+  &-all-wrapper {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: @background-color;
+  }
+  &-content-wrapper {
+      height: 100%;
+      width: 100%;
+      max-width: 1200px;
+      position: relative;
+      padding: 0 60px;
+      will-change: transform;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: transparent;
+  }
+  &-card-block{
+    padding: 10px;
+  }
+  &-cards {
+      &-wrapper {
+          margin-top: 10vh;
+      }
+
+      &-title {
+          display: flex;
+          justify-content: space-between;
+          align-items: baseline;
+
+          &-h1 {
+              font-size: 2.7em;
+              padding-left: 10px;
+          }
+
+          &-link {
+              color: black;
+          }
+      }
+  }
+  &-application{
+    margin-top: 15px;
+    &-section{
+      background-color: white;
+      border-radius: 10px;
+      margin-left: 10px;
+      &-title{
+        padding-left: 10px;
+        font-weight: bold;
+        margin-bottom: 0px;
+      }
+    }
+  }
+
+}
