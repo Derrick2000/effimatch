@@ -50,7 +50,7 @@ const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
 
                 <div className='RHome-Signed-In-cards-title'>
                     <h1 className='RHome-Signed-In-cards-title-h1'>Posts:</h1>
-                    <Button type="primary" className = "">Add Position</Button>
+                    <Button type="primary" className = "RHome-Signed-In-cards-title-button">Add Position</Button>
                 </div>
                 <Row justify='space-between'>
                     {cardsData.map((item: CardData, i: number) => (
