@@ -52,7 +52,7 @@ const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
                     <h1 className='RHome-Signed-In-cards-title-h1'>Posts:</h1>
                     <Button type="primary" className = "RHome-Signed-In-cards-title-button">Add Position</Button>
                 </div>
-                <Row justify='space-between'>
+                <Row justify='space-between' className="RHome-Signed-In-cards-section">
                     {cardsData.map((item: CardData, i: number) => (
                         <Col md={6} xs={24} className='RHome-Signed-In-card-block' key={i.toString()}>
                             <MyCard

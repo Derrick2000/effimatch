@@ -1,7 +1,7 @@
 @import '../../GuestHome/styles/homeHeader.less';
 @import '../../GuestHome/styles/companies.less';
 
-@home: RHome-Signed-In;
+@home: RHomeDetails;
 @application: application;
 .@{home}{
   &-all-wrapper {
@@ -14,7 +14,7 @@
   }
   &-content-wrapper {
       height: 100%;
-      width: 100%;
+      width: 75%;
       max-width: 1200px;
       position: relative;
       padding: 0 60px;
@@ -24,13 +24,10 @@
       background-color: transparent;
   }
 
-  &-cards {
-      &-section{
-        margin-left: 10px;
-      }
+  &-job {
       &-wrapper {
           margin-top: 10vh;
-          margin-left: 10px;
+
       }
 
       &-title {
@@ -51,8 +48,8 @@
   &-application{
     margin-top: 15px;
     &-section{
-      border-radius: 8px;
-      padding-bottom: 20px;
+      border-radius: 10px;
+      margin-left: 10px;
       &-title{
         padding-left: 10px;
         font-weight: bold;
@@ -60,17 +57,25 @@
       }
     }
   }
+  &-imageblock{
+      text-align: center;
+      &-image{
+        width: 70px;
+
+      }
+
+      
+  }
+
+  // by william
+  &-card {
+    &-block {
+      width:100%;
+      margin: 10px 0;
+      background-color: white;
+      border-radius: 4px
+
+    }
+  }
 
 }
-
-// 去掉 Card Grid 之间的分割线
-.ant-card-grid {
-  box-shadow: none;
-}
-
-// By William
-// 个人觉得 card header 下面带个横线视觉效果更好一些
-// 想去掉横线则enable下面这段
-// .ant-card-head {
-//   border-bottom: none;
-// }

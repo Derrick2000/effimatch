@@ -13,6 +13,8 @@ import postDetails from './screens/post-details/post-details';
 import getReferredSingle from './screens/get-referred-single/get-referred-single';
 import OnBoard from './screens/OnBoard/OnBoard'
 import RHomeSignedIn from './screens/R-Home-Signed-In/RHomeSignedIn';
+import RHomeDetails from './screens/RHomeDetails/RHomeDetails';
+
 import SignIn from './screens/SignIn/SignIn';
 import SignUp from './screens/SignUp/SignUp';
 
@@ -127,6 +129,14 @@ function App() {
 						exact={true}
 						path="/onboard"
 						component={OnBoard}
+					/>
+				</Switch>
+
+				<Switch>
+					<Route
+						exact={true}
+						path="/RHomeDetails"
+						component={RHomeDetails}
 					/>
 				</Switch>
 
