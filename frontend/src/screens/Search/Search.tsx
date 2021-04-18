@@ -1,6 +1,3 @@
-// TODO: 根据要求完成这个page
-// 你应该会需要用到 components 里面的 Card
-
 import React from 'react';
 
 // componenet
@@ -13,6 +10,8 @@ import { Row, Col } from 'antd';
 import { Tag } from 'antd';
 import { Skeleton } from 'antd';
 import TweenOne from 'rc-tween-one';
+import { TweenOneGroup } from 'rc-tween-one';
+
 
 
 // assets (temp)
@@ -66,47 +65,35 @@ const RenderCards = (cardsData: CardData[], header: boolean, load: boolean) => {
     )
 }
 
-const RenderTags: React.FC<String[]> = (jobTag: String[]) => {
+// const RenderTags: React.FC<String[]> = (jobTag: String[]) => {
 
-    return (
-        <div className='search-tags-wrapper'>
-            <Row justify='start'>
-                {jobTag.map((item: String, i: number) => (
-                    <Col className='search-tags-block' key={i.toString()}>
-                        {i !== jobTag.length - 1 ? 
-                            <Tag closable 
-                              className='search-tags-tag'
-                              onClose={() => console.log("Closing...")}
-                            >
-                              {item}
-                            </Tag>
-                        :
-                            <CheckableTag
-                              className='search-tags-remote-tag'
-                              checked={false}
-                              onChange={checked => console.log("Checking...")}
-                            >
-                              {item}
-                            </CheckableTag>
-                        }
-                    </Col>
-                ))}
+//     const handleCLose = (removedItem: String, jobTag: String[]) => {
+//         var alternJobTag = jobTag.filter(word => word !== removedItem);
+//         setJob(alternJobTag);
+//     }
 
-            </Row>
+//     return (
 
-        </div>
-    )
-}
+//     )
+// }
 
 
 const Search: React.FC<any> = () => {
     const [search, setSearch] = React.useState(false);
     const [header, setHeader] = React.useState(true);
     const [load, setLoad] = React.useState(false);
+    const [jobTag, setJob] = React.useState(new Array<string>()); // edited by William. The initial jobTab array should be empty
+
 
     const wait=(ms:number)=>new Promise(resolve => setTimeout(resolve, ms)); 
 
-    const onClickSearch = async () => {
+    const onClickSearch = async (value : string) => {
+        
+        if(value !== ''){
+            jobTag.push(value);
+            setJob(jobTag);
+        }
+
         setHeader(false);
         setLoad(true);
         setSearch(false);
@@ -115,13 +102,21 @@ const Search: React.FC<any> = () => {
         setSearch(true);
     };
 
+    
+
+    const handleClose = (removedItem: String, jobTag: string[]) => {
+        var alternJobTag = jobTag.filter(word => word !== removedItem);
+        setJob(alternJobTag);
+    }
+
+
     return (
         <div className="search-wrapper">
             <div className="search-content-wrapper">
                 <TweenOne 
                     animation={{ x: 200, type: 'from', ease: 'linear' }}
                 >
-                <SearchBar
+                <SearchBar 
                     buttonWidth={150}
                     search={onClickSearch}
                 />
@@ -130,8 +125,23 @@ const Search: React.FC<any> = () => {
                 <TweenOne
                     animation={{ x: -200, type: 'from', ease: 'linear' }}
                 >
-                    {search &&
-                    RenderTags(jobTag)}
+                    {/* Edited by William. Also need to display tags when search is in progress */}
+                    <div className='search-tags-wrapper'>
+
+                        <Row justify='start'>
+                            {jobTag.map((item: String, i: number) => (
+                                <Col className='search-tags-block' key={i.toString()}>
+                                    <Tag closable 
+                                            onClose={() => handleClose(item, jobTag)}
+                                            className='search-tags-tag'
+                                    >
+                                        {item}
+                                    </Tag>
+                                </Col>
+                            ))}
+                        </Row>
+
+                    </div>            
                     
                     {RenderCards(cardData, header, load)}
                 </TweenOne>
@@ -156,7 +166,7 @@ for (let ii = 0; ii < 6; ii++) {
 }
 
 
-const jobTag: String[] = ["Internship", "San Diego", "Remote"];
+
 
 
 
