@@ -31,17 +31,26 @@ const SearchBar: React.FC<Props> = (props: Props) => {
 
     const onChange = (data: string) => {
         setValue(data);
+        
     };
 
     const onClick = () => {
         // to avoid exception when 'search()' is undefined
-        if (props.search) props.search();
+        if (props.search) {
+            props.search(value);
+            setValue("");
+        }
     };
-
-
+    
+    // detect user key down input
+    const onDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if(e.key === 'Enter'){
+            onClick();
+        }
+    }
 
     return (
-        <div className='search-bar-wrapper'>
+        <div className='search-bar-wrapper' onKeyDown={onDown} >
             <AutoComplete
                 className='search-bar-autocomplete'
                 value={value}
