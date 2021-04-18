@@ -47,9 +47,8 @@
   &-application{
     margin-top: 15px;
     &-section{
-      background-color: white;
-      border-radius: 10px;
-      margin-left: 10px;
+      border-radius: 8px;
+      padding-bottom: 20px;
       &-title{
         padding-left: 10px;
         font-weight: bold;
@@ -59,3 +58,15 @@
   }
 
 }
+
+// 去掉 Card Grid 之间的分割线
+.ant-card-grid {
+  box-shadow: none;
+}
+
+// By William
+// 个人觉得 card header 下面带个横线视觉效果更好一些
+// 想去掉横线则enable下面这段
+// .ant-card-head {
+//   border-bottom: none;
+// }

@@ -5,11 +5,11 @@ import React from 'react';
 // screens and componets
 import TweenOne from 'rc-tween-one';
 import Footer from '../../components/Footer/Footer';
-import Card from '../../components/Card/Card';
+import MyCard from '../../components/Card/Card';
 import RequestCard from '../../components/Card/RequestCard';
 // antd
 import QueueAnim from 'rc-queue-anim';
-import {Row, Col, Button,Divider,Modal} from 'antd';
+import {Row, Card, Col, Button,Divider,Modal} from 'antd';
 
 // assets (temp)
 import MS_logo from '../../images/MS_logo.png';
@@ -55,7 +55,7 @@ const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
                 <Row justify='space-between'>
                     {cardsData.map((item: CardData, i: number) => (
                         <Col md={6} xs={24} className='RHome-Signed-In-card-block' key={i.toString()}>
-                            <Card
+                            <MyCard
                                 title={item.title}
                                 company={item.company}
                                 logo={item.logo}
@@ -78,22 +78,18 @@ const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
 
 const RenderRequestCards: React.FC<requestSectionData[]> = (sectionData: requestSectionData[]) => {
     return (
-        <div className='RHome-Signed-In-application'>
-
-            <Row justify='space-between' className='RHome-Signed-In-application-section'>
-                <h2 className='RHome-Signed-In-application-section-title' >{sectionData[0].title} @ {sectionData[0].company}</h2>
+        // Edited by William. 这样视觉效果更好
+        <Card title={`${sectionData[0].title} @ ${sectionData[0].company}`} className='RHome-Signed-In-application-section'>
                 {sectionData[0].requests.map((item: requestCardData, i: number) => (
-                    <Col md={24} xs={24} className='RHome-Signed-In-card-block' key={i.toString()}>
+                    <Card.Grid key={i.toString()} style={{width:'100%'}} >
                         <RequestCard
                             logo={item.logo}
                             name={item.name}
                             description={item.description}
                         />
-                    </Col>
+                    </Card.Grid>
                 ))}
-            </Row>
-
-        </div>
+        </Card>
     )
 }
 
