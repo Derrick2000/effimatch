@@ -5,11 +5,10 @@ import React from 'react';
 // screens and componets
 import TweenOne from 'rc-tween-one';
 import Footer from '../../components/Footer/Footer';
-import Card from '../../components/Card/Card';
 import RequestCard from '../../components/Card/RequestCard';
 // antd
 import QueueAnim from 'rc-queue-anim';
-import {Row, Col, Button,Divider,Modal} from 'antd';
+import {Row, Col, Card, Button,Divider,Modal} from 'antd';
 
 // material ui
 import Grid from '@material-ui/core/Grid';
@@ -72,13 +71,14 @@ const RenderRequestCards: React.FC<requestCardData[]> = (requestData: requestCar
                 <Row justify='space-between' className='RHomeDetails-application-section' gutter={[10,10]}>
                 <h2 className='RHomeDetails-application-section-title' >Candidates ({requestData.length})</h2>
                 {requestData.map((item: requestCardData, i: number) => (
-                    <Col md={24} xs={24} className='RHomeDetails-card-block' key={i.toString()}>
+                    // Edited by William. For better display and hover effects
+                    <Card.Grid className='RHomeDetails-card-block' key={i.toString()} hoverable={true}>
                         <RequestCard
                             logo={item.logo}
                             name={item.name}
                             description={item.description}
                         />
-                    </Col>
+                    </Card.Grid>
                 ))}
             </Row>
 
