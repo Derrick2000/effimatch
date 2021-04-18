@@ -4,7 +4,7 @@ import React from 'react';
 import InputBar from '../../components/InputBar/InputBar';
 
 // antd
-import { Button, Radio, Row, Col, Tag } from 'antd';
+import { Button, Select, Radio, Row, Col, Tag } from 'antd';
 
 // style
 import './styles/onboard.less';
@@ -198,11 +198,12 @@ const JobSeeker: React.FC<any> = (type:number) => {
             />
 
             <p className='onboard-content-question'><strong>Job type you're looking for?</strong></p>
-            <InputBar
-                input={onInputType}
-                placehold="Full time / Internship"
-                autocomplete={false}
-            />
+            
+            {/* Edited by William, changed input to select */}
+            <Select placeholder='Full time / Internship' className='onboard-content-selector' onChange={onInputType}>
+                <Select.Option value="Full time">Full time</Select.Option>
+                <Select.Option value="Internship">Internship</Select.Option>
+            </Select>
             
             
             <div className="onboard-button-wrapper">
