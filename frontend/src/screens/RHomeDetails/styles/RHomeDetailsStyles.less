@@ -1,7 +1,7 @@
 @import '../../GuestHome/styles/homeHeader.less';
 @import '../../GuestHome/styles/companies.less';
 
-@home: RHome-Signed-In;
+@home: RHomeDetails;
 @application: application;
 .@{home}{
   &-all-wrapper {
@@ -14,7 +14,7 @@
   }
   &-content-wrapper {
       height: 100%;
-      width: 100%;
+      width: 75%;
       max-width: 1200px;
       position: relative;
       padding: 0 60px;
@@ -24,13 +24,10 @@
       background-color: transparent;
   }
 
-  &-cards {
-      &-section{
-        margin-left: 10px;
-      }
+  &-job {
       &-wrapper {
           margin-top: 10vh;
-          margin-left: 10px;
+
       }
 
       &-title {
@@ -51,7 +48,6 @@
   &-application{
     margin-top: 15px;
     &-section{
-      background-color: white;
       border-radius: 10px;
       margin-left: 10px;
       &-title{
@@ -60,6 +56,15 @@
         margin-bottom: 0px;
       }
     }
+  }
+  &-imageblock{
+      text-align: center;
+      &-image{
+        width: 70px;
+
+      }
+
+      
   }
 
 }
