@@ -1,6 +1,6 @@
 import React from 'react';
 import './searchBar.less'
-import { AutoComplete, Button } from 'antd';
+import { AutoComplete, Button, Input } from 'antd';
 
 interface Props {
     buttonWidth?: number | string,
@@ -29,9 +29,8 @@ const SearchBar: React.FC<Props> = (props: Props) => {
         console.log('onSelect', data);
     };
 
-    const onChange = (data: string) => {
-        setValue(data);
-        
+    const onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+        setValue(ev.target.value)
     };
 
     const onClick = () => {
@@ -51,12 +50,9 @@ const SearchBar: React.FC<Props> = (props: Props) => {
 
     return (
         <div className='search-bar-wrapper' onKeyDown={onDown} >
-            <AutoComplete
+            <Input
                 className='search-bar-autocomplete'
                 value={value}
-                options={options}
-                onSelect={onSelect}
-                onSearch={onSearch}
                 onChange={onChange}
                 placeholder='Search your favorite company'
             />
