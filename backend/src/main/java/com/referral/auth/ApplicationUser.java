@@ -2,6 +2,7 @@ package com.referral.auth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -26,7 +27,8 @@ public class ApplicationUser implements UserDetails {
     @Getter
     private final String nickname;
 
-    private final Set<? extends GrantedAuthority> grantedAuthorities;
+    @Setter
+    private Set<? extends GrantedAuthority> grantedAuthorities;
     private final boolean isAccountNonExpired;
     private final boolean isAccountNonLocked;
     private final boolean isCredentialsNonExpired;

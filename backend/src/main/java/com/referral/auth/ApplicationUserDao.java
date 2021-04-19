@@ -10,4 +10,7 @@ public interface ApplicationUserDao {
     boolean addUser(ApplicationUser user);
 
     List<ApplicationUser> getApplicationUsers();
+
+    // change the permission of a user
+    boolean changeRole(String email, String newPermission);
 }

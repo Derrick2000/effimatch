@@ -32,6 +32,8 @@ import { Provider } from 'react-redux'
 
 // router
 import { BrowserRouter, Route, Switch} from 'react-router-dom';
+import { createBrowserHistory } from "history";
+const history = createBrowserHistory()
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -42,6 +44,11 @@ if (localStorage.jwtToken) {
 	const decoded = jwt_decode(token);
 	// Set user and isAuthenticated
 	store.dispatch(setCurrentUser(decoded));
+
+	// if the user have not set his role
+	// if (decoded.authorities.length === 0 && history.location.pathname !== '/onboard') {
+	// 	window.location.href = '/onboard'
+	// }
 
 	// Check for expired token
 	const currentTime = Date.now() / 1000; // to get in milliseconds

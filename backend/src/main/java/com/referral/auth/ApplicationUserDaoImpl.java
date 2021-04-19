@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-import static com.referral.security.ApplicationUserRole.USER;
+import static com.referral.security.ApplicationUserRole.*;
 
 @Repository("redis")
 public class ApplicationUserDaoImpl implements ApplicationUserDao {
@@ -42,7 +42,8 @@ public class ApplicationUserDaoImpl implements ApplicationUserDao {
                 user.getUsername(),
                 passwordEncoder.encode(user.getPassword()),
                 user.getNickname(),
-                USER.getGrantedAuthorities(),
+//                USER.getGrantedAuthorities(),
+                null, // the default roles and authorities for a user is null. The user has to choose a role on 'onBoarding' page
                 true,
                 true,
                 true,
@@ -55,5 +56,27 @@ public class ApplicationUserDaoImpl implements ApplicationUserDao {
     @Override
     public List<ApplicationUser> getApplicationUsers() {
         return (List) redisTemplate.opsForHash().values(KEY);
+    }
+
+    public boolean changeRole(String email, String newPermission) {
+        Optional<ApplicationUser> theUser = selectApplicationUserByUsername(email);
+
+        // if no user with this email
+        if (theUser.isEmpty()) return false;
+
+        switch(newPermission) {
+            case "JS_INCOMPLETE":
+                theUser.get().setGrantedAuthorities(JS_INCOMPLETE.getGrantedAuthorities());
+                break;
+            case "JS":
+                theUser.get().setGrantedAuthorities(JS.getGrantedAuthorities());
+                addUser(theUser.get());
+                break;
+            default:
+                return false;
+        }
+
+        redisTemplate.opsForHash().put(KEY, theUser.get().getUsername(), theUser.get());
+        return true;
     }
 }

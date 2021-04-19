@@ -10,7 +10,10 @@ import static com.referral.security.ApplicationUserPermission.*;
 
 public enum ApplicationUserRole {
     USER(Sets.newHashSet(TEST_READ)),
-    ADMIN(Sets.newHashSet(TEST_WRITE, TEST_READ));
+    ADMIN(Sets.newHashSet(TEST_WRITE, TEST_READ)),
+    R(Sets.newHashSet(R_PERMISSIONS)),
+    JS(Sets.newHashSet(JS_PERMISSIONS)),
+    JS_INCOMPLETE(Sets.newHashSet(JS_PERMISSIONS)); // when the user selected the role but did not finish the tutorials
 
     private final Set<ApplicationUserPermission> permissions;
 

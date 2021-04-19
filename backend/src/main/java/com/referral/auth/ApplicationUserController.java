@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +44,18 @@ class RegisterRequest {
     @Getter
     @Setter
     private String userName;
+}
+
+// user's request to change a role (between referrer and job seeker)
+@AllArgsConstructor
+class ChangeRoleRequest {
+    @JsonProperty("newRole")
+    @Getter
+    private final String newRole;
+
+    @JsonProperty("email")
+    @Getter
+    private final String email;
 }
 
 @RestController
@@ -186,6 +198,27 @@ public class ApplicationUserController {
         }
 
         return ResponseEntity.ok("Email sent");
+    }
+
+    @PostMapping("/v1/change-role")
+    public ResponseEntity<String> changeRole(@RequestBody ChangeRoleRequest changeRoleRequest) {
+        // get the current currentUserEmail
+        String currentUserEmail = (String) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        String requestEmail = changeRoleRequest.getEmail();
+
+        if (!requestEmail.equals(currentUserEmail)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You do not have permission to modify " + requestEmail);
+        }
+
+        if (applicationUserService.changeRole(currentUserEmail, changeRoleRequest.getNewRole())) {
+            return ResponseEntity.ok("Changed permission to " + changeRoleRequest.getNewRole());
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Change permission failed");
+        }
     }
 
 }

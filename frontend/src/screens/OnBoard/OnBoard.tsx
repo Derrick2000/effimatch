@@ -8,6 +8,13 @@ import { Button, Select, Radio, Row, Col, Tag } from 'antd';
 
 // style
 import './styles/onboard.less';
+import axios from 'axios';
+
+// redux
+import { useSelector } from 'react-redux'
+import { setCurrentUser } from '../../actions/authAction'
+
+import jwt_decode from "jwt-decode";
 
 const RadioGroup = Radio.Group;
 
@@ -86,6 +93,7 @@ const JobSeeker: React.FC<any> = (type:number) => {
     const [skills, setSkills] = React.useState(['']);
     const [location, setLocation] = React.useState('');
     const [jobType, setJobType] = React.useState('');
+    const auth = useSelector((state:any) => state.auth);
 
 
     // handle question handling 
@@ -123,8 +131,26 @@ const JobSeeker: React.FC<any> = (type:number) => {
             jobType: jobType
         });
 
+
+        const changeRoleRequest = {
+            email: auth.user.sub,
+            newRole: 'JS_INCOMPLETE'
+        }
+
+        axios.post('http://localhost:8080/v1/change-role', changeRoleRequest)
+        .then(r => {
+            // if success, re-login to update the jwt
+            let modifiedAuth = auth;
+            modifiedAuth.user.authorities = [
+                {authority:'js:permissions'},
+                {authority:"ROLE_JS_INCOMPLETE"}
+            ]
+            setCurrentUser(modifiedAuth);
+        })
+        .catch(e => console.log(e))
+
         // go /js-home
-        window.location.href = '/js-home';
+        // window.location.href = '/js-home';
     }
 
     // handle close tags
@@ -238,7 +264,8 @@ const OnBoard: React.FC<any> = () => {
                 <p className='onboard-content-question'><strong>Are you a referrer or job seeker?</strong></p>
                 <RadioGroup  
                   onChange={onChange} 
-                  value={type}>
+                  value={type}
+                >
                     <Radio value={1} className='onboard-content-radio'>Referrer</Radio>
                     <Radio value={2} className='onboard-content-radio'>Job Seeker</Radio>
                 </RadioGroup>

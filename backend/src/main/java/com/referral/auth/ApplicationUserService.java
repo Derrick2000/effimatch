@@ -33,4 +33,8 @@ public class ApplicationUserService implements UserDetailsService {
     public List<ApplicationUser> getAllUsers() {
         return applicationUserDao.getApplicationUsers();
     }
+
+    public boolean changeRole(String email, String newRole) {
+        return applicationUserDao.changeRole(email, newRole);
+    }
 }
