@@ -15,7 +15,7 @@ import com.referral.model.Referrer;
 import com.referral.model.Review;
 
 @Repository
-public class ReferrerImpl implements ReferrerDao{
+public class ReferrerDaoImpl implements ReferrerDao{
 	 @Autowired
 	 private RedisTemplate<String, Object> redisTemplate;
 

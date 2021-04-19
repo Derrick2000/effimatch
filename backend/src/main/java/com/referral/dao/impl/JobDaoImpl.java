@@ -102,10 +102,16 @@ public class JobDaoImpl implements JobDao {
      * case-insensitive
      */
 	public LinkedHashSet<Job> getSearchJobs(String search) {
+		 search = search.toLowerCase();
 		 LinkedHashSet<Job> list = getAllJobs();
 		 LinkedHashSet<Job> searchedJobs = new LinkedHashSet<>();
 		 for(Job j:list) {
-			 if(j.getJobTitle().equals(search) || j.getCompanyName().equals(search)) {
+			 if(j.getJobTitle().toLowerCase().equals(search) || j.getCompanyName().toLowerCase().equals(search)) {
+				 searchedJobs.add(j);
+				 continue;
+			 }
+			 //update:包含关系的搜索结果我放后面
+			 if(j.getJobTitle().toLowerCase().contains(search) || j.getCompanyName().toLowerCase().contains(search)) {
 				 searchedJobs.add(j);
 			 }
 		 }
