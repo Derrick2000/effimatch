@@ -3,6 +3,7 @@ package com.referral.jwt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -50,7 +51,6 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
