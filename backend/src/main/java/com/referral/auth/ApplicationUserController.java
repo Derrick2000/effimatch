@@ -7,6 +7,7 @@ import com.referral.utils.EmailVerificationUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.http.HttpStatus;
@@ -27,10 +28,12 @@ class RegisterRequest {
 
     @JsonProperty
     @Getter
+    @Setter
     private String email;
 
     @JsonProperty
     @Getter
+    @Setter
     private String password;
 
     @JsonProperty
@@ -39,41 +42,8 @@ class RegisterRequest {
 
     @JsonProperty
     @Getter
+    @Setter
     private String userName;
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-    
-    
 }
 
 @RestController
@@ -172,6 +142,43 @@ public class ApplicationUserController {
 
             // Send email
             emailVerification.sendEmail(email, code);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Fail to send email due to server error");
+        }
+
+        return ResponseEntity.ok("Email sent");
+    }
+
+    // for testing purpose. No email will be sent out, the code will be logged out in console
+    @RequestMapping(value = "/v1/send-verification-muted", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String> sendVerificationMuted(HttpServletRequest request,
+                                                   HttpServletResponse response, @Valid @RequestBody RegisterRequest registerRequest) {
+
+        // Get email from request body
+        String email = registerRequest.getEmail();
+
+        if (email == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email can not be null");
+        }
+
+        HttpSession session = request.getSession();
+        response.addHeader("Set-Cookie", session.getId());
+
+        try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(CONFIG_PATH)) {
+
+            EmailVerificationUtils emailVerification = (EmailVerificationUtils) context.getBean(UTIL_NAME);
+
+            // Generate verification code
+            String code = emailVerification.generateVerificationCode();
+
+            // Store the code in http session
+            session.setAttribute(email, code);
+            session.setMaxInactiveInterval(SESSION_INTERVAL);
+
+            System.out.println(code);
 
         } catch (Exception e) {
             e.printStackTrace();

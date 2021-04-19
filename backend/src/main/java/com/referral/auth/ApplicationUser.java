@@ -32,17 +32,6 @@ public class ApplicationUser implements UserDetails {
     private final boolean isCredentialsNonExpired;
     private final boolean isEnabled;
 
-    public ApplicationUser(String username) {
-        this.username = username;
-        this.password = null;
-        this.nickname = null;
-        this.grantedAuthorities = null;
-        this.isAccountNonExpired = false;
-        this.isAccountNonLocked = false;
-        this.isCredentialsNonExpired = false;
-        this.isEnabled = false;
-    }
-
     public ApplicationUser(
             String username,
             String password,
@@ -101,21 +90,7 @@ public class ApplicationUser implements UserDetails {
         return isEnabled;
     }
 
-	public String getUsername() {
-		return username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public String getNickname() {
-		return nickname;
-	}
-
 	public Set<? extends GrantedAuthority> getGrantedAuthorities() {
 		return grantedAuthorities;
 	}
-    
-    
 }

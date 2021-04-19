@@ -6,6 +6,9 @@ import {ReactComponent as SignInPerson} from '../../images/sign_in_person.svg';
 
 import { Input, Button, notification } from 'antd';
 
+// redux
+import { loginUser, logoutUser } from "../../actions/authAction";
+
 import './styles/signin.less';
 
 const openErrorNotification = (placement: any, errorMsg: string) => {
@@ -38,18 +41,16 @@ const SignIn: React.FC<any> = (props) => {
             password: password
         }
         setLoading(true);
-        const URL = 'http://localhost:8080/login' // this is the login URL of our backend
-        axios.post(URL, userInfo)
+        loginUser(userInfo)
         .then(r => {
-            const jwtToken = r.headers.authorization // the jwt token
-            localStorage.setItem('jwtToken', jwtToken) // store token in browser local storage
             openSuccessNotification('bottomLeft');
             setLoading(false);
             window.location.href = '/';
-        }).catch(e => {
+        })
+        .catch(e => {
             openErrorNotification('bottomLeft', 'Invalid login');
             setLoading(false);
-        });
+        })
     }
 
     const signWithLinkedIn = () => {

@@ -8,6 +8,9 @@ import { Menu } from 'antd';
 // import Logo from '../../images/logo.png'
 import {ReactComponent as Logo} from '../../images/logo.svg';
 
+// redux
+import { useSelector } from 'react-redux'
+
 import './navbar.less'
 
 const { Item } = Menu;
@@ -20,6 +23,8 @@ const NavBar: React.FC<Props> = (props: Props) => {
     const { isMobile } = props;
 
     const [ phoneOpen, setPhoneOpen ] = React.useState<boolean | undefined>(undefined)
+
+    const auth = useSelector((state:any) => state.auth);
 
     // 手机状态下点击菜单按钮
     const onPhoneClick = () => {
