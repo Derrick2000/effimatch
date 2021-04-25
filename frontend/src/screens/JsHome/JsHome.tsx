@@ -17,6 +17,7 @@ import MS_logo from '../../images/MS_logo.png';
 import Avatar from '../../images/avatar.png';
 
 import './styles/JsHome.less';
+import axios from 'axios';
 
 interface Props {
 
@@ -96,6 +97,18 @@ const RenderApplicationCards: React.FC<applicationData[]> = (cardsData: applicat
 const JsHome: React.FC<Props> = (props: Props) => {
     const [renderdata, setrenderdata] = React.useState(sentCardData);
     const [underlineButton, setUnderlineButton] = React.useState(1);
+    const [ finishedOnBoarding, setFinishedOnboarding ] = React.useState(true);
+
+    React.useEffect(() => {
+        axios.get('http://localhost:8080/v1/users/get-own')
+        .then(r => {
+            setFinishedOnboarding(r.data.finishedTutorial);
+        })
+    }, [])
+
+    const handleOnBoardingClose = () => {
+        axios.post('http://localhost:8080/v1/users/finished-tutorial')
+    }
 
     return (
 
@@ -151,7 +164,7 @@ const JsHome: React.FC<Props> = (props: Props) => {
                 </TweenOne>
             </div>
             <Footer />
-            <JSHomeOnBoarding/>
+            {finishedOnBoarding ? null : <JSHomeOnBoarding handleClose={handleOnBoardingClose}/>}
         </div>
 
     )

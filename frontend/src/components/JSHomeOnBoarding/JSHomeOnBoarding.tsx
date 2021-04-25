@@ -18,11 +18,11 @@ import {ReactComponent as ScooterWithBackpack} from '../../images/ScooterWithBac
    return { width };
  }
 
- const OnBoardingWrapper: React.FC<any> = () => {
+ const OnBoardingWrapper: React.FC<any> = (props) => {
   const { width } = useViewport();
   const breakpoint = 620;
 
-  return width < breakpoint ? <OnBoardingPart /> : <OnBoardingFull />;
+  return width < breakpoint ? <OnBoardingPart /> : <OnBoardingFull {...props}/>;
 }
 
 const OnBoardingPart: React.FC<any> = () => {
@@ -66,8 +66,14 @@ const OnBoardingPart: React.FC<any> = () => {
 
  );
 }
-const OnBoardingFull: React.FC<any> = () => {
+const OnBoardingFull: React.FC<any> = (props) => {
   const [showOnBoard, setShowOnBoard] = React.useState(true);
+
+  // added by William
+  const handleClose = () => {
+    props.handleClose();
+    setShowOnBoard(false)
+  }
 
   return (
    <Modal
@@ -101,7 +107,7 @@ const OnBoardingFull: React.FC<any> = () => {
                    <p className='card-avatar-text'>Description Text</p>
                  </div>
              </div>
-             <Button type='primary' className='onboard-button' onClick={() => {setShowOnBoard(false)}}>Start</Button>
+             <Button type='primary' className='onboard-button' onClick={handleClose}>Start</Button>
            </div>
            </Col>
            <Col span={11} >
@@ -116,9 +122,9 @@ const OnBoardingFull: React.FC<any> = () => {
 }
 
 
-const JSHomeOnBoarding: React.FC<any> = () => {
+const JSHomeOnBoarding: React.FC<any> = (props) => {
     return (
-      <OnBoardingWrapper/>
+      <OnBoardingWrapper {...props}/>
     )
 }
 
