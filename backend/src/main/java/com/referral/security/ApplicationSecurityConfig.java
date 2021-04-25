@@ -67,7 +67,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 .antMatchers("/v1/send-verification").permitAll()
                 .antMatchers("/v1/send-verification-muted").permitAll()
-                .antMatchers("/v1/users").permitAll()
+                .antMatchers("/v1/users/**").permitAll()
                 .antMatchers("/v1/file/upload").permitAll()
                 .antMatchers("/v1/change-role").permitAll()
 

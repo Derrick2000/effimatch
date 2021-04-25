@@ -37,4 +37,16 @@ public class ApplicationUserService implements UserDetailsService {
     public boolean changeRole(String email, String newRole) {
         return applicationUserDao.changeRole(email, newRole);
     }
+
+    public ApplicationUser getOwnInformation() {
+        return applicationUserDao.getOwnInformation();
+    }
+
+    public void finishedTutorial() {
+        applicationUserDao.finishedTutorial();
+    }
+
+    public void finishedInitialSettings() {
+        applicationUserDao.finishedInitialSettings();
+    }
 }

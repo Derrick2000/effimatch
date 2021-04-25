@@ -1,5 +1,6 @@
 package com.referral.auth;
 
+import com.amazonaws.services.cognitoidp.model.UserNotFoundException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.referral.model.Session;
 import com.referral.service.SessionService;
@@ -43,7 +44,7 @@ class RegisterRequest {
     @JsonProperty
     @Getter
     @Setter
-    private String userName;
+    private String username;
 }
 
 // user's request to change a role (between referrer and job seeker)
@@ -120,7 +121,7 @@ public class ApplicationUserController {
         ApplicationUser newUser = new ApplicationUser(
                 registerRequest.getEmail(),
                 registerRequest.getPassword(),
-                registerRequest.getUserName()
+                registerRequest.getUsername()
         );
         applicationUserService.addUser(newUser);
         return ResponseEntity.ok("User " + newUser.getUsername() + " created");
@@ -200,7 +201,7 @@ public class ApplicationUserController {
         return ResponseEntity.ok("Email sent");
     }
 
-    @PostMapping("/v1/change-role")
+    @PostMapping("/v1/users/change-role")
     public ResponseEntity<String> changeRole(@RequestBody ChangeRoleRequest changeRoleRequest) {
         // get the current currentUserEmail
         String currentUserEmail = (String) SecurityContextHolder
@@ -218,6 +219,34 @@ public class ApplicationUserController {
         }
         else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Change permission failed");
+        }
+    }
+
+    @GetMapping("/v1/users/get-own")
+    public ResponseEntity<?> getOwnInformation() {
+        return ResponseEntity.ok(applicationUserService.getOwnInformation());
+    }
+
+    @PostMapping("/v1/users/finished-initial-settings")
+    public ResponseEntity<String> finishedInitialSettings() {
+        try {
+            applicationUserService.finishedInitialSettings();
+            return ResponseEntity.ok("Finished initial settings");
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected error");
+        }
+    }
+
+    @PostMapping("/v1/users/finished-tutorial")
+    public ResponseEntity<String> finishedTutorial() {
+        try {
+            applicationUserService.finishedTutorial();
+            return ResponseEntity.ok("Finished tutorial");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected error");
         }
     }
 

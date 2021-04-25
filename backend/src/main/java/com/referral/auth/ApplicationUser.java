@@ -19,7 +19,8 @@ public class ApplicationUser implements UserDetails {
 
     @JsonProperty("password")
     @Getter
-    private final String password;
+    @Setter
+    private String password;
 
     // the user's custom name （昵称）
     // 我知道这一坨命名看起来很垃圾，但因为必须implement UserDetails所以没办法
@@ -33,6 +34,16 @@ public class ApplicationUser implements UserDetails {
     private final boolean isAccountNonLocked;
     private final boolean isCredentialsNonExpired;
     private final boolean isEnabled;
+
+    // 用户完成了on boarding界面的设置没有
+    @JsonProperty("finishedInitialSettings")
+    @Setter
+    private boolean finishedInitialSettings;
+
+    // 用户完成了新手教程没有
+    @Setter
+    @JsonProperty("finishedTutorial")
+    private boolean finishedTutorial;
 
     public ApplicationUser(
             String username,
@@ -51,6 +62,8 @@ public class ApplicationUser implements UserDetails {
         this.isAccountNonLocked = isAccountNonLocked;
         this.isCredentialsNonExpired = isCredentialsNonExpired;
         this.isEnabled = isEnabled;
+        this.finishedInitialSettings = false;
+        this.finishedTutorial = false;
     }
 
     public ApplicationUser(

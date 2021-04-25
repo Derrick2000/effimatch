@@ -1,7 +1,9 @@
 package com.referral.auth;
 
+import com.amazonaws.services.cognitoidp.model.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
@@ -58,6 +60,7 @@ public class ApplicationUserDaoImpl implements ApplicationUserDao {
         return (List) redisTemplate.opsForHash().values(KEY);
     }
 
+    @Override
     public boolean changeRole(String email, String newPermission) {
         Optional<ApplicationUser> theUser = selectApplicationUserByUsername(email);
 
@@ -78,5 +81,45 @@ public class ApplicationUserDaoImpl implements ApplicationUserDao {
 
         redisTemplate.opsForHash().put(KEY, theUser.get().getUsername(), theUser.get());
         return true;
+    }
+
+    @Override
+    public ApplicationUser getOwnInformation() {
+        // get the current currentUserEmail
+        String currentUserEmail = (String) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        Optional<ApplicationUser> user = selectApplicationUserByUsername(currentUserEmail);
+        // not sending password to the client
+        user.get().setPassword("");
+        return user.get();
+    }
+
+    @Override
+    public void finishedInitialSettings() {
+        // get the current currentUserEmail
+        String currentUserEmail = (String) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        ApplicationUser user = selectApplicationUserByUsername(currentUserEmail).get();
+
+        user.setFinishedInitialSettings(true);
+        redisTemplate.opsForHash().put(KEY, user.getUsername(), user);
+    }
+
+    @Override
+    public void finishedTutorial() {
+        // get the current currentUserEmail
+        String currentUserEmail = (String) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        ApplicationUser user = selectApplicationUserByUsername(currentUserEmail).get();
+
+        user.setFinishedTutorial(true);
+        redisTemplate.opsForHash().put(KEY, user.getUsername(), user);
     }
 }

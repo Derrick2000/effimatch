@@ -13,4 +13,13 @@ public interface ApplicationUserDao {
 
     // change the permission of a user
     boolean changeRole(String email, String newPermission);
+
+    // a user get his own information
+    ApplicationUser getOwnInformation();
+
+    // finishes the initial settings (on boarding)
+    void finishedInitialSettings();
+
+    // finishes the tutorial
+    void finishedTutorial();
 }
