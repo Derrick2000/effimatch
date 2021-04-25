@@ -68,11 +68,11 @@ public class ApplicationUserDaoImpl implements ApplicationUserDao {
         if (theUser.isEmpty()) return false;
 
         switch(newPermission) {
-            case "JS_INCOMPLETE":
-                theUser.get().setGrantedAuthorities(JS_INCOMPLETE.getGrantedAuthorities());
-                break;
             case "JS":
                 theUser.get().setGrantedAuthorities(JS.getGrantedAuthorities());
+                break;
+            case "R":
+                theUser.get().setGrantedAuthorities(R.getGrantedAuthorities());
                 addUser(theUser.get());
                 break;
             default:

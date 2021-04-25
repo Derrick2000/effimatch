@@ -12,7 +12,7 @@ import axios from 'axios';
 
 // redux
 import { useSelector } from 'react-redux'
-import { setCurrentUser } from '../../actions/authAction'
+import { setCurrentUser, logoutUser } from '../../actions/authAction'
 
 import jwt_decode from "jwt-decode";
 
@@ -134,23 +134,20 @@ const JobSeeker: React.FC<any> = (type:number) => {
 
         const changeRoleRequest = {
             email: auth.user.sub,
-            newRole: 'JS_INCOMPLETE'
+            newRole: 'JS'
         }
 
-        axios.post('http://localhost:8080/v1/change-role', changeRoleRequest)
+        axios.post('http://localhost:8080/v1/users/change-role', changeRoleRequest)
         .then(r => {
-            // if success, re-login to update the jwt
-            let modifiedAuth = auth;
-            modifiedAuth.user.authorities = [
-                {authority:'js:permissions'},
-                {authority:"ROLE_JS_INCOMPLETE"}
-            ]
-            setCurrentUser(modifiedAuth);
+            // if success, change user info in server 'initial settings finished'
+            axios.post('http://localhost:8080/v1/users/finished-initial-settings')
+            .then(() => {
+                // has to re-login after changing permissions
+                logoutUser();
+                window.location.href = '/sign-in';
+            })
         })
         .catch(e => console.log(e))
-
-        // go /js-home
-        // window.location.href = '/js-home';
     }
 
     // handle close tags

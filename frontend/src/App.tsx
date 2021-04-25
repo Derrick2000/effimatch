@@ -33,6 +33,7 @@ import { Provider } from 'react-redux'
 // router
 import { BrowserRouter, Route, Switch} from 'react-router-dom';
 import { createBrowserHistory } from "history";
+import axios from 'axios';
 const history = createBrowserHistory()
 
 // Check for token to keep user logged in
@@ -46,9 +47,20 @@ if (localStorage.jwtToken) {
 	store.dispatch(setCurrentUser(decoded));
 
 	// if the user have not set his role
-	// if (decoded.authorities.length === 0 && history.location.pathname !== '/onboard') {
-	// 	window.location.href = '/onboard'
-	// }
+	if (decoded !== null
+			&&decoded.authorities.length === 0 
+			&& history.location.pathname !== '/onboard'
+			&& history.location.pathname !== '/sign-in') {
+		
+
+		// check if the user actually finished initial settings, but did not re-signin
+		axios.get('http://localhost:8080/v1/users/get-own')
+		.then(r => {
+			console.log('userinfo', r)
+			const finishedInitialSettings = r.data.finishedInitialSettings;
+			if (!finishedInitialSettings) window.location.href = '/onboard';
+		})
+	}
 
 	// Check for expired token
 	const currentTime = Date.now() / 1000; // to get in milliseconds

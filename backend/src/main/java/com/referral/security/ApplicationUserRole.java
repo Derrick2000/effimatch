@@ -12,8 +12,7 @@ public enum ApplicationUserRole {
     USER(Sets.newHashSet(TEST_READ)),
     ADMIN(Sets.newHashSet(TEST_WRITE, TEST_READ)),
     R(Sets.newHashSet(R_PERMISSIONS)),
-    JS(Sets.newHashSet(JS_PERMISSIONS)),
-    JS_INCOMPLETE(Sets.newHashSet(JS_PERMISSIONS)); // when the user selected the role but did not finish the tutorials
+    JS(Sets.newHashSet(JS_PERMISSIONS));
 
     private final Set<ApplicationUserPermission> permissions;
 
