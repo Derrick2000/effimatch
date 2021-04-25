@@ -2,7 +2,7 @@ import React from 'react';
 import TweenOne from 'rc-tween-one';
 
 // antd
-import { Menu } from 'antd';
+import { Menu, Dropdown, Avatar } from 'antd';
 
 // assets
 // import Logo from '../../images/logo.png'
@@ -10,6 +10,8 @@ import {ReactComponent as Logo} from '../../images/logo.svg';
 
 // redux
 import { useSelector } from 'react-redux'
+import { logoutUser } from '../../actions/authAction'
+import store from '../../store'
 
 import './navbar.less'
 
@@ -47,7 +49,6 @@ const NavBar: React.FC<Props> = (props: Props) => {
             className="navbar-logo"
             onClick={() => {window.location.href = '/'}}
           >
-            {/* <img height="45px" src={Logo} alt="logo_img" /> */}
             <Logo/>
           </TweenOne>
           
@@ -88,7 +89,7 @@ const NavBar: React.FC<Props> = (props: Props) => {
               mode={isMobile ? 'inline' : 'horizontal'}
               theme="light"
             >
-              {rightMenuChildren}
+              {auth.isAuthenticated ? <UserAvatar />  : rightMenuChildren}
             </Menu>
           </TweenOne>
         </div>
@@ -139,5 +140,39 @@ const rightMenuChildren: React.ReactNode = rightMenuData.map((item) => (
         </a>
     </Item>
 ))
+
+const UserAvatar: React.FC<any> = () => {
+
+  const onLogOut = () => {
+    store.dispatch(logoutUser());
+  }
+
+  const menu = (
+    <Menu>
+      <Menu.Item>
+        <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+          1st menu item
+        </a>
+      </Menu.Item>
+      <Menu.Item disabled>
+        <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+          2nd menu item
+        </a>
+      </Menu.Item>
+      <Menu.Item disabled>
+        <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+          3rd menu item
+        </a>
+      </Menu.Item>
+      <Menu.Item danger onClick={onLogOut}>Log Out</Menu.Item>
+    </Menu>
+  );
+
+  return (
+    <Dropdown overlay={menu} className='navbar-avatar'>
+       <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>
+  </Dropdown>
+  )
+}
 
 export default NavBar;
