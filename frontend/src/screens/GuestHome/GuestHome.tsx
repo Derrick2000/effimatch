@@ -40,7 +40,7 @@ const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
             >   
                 <div className='home-cards-title'>
                     <h1 className='home-cards-title-h1'>Jobs by Category</h1>
-                    <a className='home-cards-title-link' href='/#'>Explore more</a>
+                    <a className='home-cards-title-link' href='/search'>Explore more</a>
                 </div>
                 <Row justify='space-between'>
                     {cardsData.map((item: CardData, i: number) => (

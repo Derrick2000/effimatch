@@ -4,14 +4,17 @@
 
 .@{component} {
   &-pagewrapper {
-    height: 100%;
-    max-width: 1200px;
+    height: 90vh;
     position: relative;
     margin: auto;
     padding: 0 60px;
     padding-top: 30px;
     will-change: transform;
-    background-color: transparent;
+    background-color: @background-color;
+  }
+
+  &-content-wrapper {
+    max-width: 1200px;
   }
 
   &-side {
@@ -24,7 +27,7 @@
     }
 
     &-card {
-      margin-right: 30px;
+      background-color: @background-color;
       width: 10px;
       padding: 0px;
     }

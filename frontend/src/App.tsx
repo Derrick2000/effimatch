@@ -51,12 +51,10 @@ if (localStorage.jwtToken) {
 			&&decoded.authorities.length === 0 
 			&& history.location.pathname !== '/onboard'
 			&& history.location.pathname !== '/sign-in') {
-		
 
 		// check if the user actually finished initial settings, but did not re-signin
 		axios.get('http://localhost:8080/v1/users/get-own')
 		.then(r => {
-			console.log('userinfo', r)
 			const finishedInitialSettings = r.data.finishedInitialSettings;
 			if (!finishedInitialSettings) window.location.href = '/onboard';
 		})

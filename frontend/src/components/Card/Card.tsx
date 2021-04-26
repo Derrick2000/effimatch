@@ -12,7 +12,7 @@ interface CardProps {
 
 const Card:React.FC<CardProps> = (props: CardProps) => {
     return (
-        <a className='card-block-group' href='/#'>
+        <a className='card-block-group' href='/post-details'>
             <div className='card-header-wrapper'>
                 <div className='card-header-title'>
                     <h1>{props.title}</h1>

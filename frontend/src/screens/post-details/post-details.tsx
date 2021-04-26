@@ -50,21 +50,23 @@ const AvatarAndButtons: React.FC<any> = () => (
 
 const Referers: React.FC<any> = () => (
       <div className='post-details-pagewrapper'>
-        <TweenOne
-            animation={{ x: -200, type: 'from', ease: 'easeOutQuad' }}
-        >
-          <Grid container>
-            <Grid item md={4} className="post-details-side-wrapper">
-              <AvatarAndButtons/>
+        <div className='post-details-content-wrapper'>
+          <TweenOne
+              animation={{ x: -200, type: 'from', ease: 'easeOutQuad' }}
+          >
+            <Grid container>
+              <Grid item md={4} className="post-details-side-wrapper">
+                <AvatarAndButtons/>
+              </Grid>
+              
+              <Grid item md={8} className="post-details-main-wrapper">
+                <div>
+                  {RenderDetailSection(dummy)}
+                </div>
+              </Grid>
             </Grid>
-            
-            <Grid item md={8} className="post-details-main-wrapper">
-              <div>
-                {RenderDetailSection(dummy)}
-              </div>
-            </Grid>
-          </Grid>
-        </TweenOne>
+          </TweenOne>
+        </div>
       </div>
 )
 
