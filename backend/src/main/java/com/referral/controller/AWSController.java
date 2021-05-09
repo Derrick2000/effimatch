@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.referral.utils.AwsS3Util;
+
+import io.swagger.annotations.ApiOperation;
+
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @RestController
@@ -21,6 +24,7 @@ public class AWSController {
 	@Autowired
 	private AwsS3Util s3Utils;
 	
+	@ApiOperation(value = "Upload a file")
 	@PostMapping("/upload")
 	public ResponseEntity<String> uploadFile(MultipartHttpServletRequest multipartRequest){
 		List<MultipartFile> files = multipartRequest.getFiles("uploadFile");

@@ -59,6 +59,13 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
                 .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig), JwtUsernameAndPasswordAuthenticationFilter.class)
                 .authorizeRequests()
+                .antMatchers(
+                        "/v2/api-docs", 
+                        "/swagger-resources/**",  
+                        "/swagger-ui.html", 
+                        "/webjars/**" ,
+                         /*Probably not needed*/ "/swagger.json")
+                    .permitAll()
                 //.antMatchers("/v1/tests").hasAnyRole(USER.name())
                 .antMatchers("/v1/tests").permitAll()
                 .antMatchers("/register").permitAll()
@@ -68,9 +75,19 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/v1/send-verification").permitAll()
                 .antMatchers("/v1/users").permitAll()
                 .antMatchers("/v1/file/upload").permitAll()
-
+                
                 .anyRequest()
                 .authenticated();
+        
+       
+//        http.authorizeRequests()
+//        .antMatchers(
+//            "/v2/api-docs", 
+//            "/swagger-resources/**",  
+//            "/swagger-ui.html", 
+//            "/webjars/**" ,
+//             /*Probably not needed*/ "/swagger.json")
+//        .permitAll();
     }
 
     @Override
