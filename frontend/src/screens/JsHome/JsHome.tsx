@@ -97,7 +97,7 @@ const RenderApplicationCards: React.FC<applicationData[]> = (cardsData: applicat
 const JsHome: React.FC<Props> = (props: Props) => {
     const [renderdata, setrenderdata] = React.useState(sentCardData);
     const [underlineButton, setUnderlineButton] = React.useState(1);
-    const [ finishedOnBoarding, setFinishedOnboarding ] = React.useState(true);
+    const [ finishedOnBoarding, setFinishedOnboarding ] = React.useState(false);
 
     React.useEffect(() => {
         axios.get('http://localhost:8080/v1/users/get-own')
