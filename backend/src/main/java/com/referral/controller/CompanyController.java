@@ -3,6 +3,9 @@ package com.referral.controller;
 import java.util.List;
 
 import com.referral.service.JobService;
+
+import io.swagger.annotations.ApiOperation;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,7 @@ public class CompanyController {
     @Autowired
     private CompanyService companyService;
 
+    @ApiOperation(value = "find all companies", response = Company.class)
     @GetMapping
     public ResponseEntity<List<Company>> getAllCompanies() {
         try {
