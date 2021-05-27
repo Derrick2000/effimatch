@@ -79,7 +79,7 @@ const Referrer: React.FC<any> = (type:number) => {
                 autocomplete={false}
             />
 
-<div className="onboard-button-wrapper">
+            <div className="onboard-button-wrapper">
                 <Button type="primary" onClick={onSave} className="onboard-button-button">Save Selection</Button>
             </div>
         </div>
