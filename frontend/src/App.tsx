@@ -11,7 +11,7 @@ import Search from './screens/Search/Search';
 import Referers from './screens/Referers/Referers';
 import postDetails from './screens/post-details/post-details';
 import getReferredSingle from './screens/get-referred-single/get-referred-single';
-import OnBoard from './screens/OnBoard/OnBoard'
+import OnBoard from './screens/OnBoard/OnBoard';
 import RHomeSignedIn from './screens/R-Home-Signed-In/RHomeSignedIn';
 import RHomeDetails from './screens/RHomeDetails/RHomeDetails';
 import AddPost from './screens/AddPost/AddPost';
@@ -22,176 +22,124 @@ import SignUp from './screens/SignUp/SignUp';
 // testing-screens
 import Popup from './screens/PopUpTest/PopUpTest';
 
-import { enquireScreen } from 'enquire-js';
+import {enquireScreen} from 'enquire-js';
 
 // import redux stuff
-import store from "./store";
-import setAuthToken from "./utils/setAuthToken";
-import jwt_decode from "jwt-decode";
-import { setCurrentUser, logoutUser } from "./actions/authAction";
-import { Provider } from 'react-redux'
+import store from './store';
+import setAuthToken from './utils/setAuthToken';
+import jwt_decode from 'jwt-decode';
+import {setCurrentUser, logoutUser} from './actions/authAction';
+import {Provider} from 'react-redux';
 
 // router
-import { BrowserRouter, Route, Switch} from 'react-router-dom';
-import { createBrowserHistory } from "history";
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {createBrowserHistory} from 'history';
 import axios from 'axios';
-const history = createBrowserHistory()
+const history = createBrowserHistory();
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
-	// Set auth token header auth
-	const token = localStorage.jwtToken;
-	setAuthToken(token);
-	// Decode token and get user info and exp
-	const decoded = jwt_decode(token);
-	// Set user and isAuthenticated
-	store.dispatch(setCurrentUser(decoded));
+  // Set auth token header auth
+  const token = localStorage.jwtToken;
+  setAuthToken(token);
+  // Decode token and get user info and exp
+  const decoded = jwt_decode(token);
+  // Set user and isAuthenticated
+  store.dispatch(setCurrentUser(decoded));
 
-	// if the user have not set his role
-	if (decoded !== null
-			&&decoded.authorities.length === 0 
-			&& history.location.pathname !== '/onboard'
-			&& history.location.pathname !== '/sign-in') {
+  // if the user have not set his role
+  if (
+    decoded !== null &&
+    decoded.authorities.length === 0 &&
+    history.location.pathname !== '/onboard' &&
+    history.location.pathname !== '/sign-in'
+  ) {
+    // check if the user actually finished initial settings, but did not re-signin
+    axios.get('http://localhost:8080/v1/users/get-own').then(r => {
+      const finishedInitialSettings = r.data.finishedInitialSettings;
+      if (!finishedInitialSettings) window.location.href = '/onboard';
+    });
+  }
 
-		// check if the user actually finished initial settings, but did not re-signin
-		axios.get('http://localhost:8080/v1/users/get-own')
-		.then(r => {
-			const finishedInitialSettings = r.data.finishedInitialSettings;
-			if (!finishedInitialSettings) window.location.href = '/onboard';
-		})
-	}
+  // Check for expired token
+  const currentTime = Date.now() / 1000; // to get in milliseconds
 
-	// Check for expired token
-	const currentTime = Date.now() / 1000; // to get in milliseconds
-
-	if (decoded.exp < currentTime) {
-		// Logout user
-		store.dispatch(logoutUser());
-	}
+  if (decoded.exp < currentTime) {
+    // Logout user
+    store.dispatch(logoutUser());
+  }
 }
 
 function App() {
-	const [ isMobile, setIsMobile ] = React.useState(false);
+  const [isMobile, setIsMobile] = React.useState(false);
 
-	React.useEffect(() => {
-			// responsive to mobile screen
-			enquireScreen((mobileState: boolean) => {
-					setIsMobile(mobileState);
-				});
-	}, [])
+  React.useEffect(() => {
+    // responsive to mobile screen
+    enquireScreen((mobileState: boolean) => {
+      setIsMobile(mobileState);
+    });
+  }, []);
 
   return (
-		<Provider store={store}>
-			<NavBar
-				isMobile={isMobile}
-			/>
-			<BrowserRouter>
+    <Provider store={store}>
+      <NavBar isMobile={isMobile} />
+      <BrowserRouter>
+        <Switch>
+          <Route exact={true} path="/" component={GuestHome} />
+        </Switch>
 
-				<Switch>
-					<Route
-						exact={true}
-						path="/"
-						component={GuestHome}
-					/>
-				</Switch>
+        <Switch>
+          <Route exact={true} path="/js-home" component={JsHome} />
+        </Switch>
 
-				<Switch>
-					<Route
-						exact={true}
-						path="/js-home"
-						component={JsHome}
-					/>
-				</Switch>
+        <Switch>
+          <Route exact={true} path="/search" component={Search} />
+        </Switch>
 
-				<Switch>
-					<Route
-						exact={true}
-						path="/search"
-						component={Search}
-					/>
-				</Switch>
+        <Switch>
+          <Route exact={true} path="/referers" component={Referers} />
+        </Switch>
 
-				<Switch>
-					<Route
-						exact={true}
-						path="/referers"
-						component={Referers}
-					/>
-				</Switch>
+        <Switch>
+          <Route exact={true} path="/post-details" component={postDetails} />
+        </Switch>
 
-				<Switch>
-					<Route
-						exact={true}
-						path="/post-details"
-						component={postDetails}
-					/>
-				</Switch>
+        <Switch>
+          <Route
+            exact={true}
+            path="/get-referred-single"
+            component={getReferredSingle}
+          />
+        </Switch>
 
-				<Switch>
-					<Route
-						exact={true}
-						path="/get-referred-single"
-						component={getReferredSingle}
-					/>
-				</Switch>
+        <Switch>
+          <Route exact={true} path="/popup-test" component={Popup} />
+        </Switch>
 
-				<Switch>
-					<Route
-						exact={true}
-						path="/popup-test"
-						component={Popup}
-					/>
-				</Switch>
+        <Switch>
+          <Route exact={true} path="/sign-in" component={SignIn} />
+        </Switch>
 
-				<Switch>
-					<Route
-						exact={true}
-						path="/sign-in"
-						component={SignIn}
-					/>
-				</Switch>
+        <Switch>
+          <Route exact={true} path="/sign-up" component={SignUp} />
+        </Switch>
 
-				<Switch>
-					<Route
-						exact={true}
-						path="/sign-up"
-						component={SignUp}
-					/>
-				</Switch>
+        <Switch>
+          <Route exact={true} path="/RHomeSignedIn" component={RHomeSignedIn} />
+        </Switch>
 
-				<Switch>
-					<Route
-						exact={true}
-						path="/RHomeSignedIn"
-						component={RHomeSignedIn}
-					/>
-				</Switch>
+        <Switch>
+          <Route exact={true} path="/onboard" component={OnBoard} />
+        </Switch>
 
-				<Switch>
-					<Route
-						exact={true}
-						path="/onboard"
-						component={OnBoard}
-					/>
-				</Switch>
-
-				<Switch>
-					<Route
-						exact={true}
-						path="/RHomeDetails"
-						component={RHomeDetails}
-					/>
-				</Switch>
-				<Switch>
-					<Route
-						exact={true}
-						path="/addpost"
-						component={AddPost}
-					/>
-				</Switch>
-
-			</BrowserRouter>
-		</Provider>
+        <Switch>
+          <Route exact={true} path="/RHomeDetails" component={RHomeDetails} />
+        </Switch>
+        <Switch>
+          <Route exact={true} path="/addpost" component={AddPost} />
+        </Switch>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
