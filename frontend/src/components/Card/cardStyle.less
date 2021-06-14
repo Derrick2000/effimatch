@@ -47,7 +47,6 @@
   }
 
   &-block {
-
     &-group {
       margin-bottom: 4vh;
       display: block;
@@ -56,11 +55,12 @@
       width: 100%;
       border-radius: 10px;
       box-shadow: 0 2px 16px fade(#000, 8);
-      transition: box-shadow @animate-duration ease-in, transform @animate-duration ease-in;
+      transition: box-shadow @animate-duration ease-in,
+        transform @animate-duration ease-in;
 
       &:hover {
         transform: translateY(-5px);
-        box-shadow: 0 6px 16px fade(#000, 12);
+        box-shadow: 0 30px 40px fade(#000, 12);
       }
     }
 
@@ -88,8 +88,9 @@
       will-change: transform;
       box-shadow: 0 2px 16px fade(#000, 8);
       border-radius: 10px;
-      transition: box-shadow @animate-duration ease-in, transform @animate-duration ease-in;
-      background-color: #F7F7F7;
+      transition: box-shadow @animate-duration ease-in,
+        transform @animate-duration ease-in;
+      background-color: #f7f7f7;
       text-align: center;
       width: 100%;
       height: 600px;
