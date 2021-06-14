@@ -3,13 +3,17 @@ import React from 'react';
 // screens and componets
 import Header from './Header';
 import TweenOne from 'rc-tween-one';
-import Footer from '../../components/Footer/Footer';
+import Footer from 'components/Footer/Footer';
 import Companies from './Companies';
-import Card from '../../components/Card/Card';
+import Card from 'components/Card/Card';
 
 // antd
 import QueueAnim from 'rc-queue-anim';
 import {Row, Col} from 'antd';
+
+// assets (temp)
+import MS_logo from '../../images/MS_logo.png';
+import Avatar from '../../images/avatar.png';
 
 import './styles/home.less';
 
@@ -21,7 +25,7 @@ interface CardData {
   name: string;
 }
 
-const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
+const RenderCards = (cardsData: CardData[]) => {
   return (
     <div className="home-cards-wrapper">
       <QueueAnim key="queue" type="bottom" leaveReverse interval={50}>
@@ -64,5 +68,15 @@ const GuestHome = () => (
 );
 
 const cardData: CardData[] = [];
+
+for (let ii = 0; ii < 3; ii++) {
+  cardData.push({
+    title: 'Design Positions',
+    company: 'Microsoft',
+    name: 'referer 1',
+    logo: MS_logo,
+    avatar: Avatar,
+  });
+}
 
 export default GuestHome;

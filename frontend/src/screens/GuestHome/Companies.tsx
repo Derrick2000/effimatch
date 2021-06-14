@@ -1,10 +1,10 @@
 import React from 'react';
 
 // logos
-import {ReactComponent as AmazonLogo} from '../../images/amazon.svg';
-import {ReactComponent as GoogleLogo} from '../../images/google.svg';
-import {ReactComponent as LinkedInLogo} from '../../images/LinkedIn.svg';
-import {ReactComponent as FacebookLogo} from '../../images/facebook.svg';
+import {ReactComponent as AmazonLogo} from 'images/amazon.svg';
+import {ReactComponent as GoogleLogo} from 'images/google.svg';
+import {ReactComponent as LinkedInLogo} from 'images/LinkedIn.svg';
+import {ReactComponent as FacebookLogo} from 'images/facebook.svg';
 
 const Companies = () => {
   return (

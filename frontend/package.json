@@ -48,6 +48,14 @@
       "react-app/jest"
     ]
   },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "eslint --ext .tsx --ext .ts src/ --fix"
+    ],
+    "*.{ts,tsx,js,json,html,yml,css,md}": [
+      "prettier --write ."
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",

@@ -18,7 +18,8 @@ rules: {
     "react/prop-types": "off",
 		"@typescript-eslint/explicit-module-boundary-types": "off",
 		"@typescript-eslint/no-explicit-any":"off",
-		"react/no-unescaped-entities" :"off"
+		"react/no-unescaped-entities" :"off",
+    "@typescript-eslint/no-var-requires":"off"
 },
 settings: {
 			"react": {
