@@ -29,7 +29,7 @@ const openSuccessNotification = (placement: any) => {
 const openCodeNotification = (placement: any) => {
   notification.success({
     message: 'Code',
-    description: 'Send code successfully.',
+    description: 'We have send an OTP to your email.',
     placement,
   });
 };
@@ -41,7 +41,7 @@ const Signup: React.FC<any> = () => {
   const [confirmPassword, setConfirmPW] = React.useState('');
   const [code, setCode] = React.useState('');
   const [loading, setLoading] = React.useState(false);
-  const [sendVal, setSendVal] = React.useState('Send Code');
+  const [sendVal, setSendVal] = React.useState('Get OTP');
   const [codeSent, setSent] = React.useState(false);
 
   const invalid = (mail: string, username: string, password: string) => {
@@ -169,16 +169,16 @@ const Signup: React.FC<any> = () => {
             maxLength={25}
           />
           <Search
-            placeholder="Enter Code Here"
+            placeholder="Enter OTP Here"
             enterButton={
               <Button type="primary" onClick={sendCode} disabled={codeSent}>
                 {sendVal}
               </Button>
             }
-            size="small"
+            size="middle"
             value={code}
             onChange={e => setCode(e.target.value)}
-            onSearch={() => sendCode()}
+            onSearch={sendCode}
             className="signup-box-form-code"
           />
         </div>

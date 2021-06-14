@@ -2,129 +2,144 @@
 @border-radius: 10px;
 
 .@{signup} {
-    &-wrapper { 
-        position: fixed;
-        overflow: hidden;
+  &-wrapper {
+    position: fixed;
+    overflow: hidden;
 
-        &-bg{
-            position: relative;
-            display: inline-block;
-            width: 100vw;
-            height: 100vh;
-            top: 0;
-            left: 0;
-            background: @background-color;
-        }
-
-        &-person{
-            position: absolute;
-            left: -530px;
-            bottom: 100px;
-            width: 100vw;
-            height: 85vh;
-            z-index: 1;
-        }
-
+    &-bg {
+      position: relative;
+      display: inline-block;
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      background: @background-color;
     }
 
-    &-box{
-        padding: 20px 50px 20px;
-        position: absolute;
-        width: 550px;
-        height: 580px;
-        top: 40%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 2;
-
-        background: #FFFFFF;
-        box-shadow: -2px -2px 1px rgba(233, 233, 233, 0.25), 2px 2px 1px rgba(233, 233, 233, 0.25);
-
-        &-header{
-          line-height: 28px;
-          font-size: 24px;
-          color: #000000;
-          font-weight: 500;
-          text-align: center;
-        }
-        &-form{
-
-          &-text{
-              margin-left: 80px;
-
-              padding-top: 10px;
-              font-family: Work Sans;
-              font-style: normal;
-              font-weight: normal;
-              font-size: 18px;
-              line-height: 19px;
-          }
-          &-input{
-            margin-left: 80px;
-            width:290px;
-            border-radius: @border-radius;
-          }
-
-          &-code{
-            padding-top: 15px;
-            margin-left: 80px;
-            width:290px;
-            
-          }
-        }
-
-        &-signupBut,&-linkedinBut{
-          margin: 0 auto;
-          display: block;
-          margin-top: 15px;
-          border-radius: @border-radius;
-          width: 239px;
-          height: 39px;
-        }
-
-        &-linkedinBut{
-          background-color: #0A66C2;
-          color:white;
-        }
-
-        &-linkedinBut:hover{
-          background-color: rgb(37, 133, 229);
-          color:white;
-          border-color: white;
-        }
-        
+    &-person {
+      position: absolute;
+      left: -530px;
+      bottom: 100px;
+      width: 100vw;
+      height: 85vh;
+      z-index: 1;
     }
+  }
+
+  &-box {
+    padding: 20px 50px 20px;
+    position: absolute;
+    width: 550px;
+    height: 630px;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+
+    background: #ffffff;
+    box-shadow: -2px -2px 1px rgba(233, 233, 233, 0.25),
+      2px 2px 1px rgba(233, 233, 233, 0.25);
+
+    // "send code" input
+    .ant-input-group > .ant-input:first-child,
+    .ant-input-group-addon:first-child {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-top-left-radius: @border-radius;
+      border-bottom-left-radius: @border-radius;
+    }
+
+    // "send code" button
+    .ant-input-search
+      > .ant-input-group
+      > .ant-input-group-addon:last-child
+      .ant-input-search-button {
+      padding-top: 0;
+      padding-bottom: 0;
+      border-top-right-radius: @border-radius;
+      border-bottom-right-radius: @border-radius;
+    }
+
+    &-header {
+      line-height: 28px;
+      font-size: 24px;
+      color: #000000;
+      font-weight: 500;
+      text-align: center;
+    }
+    &-form {
+      &-text {
+        margin-left: 80px;
+
+        padding-top: 10px;
+        font-family: Work Sans;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 19px;
+      }
+      &-input {
+        margin-left: 80px;
+        width: 290px;
+        border-radius: @border-radius;
+      }
+
+      &-code {
+        padding-top: 30px;
+        padding-bottom: 10px;
+        margin-left: 80px;
+        width: 290px;
+      }
+    }
+
+    &-signupBut,
+    &-linkedinBut {
+      margin: 0 auto;
+      display: block;
+      margin-top: 15px;
+      border-radius: @border-radius;
+      width: 239px;
+      height: 39px;
+    }
+
+    &-linkedinBut {
+      background-color: #0a66c2;
+      color: white;
+    }
+
+    &-linkedinBut:hover {
+      background-color: rgb(37, 133, 229);
+      color: white;
+      border-color: white;
+    }
+  }
 }
 
 @media screen and (max-width: 1100px) {
-    .@{signup} {
-      &-wrapper-person{
-        display: none;
-      }
-
+  .@{signup} {
+    &-wrapper-person {
+      display: none;
     }
+  }
 }
 @media screen and (min-width: 1100px) {
-    .@{signup} {
-      &-wrapper-person{
-        visibility: visible;
-      }
+  .@{signup} {
+    &-wrapper-person {
+      visibility: visible;
     }
+  }
 }
 @media screen and (max-height: 600px) {
   .@{signup} {
-    &-wrapper-person{
+    &-wrapper-person {
       display: none;
     }
-
   }
-}  
+}
 @media screen and (min-height: 600px) {
   .@{signup} {
-
-    &-wrapper-person{
+    &-wrapper-person {
       visibility: visible;
     }
-
   }
-}  
+}
