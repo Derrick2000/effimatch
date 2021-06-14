@@ -1,14 +1,21 @@
 @companies: companies;
 
 .@{companies} {
-    &-wrapper {
-        margin-top: 10vh;
-        width: 100%;
-        text-align: center;
-    }
+  &-wrapper {
+    margin-top: 10vh;
+    width: 100%;
+    text-align: center;
+  }
 
-    &-logos {
-        height: 40px;
-        margin: 10px 40px;
-    }
+  &-logo-holder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-logos {
+    height: 100%;
+    margin: 10px 40px;
+    overflow: visible;
+  }
 }

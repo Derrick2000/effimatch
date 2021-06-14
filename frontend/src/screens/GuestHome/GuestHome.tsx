@@ -12,8 +12,8 @@ import QueueAnim from 'rc-queue-anim';
 import {Row, Col} from 'antd';
 
 // assets (temp)
-import MS_logo from '../../images/MS_logo.png';
-import Avatar from '../../images/avatar.png';
+import MS_logo from 'images/MS_logo.png';
+import Avatar from 'images/avatar.png';
 
 import './styles/home.less';
 

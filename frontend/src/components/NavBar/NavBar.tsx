@@ -17,11 +17,11 @@ import './navbar.less';
 
 const {Item} = Menu;
 
-interface Props {
+interface NavBarProps {
   isMobile: boolean;
 }
 
-const NavBar: React.FC<Props> = (props: Props) => {
+const NavBar = (props: NavBarProps) => {
   const {isMobile} = props;
 
   const [phoneOpen, setPhoneOpen] =
