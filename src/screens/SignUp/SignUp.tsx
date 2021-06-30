@@ -59,7 +59,6 @@ const Signup: React.FC<any> = () => {
   const sendCodeSeccess = () => {
     let timer = 60;
     setSent(true);
-    console.log(codeSent);
     const downloadTimer = setInterval(function () {
       setSendVal(timer + '');
       timer--;
@@ -81,14 +80,18 @@ const Signup: React.FC<any> = () => {
       email: email,
     };
 
-    // 后端发送email的服务延迟太长，为了避免用户产生焦虑，点了发送button之后直接显示发送成功
+    // 后端发送email的服务延迟太长，为了避免用户产生焦虑，点了发送button之后直接开始倒计时
     sendCodeSeccess();
-    openCodeNotification('bottomLeft');
 
-    const URL = 'http://localhost:8080/v1/send-verification';
-    axios.post(URL, emailInfo, {withCredentials: true}).catch(e => {
-      openErrorNotification('bottomLeft', e);
-    });
+    const URL = 'http://localhost:8080/v1/send-verification-muted';
+    axios
+      .post(URL, emailInfo, {withCredentials: true})
+      .catch(e => {
+        openErrorNotification('bottomLeft', e);
+      })
+      .then(() => {
+        openCodeNotification('bottomLeft');
+      });
   };
 
   const signUp = () => {
@@ -113,7 +116,7 @@ const Signup: React.FC<any> = () => {
       password: password,
       code: Number(code),
     };
-    console.log(Number(code));
+
     axios
       .post(URL, userInfo, {withCredentials: true})
       .then(r => {

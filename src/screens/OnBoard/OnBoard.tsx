@@ -16,10 +16,32 @@ import {logoutUser} from '../../actions/authAction';
 
 const RadioGroup = Radio.Group;
 
+const handleChangeRole = (newRole: string, auth) => {
+  const changeRoleRequest = {
+    email: auth.user.sub,
+    newRole: 'R',
+  };
+
+  axios
+    .post('http://localhost:8080/v1/users/change-role', changeRoleRequest)
+    .then(() => {
+      // if success, change user info in server 'initial settings finished'
+      axios
+        .post('http://localhost:8080/v1/users/finished-initial-settings')
+        .then(() => {
+          // has to re-login after changing permissions
+          logoutUser();
+          window.location.href = '/sign-in';
+        });
+    })
+    .catch(e => console.log(e));
+};
+
 const Referrer: React.FC<any> = () => {
   const [position, setPosition] = React.useState('');
   const [location, setLocation] = React.useState('');
   const [company, setCompany] = React.useState('');
+  const auth = useSelector((state: any) => state.auth);
 
   const onInputPosition = (value: string) => {
     if (value !== '') {
@@ -40,15 +62,7 @@ const Referrer: React.FC<any> = () => {
   };
 
   const onSave = () => {
-    // print what user input
-    console.log({
-      position: position,
-      location: location,
-      company: company,
-    });
-
-    // go /#
-    window.location.href = '/#';
+    handleChangeRole('R', auth);
   };
 
   return (
@@ -128,32 +142,7 @@ const JobSeeker = () => {
 
   // handle button click
   const onSave = () => {
-    // print what user input
-    console.log({
-      jobs: jobs.filter(word => word !== ''),
-      skills: skills.filter(word => word !== ''),
-      location: location,
-      jobType: jobType,
-    });
-
-    const changeRoleRequest = {
-      email: auth.user.sub,
-      newRole: 'JS',
-    };
-
-    axios
-      .post('http://localhost:8080/v1/users/change-role', changeRoleRequest)
-      .then(() => {
-        // if success, change user info in server 'initial settings finished'
-        axios
-          .post('http://localhost:8080/v1/users/finished-initial-settings')
-          .then(() => {
-            // has to re-login after changing permissions
-            logoutUser();
-            window.location.href = '/sign-in';
-          });
-      })
-      .catch(e => console.log(e));
+    handleChangeRole('JS', auth);
   };
 
   // handle close tags
