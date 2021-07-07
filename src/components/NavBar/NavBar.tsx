@@ -12,6 +12,7 @@ import {ReactComponent as Logo} from '../../images/logo.svg';
 import {useSelector} from 'react-redux';
 import {logoutUser} from '../../actions/authAction';
 import store from '../../store';
+import PopUp from './PopUp';
 
 import './navbar.less';
 
@@ -24,8 +25,9 @@ interface NavBarProps {
 const NavBar = (props: NavBarProps) => {
   const {isMobile} = props;
 
-  const [phoneOpen, setPhoneOpen] =
-    React.useState<boolean | undefined>(undefined);
+  const [phoneOpen, setPhoneOpen] = React.useState<boolean | undefined>(
+    undefined,
+  );
 
   const auth = useSelector((state: any) => state.auth);
 
