@@ -55,7 +55,7 @@
       "eslint --ext .tsx --ext .ts src/ --fix"
     ],
     "*.{ts,tsx,js,json,html,yml,css,md}": [
-      "prettier --write ."
+      "prettier --write *.{ts,tsx,js,json,html,yml,css,md}"
     ]
   },
   "browserslist": {

@@ -12,7 +12,6 @@ import {ReactComponent as Logo} from '../../images/logo.svg';
 import {useSelector} from 'react-redux';
 import {logoutUser} from '../../actions/authAction';
 import store from '../../store';
-import PopUp from './PopUp';
 
 import './navbar.less';
 
