@@ -1,12 +1,10 @@
 import React from 'react';
-import axios from 'axios';
-
 import {ReactComponent as SignUpBackGround} from '../../images/sign_bg.svg';
 import {ReactComponent as SignUpPerson} from '../../images/sign_up_person.svg';
-
 import {Input, Button, notification} from 'antd';
-
 import './styles/signup.less';
+import {addUserUsingPost, sendVerificationMutedUsingPost} from 'apis/effimatch';
+import {useRequest} from 'apis/useRequest';
 
 const {Search} = Input;
 
@@ -44,6 +42,29 @@ const Signup: React.FC<any> = () => {
   const [sendVal, setSendVal] = React.useState('Get OTP');
   const [codeSent, setSent] = React.useState(false);
 
+  const [register] = useRequest(addUserUsingPost, {
+    onSuccess: r => {
+      console.log('sign up success: ', r.data);
+      openSuccessNotification('bottomLeft');
+      setLoading(false);
+      window.location.href = '/';
+    },
+    onFail: e => {
+      console.error('sign up error: ', e.response.data);
+      openErrorNotification('bottomLeft', e.response.data);
+      setLoading(false);
+    },
+  });
+
+  const [sendVerificationMuted] = useRequest(sendVerificationMutedUsingPost, {
+    onSuccess: () => {
+      openCodeNotification('bottomLeft');
+    },
+    onFail: e => {
+      openErrorNotification('bottomLeft', e);
+    },
+  });
+
   const invalid = (mail: string, username: string, password: string) => {
     return (
       !new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(mail) ||
@@ -80,18 +101,8 @@ const Signup: React.FC<any> = () => {
       email: email,
     };
 
-    // 后端发送email的服务延迟太长，为了避免用户产生焦虑，点了发送button之后直接开始倒计时
     sendCodeSeccess();
-
-    const URL = 'http://localhost:8080/v1/send-verification-muted';
-    axios
-      .post(URL, emailInfo, {withCredentials: true})
-      .catch(e => {
-        openErrorNotification('bottomLeft', e);
-      })
-      .then(() => {
-        openCodeNotification('bottomLeft');
-      });
+    sendVerificationMuted({requestBody: emailInfo});
   };
 
   const signUp = () => {
@@ -108,28 +119,15 @@ const Signup: React.FC<any> = () => {
     }
 
     setLoading(true);
-    const URL = 'http://localhost:8080/register';
 
     const userInfo = {
       username: username,
       email: email,
       password: password,
-      code: Number(code),
+      code: code,
     };
 
-    axios
-      .post(URL, userInfo, {withCredentials: true})
-      .then(r => {
-        console.log('sign up success: ', r.data);
-        openSuccessNotification('bottomLeft');
-        setLoading(false);
-        window.location.href = '/';
-      })
-      .catch(e => {
-        console.error('sign up error: ', e.response.data);
-        openErrorNotification('bottomLeft', e.response.data);
-        setLoading(false);
-      });
+    register({requestBody: userInfo});
   };
   const signWithLinkedIn = () => {
     console.log('TODO');

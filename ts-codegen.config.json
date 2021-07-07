@@ -1,0 +1,14 @@
+{
+  "outputFolder": "src/apis",
+  "requestCreateLib": "apis/createRequestConfig",
+  "requestCreateMethod": "createRequestConfig",
+  "timeout": 180000,
+  "apiSpecsPaths": [
+    { "path": "http://localhost:8080/v2/api-docs", "name": "effimatch" }
+  ],
+  "options": {
+    "withComments": true,
+    "typeWithPrefix": false,
+    "backwardCompatible": false
+  }
+}
