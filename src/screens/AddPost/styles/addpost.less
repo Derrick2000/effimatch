@@ -2,101 +2,105 @@
 @border-radius: 10px;
 
 .@{addpost} {
-    &-wrapper{      
-        min-height: 93vh;  
-        width: 100%;
-        position: absolute;
-        background-color: @background-color;
-        padding-bottom: 40px;
+  &-wrapper {
+    min-height: 100vh;
+    width: 100%;
+    position: absolute;
+    background-color: @background-color;
+    padding-bottom: 40px;
+  }
+
+  &-button {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &-button {
+      text-align: center;
+      border-radius: 10px;
+      display: block;
+      width: 195px;
+      height: 32px;
+      margin: auto;
+    }
+  }
+
+  &-content {
+    position: relative;
+    margin: auto;
+    padding: 0px 40px 0px;
+    width: 100%;
+    max-width: 800px;
+
+    &-error {
+      color: red;
+      font-size: 0.7rem;
     }
 
-    &-button{
-        padding-top: 10px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+    &-date {
+      width: 100%;
+      align-items: center;
+      padding: 8px;
 
-        &-button{
-            text-align: center;
-            border-radius: 10px;
-            display: block;
-            width: 195px;
-            height: 32px;
-            margin: auto;
-        }
+      border: 1px solid white;
+      box-sizing: border-box;
+      border-radius: 4px;
+
+      font-style: normal;
+      font-weight: normal;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
     }
 
+    &-header {
+      font-family: Avenir;
+      font-size: 20px;
 
-
-    &-content{
-        position: relative;
-        margin: auto;
-        padding: 0px 40px 0px;
-        width: 100%;
-        max-width: 800px;
-
-        &-date{
-            width: 100%;
-            align-items: center;
-            padding: 8px;
-    
-            border: 1px solid white;
-            box-sizing: border-box;
-            border-radius: 4px;
-    
-            font-style: normal;
-            font-weight: normal;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-        }
-
-        &-header{
-            font-family: Avenir;
-            font-size: 20px;
-            
-            color: #000000;
-        }
-
-        &-question{
-            font-family: Avenir;
-            font-size: 20px;
-            padding-top: 20px;
-            color: #000000;
-        }
-
-        &-radio{
-            margin-right: 50px;
-        }
-
-        &-tags-wrapper{
-            margin-top: 1vh;
-        }
-
-        &-tag{
-            font-family: Avenir;
-            font-style: normal;
-            font-weight: normal;
-            font-size: 14px;
-            line-height: 15px;
-
-            background: #DDF0FB;
-            border-radius: 6px; 
-            justify-content: center;
-            align-items: center;
-            padding: 7px;
-        }
-        
-
-        &-box{
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            height: 350px;
-            background: #FFFFFF;
-            border: 2px solid #000000;
-            box-sizing: border-box;
-                        
-        }
-
+      color: #000000;
     }
+
+    &-question {
+      font-family: Avenir;
+      font-size: 20px;
+      padding-top: 20px;
+      color: #000000;
+    }
+
+    &-radio {
+      margin-right: 50px;
+    }
+
+    &-tags-wrapper {
+      margin-top: 1vh;
+    }
+
+    &-tag {
+      font-family: Avenir;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 15px;
+
+      background: #ddf0fb;
+      border-radius: 6px;
+      justify-content: center;
+      align-items: center;
+      padding: 7px;
+    }
+
+    &-box {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 350px;
+      background: #ffffff;
+      border: 2px solid #000000;
+      box-sizing: border-box;
+    }
+    &-text {
+      position: absolute;
+      right: 40px;
+    }
+  }
 }

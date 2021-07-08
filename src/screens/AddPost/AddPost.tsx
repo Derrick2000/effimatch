@@ -1,9 +1,9 @@
 import React from 'react';
-import ReactQuill from 'react-quill';
+import ReactQuill, {Quill} from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 // componenet
-import InputBar from '../../components/InputBar/InputBar';
+import InputBar from 'components/InputBar/InputBar';
 
 // antd
 import {Button, Radio, DatePicker} from 'antd';
@@ -13,7 +13,58 @@ import './styles/addpost.less';
 
 const RadioGroup = Radio.Group;
 
+class Counter {
+  quill: any;
+  options: any;
+  container: any;
+  constructor(quill, options) {
+    this.quill = quill;
+    this.options = options;
+    this.container = document.querySelector(options.container);
+    quill.on('text-change', this.update.bind(this));
+    this.update(); // Account for initial contents
+  }
+
+  calculate() {
+    let text = this.quill.getText().trim();
+    if (this.options.unit === 'word') {
+      text = text.trim();
+      return text.length > 0 ? text.split(/\s+/).length : 0;
+    } else {
+      return text.length;
+    }
+  }
+
+  update() {
+    const length = this.calculate();
+    if (length >= 1000) {
+      this.quill.history.undo();
+    }
+
+    let label = this.options.unit;
+    if (length !== 1) {
+      label += 's';
+    }
+    this.container.innerText = length + '/1000';
+  }
+}
+Quill.register('modules/counter', Counter);
+
+const modules = {
+  counter: {
+    container: '#counter',
+    unit: 'character',
+    history: {delay: 100, userOnly: true},
+  },
+};
+
 const AddPost: React.FC<any> = () => {
+  const [jobDescPresent, setJobDescPresent] = React.useState(false);
+  const [typePresent, setTypePresent] = React.useState(false);
+  const [locationPresent, setLocationPresent] = React.useState(false);
+  const [companyPresent, setCompanyPresent] = React.useState(false);
+  const [datePresent, setDatePresent] = React.useState(false);
+
   const [type, setType] = React.useState(0);
   const [position, setPosition] = React.useState('');
   const [location, setLocation] = React.useState('');
@@ -41,22 +92,51 @@ const AddPost: React.FC<any> = () => {
 
   const onInputDate = (date: any, dateString: string) => {
     setDate(dateString);
-    console.log(dateString);
   };
 
   const onSave = () => {
-    // print what user input
-    console.log({
-      value: value,
-      type: type,
-      position: position,
-      location: location,
-      company: company,
-      date: date,
-    });
+    let submit = true;
 
-    // go /#
-    window.location.href = '/#';
+    if (value == '') {
+      submit = false;
+      setJobDescPresent(true);
+    }
+    if (type == 0) {
+      submit = false;
+      setTypePresent(true);
+    }
+    if (location == '') {
+      submit = false;
+      setLocationPresent(true);
+    }
+    if (company == '') {
+      submit = false;
+      setCompanyPresent(true);
+    }
+    if (date == '') {
+      submit = false;
+      setDatePresent(true);
+    }
+
+    if (submit) {
+      setJobDescPresent(false);
+      setTypePresent(false);
+      setLocationPresent(false);
+      setCompanyPresent(false);
+      setDatePresent(false);
+
+      console.log({
+        value: value,
+        type: type,
+        position: position,
+        location: location,
+        company: company,
+        date: date,
+      });
+
+      // go /#
+      window.location.href = '/#';
+    }
   };
 
   const onChange = (e: any) => {
@@ -66,20 +146,26 @@ const AddPost: React.FC<any> = () => {
   return (
     <div className="addpost-wrapper">
       <div className="addpost-content">
-        <link
-          rel="stylesheet"
-          href="//cdn.quilljs.com/1.2.6/quill.snow.css"></link>
-
         <p className="addpost-content-header">
           <strong>Job Description</strong>
         </p>
 
+        <link
+          rel="stylesheet"
+          href="//cdn.quilljs.com/1.2.6/quill.snow.css"></link>
         <ReactQuill
           theme="snow"
           value={value}
           onChange={setValue}
           className="addpost-content-box"
+          modules={modules}
         />
+        <div className="addpost-content-text" id="counter">
+          0
+        </div>
+        {jobDescPresent ? (
+          <p className="addpost-content-error">This field is required</p>
+        ) : null}
 
         <p className="addpost-content-question">
           <strong>Required year of experience:</strong>
@@ -95,6 +181,9 @@ const AddPost: React.FC<any> = () => {
             Senior
           </Radio>
         </RadioGroup>
+        {typePresent ? (
+          <p className="addpost-content-error">This field is required</p>
+        ) : null}
 
         <p className="addpost-content-question">
           <strong>Add job link here</strong>
@@ -113,6 +202,9 @@ const AddPost: React.FC<any> = () => {
           placehold="Type your current location to start"
           autocomplete={false}
         />
+        {locationPresent ? (
+          <p className="addpost-content-error">This field is required</p>
+        ) : null}
 
         <p className="addpost-content-question">
           <strong>Company</strong>
@@ -122,6 +214,9 @@ const AddPost: React.FC<any> = () => {
           placehold="Type your company name"
           autocomplete={false}
         />
+        {companyPresent ? (
+          <p className="addpost-content-error">This field is required</p>
+        ) : null}
 
         <p className="addpost-content-question">
           <strong>Application deadline</strong>
@@ -131,6 +226,9 @@ const AddPost: React.FC<any> = () => {
           className="addpost-content-date"
           onChange={onInputDate}
         />
+        {datePresent ? (
+          <p className="addpost-content-error">This field is required</p>
+        ) : null}
 
         <div className="addpost-button">
           <Button
