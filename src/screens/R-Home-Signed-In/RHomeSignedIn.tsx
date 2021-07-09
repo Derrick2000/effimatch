@@ -4,25 +4,15 @@ import React from 'react';
 
 // screens and componets
 import TweenOne from 'rc-tween-one';
-import Footer from '../../components/Footer/Footer';
-import MyCard from '../../components/Card/Card';
-import RequestCard from '../../components/Card/RequestCard';
+import Footer from 'components/Footer/Footer';
+import RequestCard from 'components/Card/RequestCard';
 // antd
-import {Row, Card, Col, Button} from 'antd';
+import {Card, Button} from 'antd';
 
 // assets (temp)
-import MS_logo from '../../images/MS_logo.png';
-import Avatar from '../../images/avatar.png';
+import MS_logo from 'images/MS_logo.png';
 
 import './styles/RHomeSignedInStyles.less';
-
-interface CardData {
-  title: string;
-  company: string;
-  avatar: string;
-  logo: string;
-  name: string;
-}
 
 interface requestCardData {
   logo: string;
@@ -36,36 +26,6 @@ interface requestSectionData {
   requests: requestCardData[];
 }
 
-const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
-  return (
-    <div className="RHome-Signed-In-cards-wrapper">
-      <div className="RHome-Signed-In-cards-title">
-        <h1 className="RHome-Signed-In-cards-title-h1">Posts:</h1>
-        <Button type="primary" className="RHome-Signed-In-cards-title-button">
-          Add Position
-        </Button>
-      </div>
-      <Row justify="space-between" className="RHome-Signed-In-cards-section">
-        {cardsData.map((item: CardData, i: number) => (
-          <Col
-            md={6}
-            xs={24}
-            className="RHome-Signed-In-card-block"
-            key={i.toString()}>
-            <MyCard
-              title={item.title}
-              company={item.company}
-              logo={item.logo}
-              avatar={item.avatar}
-              name={item.name}
-            />
-          </Col>
-        ))}
-      </Row>
-    </div>
-  );
-};
-
 // title: string,
 //     avatar: string,
 //     logo: string,
@@ -77,11 +37,12 @@ const RenderRequestCards: React.FC<requestSectionData[]> = (
 ) => {
   return (
     // Edited by William. 这样视觉效果更好
-    <Card
-      title={`${sectionData[0].title} @ ${sectionData[0].company}`}
-      className="RHome-Signed-In-application-section">
+    <Card className="RHome-Signed-In-application-section">
       {sectionData[0].requests.map((item: requestCardData, i: number) => (
-        <Card.Grid key={i.toString()} style={{width: '100%'}}>
+        <Card.Grid
+          className="RHome-Signed-In-application-section-card"
+          key={i.toString()}
+          style={{width: '100%', height: '100%'}}>
           <RequestCard
             logo={item.logo}
             name={item.name}
@@ -99,31 +60,24 @@ const RHomeSignedIn = () => {
       <div className="RHome-Signed-In-content-wrapper">
         <TweenOne animation={{x: -200, type: 'from', ease: 'easeOutQuad'}}>
           <div className="RHome-Signed-In-cards-title">
-            <h1 className="RHome-Signed-In-cards-title-h1">
-              Referral Requests:
-            </h1>
+            <h1 className="RHome-Signed-In-cards-title-h1">Opportunities</h1>
+            <Button
+              type="primary"
+              onClick={() => {
+                window.location.href = '/addpost';
+              }}
+              className="RHome-Signed-In-cards-title-button">
+              Post Opportunity
+            </Button>
           </div>
 
           {RenderRequestCards(dummuRequestSectionData)}
-          {RenderCards(referralCardData)}
         </TweenOne>
       </div>
       <Footer />
     </div>
   );
 };
-
-// dummy data for "get referral cards"
-const referralCardData: CardData[] = [];
-for (let ii = 0; ii < 1; ii++) {
-  referralCardData.push({
-    title: 'Software Engineer',
-    company: 'Microsoft',
-    name: 'referer 3',
-    logo: MS_logo,
-    avatar: Avatar,
-  });
-}
 
 // interface applicationData {
 //     title: string,
@@ -138,8 +92,8 @@ const dummuRequestCardData: requestCardData[] = [];
 for (let ii = 0; ii < 2; ii++) {
   dummuRequestCardData.push({
     logo: MS_logo,
-    name: 'Allen C',
-    description: 'Looking for software developer position',
+    name: 'Software Developer',
+    description: 'Open now',
   });
 }
 

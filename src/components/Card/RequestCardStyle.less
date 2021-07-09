@@ -1,13 +1,15 @@
-
 @card: request-card;
 @animate-duration: 0.25s;
 
 .@{card} {
-
   &-info {
-    &-button {
-
-      border-radius: 10px;
+    &-section {
+      &-button {
+        margin-left: 20px;
+        border-radius: 5px;
+        width: 90px;
+        border-color: black;
+      }
     }
     &-wrapper {
       display: flex;
@@ -17,7 +19,7 @@
       padding: 10px;
     }
     &-block {
-      display:flex;
+      display: flex;
     }
     &-block-image {
       float: left;
@@ -30,25 +32,23 @@
       margin-top: auto;
       margin-bottom: auto;
       h1 {
-        font-size: 16px;
+        font-size: 22px;
         font-weight: bold;
       }
 
       p {
+        font-weight: bold;
         display: inline;
-        font-size: 12px;
-        color: black;
+        font-size: 16px;
+        color: @primary-color;
       }
     }
     &-date {
       color: black;
     }
-
-
   }
 
   &-block {
-
     &-group {
       margin-bottom: 0;
       display: block;

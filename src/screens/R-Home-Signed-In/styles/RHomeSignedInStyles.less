@@ -5,7 +5,7 @@
 @application: application;
 .@{home}{
   &-all-wrapper {
-    height: 140vh;
+    height: 100vh;
     width: 100%;
     position: absolute;
     display: flex;
@@ -21,6 +21,7 @@
       will-change: transform;
       margin-left: auto;
       margin-right: auto;
+      margin-top: 70px;
       background-color: transparent;
   }
 
@@ -40,23 +41,23 @@
 
           &-h1 {
               font-size: 2.3em;
+              font-weight: bold;
               padding-left: 10px;
           }
 
           &-button {
               border-radius: 10px;
+              width: 200px;
           }
       }
   }
   &-application{
-    margin-top: 15px;
     &-section{
-      border-radius: 8px;
-      padding-bottom: 20px;
-      &-title{
-        padding-left: 10px;
-        font-weight: bold;
-        margin-bottom: 0px;
+      background-color: @background-color;
+      &-card{
+        border-radius: 5px;
+        margin-bottom: 15px;
+        background-color: white;
       }
     }
   }
@@ -64,9 +65,9 @@
 }
 
 // 去掉 Card Grid 之间的分割线
-.ant-card-grid {
-  box-shadow: none;
-}
+// .ant-card-grid {
+//   box-shadow: none;
+// }
 
 // By William
 // 个人觉得 card header 下面带个横线视觉效果更好一些
