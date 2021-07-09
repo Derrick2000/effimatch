@@ -76,6 +76,7 @@ const RenderRequestCards: React.FC<requestCardData[]> = (
               logo={item.logo}
               name={item.name}
               description={item.description}
+              closable={false}
             />
           </Card.Grid>
         ))}

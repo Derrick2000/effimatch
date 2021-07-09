@@ -5,6 +5,7 @@ interface requestCardData {
   logo: string;
   name: string;
   description: string;
+  closable: boolean;
 }
 
 const RequestCard: React.FC<requestCardData> = (props: requestCardData) => {
@@ -27,9 +28,11 @@ const RequestCard: React.FC<requestCardData> = (props: requestCardData) => {
           <Button type="default" className="request-card-info-section-button">
             View
           </Button>
-          <Button type="default" className="request-card-info-section-button">
-            Close
-          </Button>
+          {props.closable ? (
+            <Button type="default" className="request-card-info-section-button">
+              Close
+            </Button>
+          ) : null}
         </div>
       </div>
     </a>

@@ -47,6 +47,7 @@ const RenderRequestCards: React.FC<requestSectionData[]> = (
             logo={item.logo}
             name={item.name}
             description={item.description}
+            closable={true}
           />
         </Card.Grid>
       ))}
