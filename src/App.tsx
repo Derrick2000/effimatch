@@ -35,6 +35,7 @@ import {Provider} from 'react-redux';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {createBrowserHistory} from 'history';
 import axios from 'axios';
+import Review from 'screens/Review/Review';
 const history = createBrowserHistory();
 
 // Check for token to keep user logged in
@@ -137,6 +138,10 @@ function App() {
         </Switch>
         <Switch>
           <Route exact={true} path="/addpost" component={AddPost} />
+        </Switch>
+
+        <Switch>
+          <Route exact={true} path="/reviewapp" component={Review} />
         </Switch>
       </BrowserRouter>
     </Provider>
