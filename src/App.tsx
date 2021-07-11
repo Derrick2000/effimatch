@@ -15,6 +15,7 @@ import OnBoard from './screens/OnBoard/OnBoard';
 import RHomeSignedIn from './screens/R-Home-Signed-In/RHomeSignedIn';
 import RHomeDetails from './screens/RHomeDetails/RHomeDetails';
 import AddPost from './screens/AddPost/AddPost';
+import ReviewDetails from 'screens/ReviewDetails/ReviewDetails';
 
 import SignIn from './screens/SignIn/SignIn';
 import SignUp from './screens/SignUp/SignUp';
@@ -142,6 +143,10 @@ function App() {
 
         <Switch>
           <Route exact={true} path="/reviewapp" component={Review} />
+        </Switch>
+
+        <Switch>
+          <Route exact={true} path="/reviewdetail" component={ReviewDetails} />
         </Switch>
       </BrowserRouter>
     </Provider>
