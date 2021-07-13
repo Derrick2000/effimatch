@@ -30,7 +30,7 @@ const RenderCards = (cardsData: CardData[]) => {
     <div className="home-cards-wrapper">
       <QueueAnim key="queue" type="bottom" leaveReverse interval={50}>
         <div className="home-cards-title">
-          <h1 className="home-cards-title-h1">Jobs by Category</h1>
+          <h1 className="home-cards-title-h1">Recent jobs</h1>
           <a className="home-cards-title-link" href="/search">
             Explore more
           </a>

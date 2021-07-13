@@ -139,9 +139,10 @@ const Signup: React.FC<any> = () => {
 
       <SignUpPerson className="signup-wrapper-person" />
       <div className="signup-box">
-        <h1 className="signup-box-header">
-          Sign Up to access thousands of potential referral opportunities.
-        </h1>
+        <h1 className="signup-box-header-base signup-box-header">Sign up</h1>
+        <h2 className="signup-box-header-base signup-box-sub-header">
+          to access thousands of potential referral opportunities.
+        </h2>
         <div className="signup-box-form">
           <p className="signup-box-form-text">Name</p>
           <Input
@@ -169,6 +170,7 @@ const Signup: React.FC<any> = () => {
             className="signup-box-form-input"
             maxLength={25}
           />
+          <p className="signup-box-form-text">One time password</p>
           <Search
             placeholder="Enter OTP Here"
             enterButton={

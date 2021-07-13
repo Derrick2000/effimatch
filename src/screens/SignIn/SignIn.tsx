@@ -57,9 +57,10 @@ const SignIn: React.FC<any> = () => {
       <SignUpBackGround className="signin-wrapper-bg" />
 
       <div className="signin-box">
-        <h1 className="signin-box-header">
-          Log in to access thousands of potential referral opportunities.
-        </h1>
+        <h1 className="signin-box-header-base signin-box-header">Log in</h1>
+        <h2 className="signin-box-header-base">
+          to access thousands of potential referral opportunities.
+        </h2>
         <div className="signin-box-form">
           <p className="signin-box-form-text">email</p>
           <Input

@@ -2,122 +2,122 @@
 @border-radius: 10px;
 
 .@{signin} {
-    &-wrapper { 
-        position: fixed;
-        overflow: hidden;
+  &-wrapper {
+    position: fixed;
+    overflow: hidden;
 
-        &-bg{
-            position: relative;
-            display: inline-block;
-            width: 100vw;
-            height: 100vh;
-            top: 0;
-            left: 0;
-            background: @background-color;
-        }
-
-        &-person{
-            position: absolute;
-            left: 350px;
-            bottom: 10px;
-            width: 100vw;
-            height: 80vh;
-            z-index: 1;
-        }
-
+    &-bg {
+      position: relative;
+      display: inline-block;
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      background: @background-color;
     }
 
-    &-box{
-        padding: 61px 85px 61px;
-        position: absolute;
-        width: 552px;
-        height: 464px;
-        top: 40%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 2;
-
-        background: #FFFFFF;
-        box-shadow: -2px -2px 1px rgba(233, 233, 233, 0.25), 2px 2px 1px rgba(233, 233, 233, 0.25);
-
-        &-header{
-          line-height: 28px;
-          font-size: 24px;
-          color: #000000;
-          font-weight: 500;
-          text-align: center;
-        }
-        &-form{
-
-          &-text{
-              margin-left:60px;
-
-              padding-top: 10px;
-              font-family: Work Sans;
-              font-style: normal;
-              font-weight: normal;
-              font-size: 18px;
-              line-height: 19px;
-          }
-          &-input{
-            margin-left:60px;
-            width:265px;
-            border-radius: @border-radius;
-          }
-        }
-
-        & Button{
-          margin: 0 auto;
-          display: block;
-          margin-top: 15px;
-          border-radius: @border-radius;
-          width: 239px;
-          height: 39px;
-        }
-
-        &-linkedinBut{
-          background-color: #0A66C2;
-          color: white;
-        }
-
-        &-linkedinBut:hover{
-          background-color: rgb(37, 133, 229);
-          color:white;
-          border-color: white;
-        }
-        
+    &-person {
+      position: absolute;
+      left: 350px;
+      bottom: 10px;
+      width: 100vw;
+      height: 80vh;
+      z-index: 1;
     }
+  }
+
+  &-box {
+    padding: 61px 85px 61px;
+    position: absolute;
+    width: 552px;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+
+    background: #ffffff;
+    box-shadow: -2px -2px 1px rgba(233, 233, 233, 0.25),
+      2px 2px 1px rgba(233, 233, 233, 0.25);
+
+    &-header-base {
+      text-align: center;
+    }
+
+    &-header {
+      color: @primary-color;
+      font-size: 40px;
+    }
+
+    &-sub-header {
+      font-size: 24px;
+      font-weight: 500;
+    }
+
+    &-form {
+      &-text {
+        margin-left: 60px;
+
+        padding-top: 10px;
+        font-family: Work Sans;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 19px;
+      }
+      &-input {
+        margin-left: 60px;
+        width: 265px;
+        border-radius: @border-radius;
+      }
+    }
+
+    & Button {
+      margin: 0 auto;
+      display: block;
+      margin-top: 15px;
+      border-radius: @border-radius;
+      width: 239px;
+      height: 39px;
+    }
+
+    &-linkedinBut {
+      background-color: #0a66c2;
+      color: white;
+    }
+
+    &-linkedinBut:hover {
+      background-color: rgb(37, 133, 229);
+      color: white;
+      border-color: white;
+    }
+  }
 }
 
 @media screen and (max-width: 1100px) {
-    .@{signin} {
-      &-wrapper-person{
-        display: none;
-      }
-
+  .@{signin} {
+    &-wrapper-person {
+      display: none;
     }
+  }
 }
 @media screen and (min-width: 1100px) {
-    .@{signin} {
-      &-wrapper-person{
-        visibility: visible;
-      }
+  .@{signin} {
+    &-wrapper-person {
+      visibility: visible;
     }
+  }
 }
 @media screen and (max-height: 600px) {
   .@{signin} {
-    &-wrapper-person{
+    &-wrapper-person {
       display: none;
     }
-
   }
-}  
+}
 @media screen and (min-height: 600px) {
   .@{signin} {
-
-    &-wrapper-person{
+    &-wrapper-person {
       visibility: visible;
     }
-
   }
-}  
+}
