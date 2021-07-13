@@ -4,16 +4,16 @@ import React from 'react';
 
 // screens and componets
 import TweenOne from 'rc-tween-one';
-import Footer from '../../components/Footer/Footer';
-import Card from '../../components/Card/Card';
-import ApplicationCard from '../../components/Card/ApplicationCard';
-import JSHomeOnBoarding from '../../components/JSHomeOnBoarding/JSHomeOnBoarding';
+import Footer from '../../../components/Footer/Footer';
+import Card from '../../../components/Card/Card';
+import ApplicationCard from '../../../components/Card/ApplicationCard';
+import JSHomeOnBoarding from '../../../components/JSHomeOnBoarding/JSHomeOnBoarding';
 // antd
 import {Row, Col} from 'antd';
 
 // assets (temp)
-import MS_logo from '../../images/MS_logo.png';
-import Avatar from '../../images/avatar.png';
+import MS_logo from 'images/MS_logo.png';
+import Avatar from 'images/avatar.png';
 
 import './styles/JsHome.less';
 import axios from 'axios';

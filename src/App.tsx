@@ -4,16 +4,16 @@ import React from 'react';
 import './styles/index.less';
 
 // screens
-import GuestHome from './screens/GuestHome/GuestHome';
+import Home from './screens/Home/GuestHome';
 import NavBar from './components/NavBar/NavBar';
-import JsHome from './screens/JsHome/JsHome';
+import JsHome from './screens/Home/JsHome/JsHome';
 import Search from './screens/Search/Search';
 import Referers from './screens/Referers/Referers';
 import postDetails from './screens/post-details/post-details';
 import getReferredSingle from './screens/get-referred-single/get-referred-single';
 import OnBoard from './screens/OnBoard/OnBoard';
-import RHomeSignedIn from './screens/R-Home-Signed-In/RHomeSignedIn';
-import RHomeDetails from './screens/RHomeDetails/RHomeDetails';
+import RHomeSignedIn from './screens/Home/R-Home-Signed-In/RHomeSignedIn';
+import RHomeDetails from './screens/Home/RHomeDetails/RHomeDetails';
 import AddPost from './screens/AddPost/AddPost';
 import ReviewDetails from 'screens/ReviewDetails/ReviewDetails';
 
@@ -87,7 +87,7 @@ function App() {
       <NavBar isMobile={isMobile} />
       <BrowserRouter>
         <Switch>
-          <Route exact={true} path="/" component={GuestHome} />
+          <Route exact={true} path="/" component={Home} />
         </Switch>
 
         <Switch>

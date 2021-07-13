@@ -8,7 +8,7 @@ import ReferSectionCard from '../../components/Card/ReferSectionCard';
 import {Col, Button, Comment, Avatar, Card} from 'antd';
 
 // assets (temp)
-import icon from '../../images/avatar.png';
+import icon from 'images/avatar.png';
 
 import Grid from '@material-ui/core/Grid';
 

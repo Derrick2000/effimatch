@@ -10,7 +10,7 @@ import {Button, Card} from 'antd';
 import Grid from '@material-ui/core/Grid';
 
 // assets (temp)
-import icon from '../../images/avatar.png';
+import icon from 'images/avatar.png';
 
 interface PostDetailData {
   jobTitle: string;

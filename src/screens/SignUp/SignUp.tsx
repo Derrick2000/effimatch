@@ -3,7 +3,7 @@ import {ReactComponent as SignUpBackGround} from '../../images/sign_bg.svg';
 import {ReactComponent as SignUpPerson} from '../../images/sign_up_person.svg';
 import {Input, Button, notification} from 'antd';
 import './styles/signup.less';
-import {addUserUsingPost, sendVerificationMutedUsingPost} from 'apis/effimatch';
+import {addUserUsingPost, sendVerificationUsingPost} from 'apis/effimatch';
 import {useRequest} from 'apis/useRequest';
 
 const {Search} = Input;
@@ -47,16 +47,16 @@ const Signup: React.FC<any> = () => {
       console.log('sign up success: ', r.data);
       openSuccessNotification('bottomLeft');
       setLoading(false);
-      window.location.href = '/';
+      window.location.href = '/sign-in';
     },
     onFail: e => {
-      console.error('sign up error: ', e.response.data);
-      openErrorNotification('bottomLeft', e.response.data);
+      console.error('sign up error: ', e);
+      // openErrorNotification('bottomLeft', e..data);
       setLoading(false);
     },
   });
 
-  const [sendVerificationMuted] = useRequest(sendVerificationMutedUsingPost, {
+  const [sendVerificationMuted] = useRequest(sendVerificationUsingPost, {
     onSuccess: () => {
       openCodeNotification('bottomLeft');
     },

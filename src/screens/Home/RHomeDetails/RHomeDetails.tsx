@@ -4,8 +4,8 @@ import React from 'react';
 
 // screens and componets
 import TweenOne from 'rc-tween-one';
-import Footer from '../../components/Footer/Footer';
-import RequestCard from '../../components/Card/RequestCard';
+import Footer from '../../../components/Footer/Footer';
+import RequestCard from '../../../components/Card/RequestCard';
 // antd
 import {Row, Card} from 'antd';
 
@@ -13,7 +13,7 @@ import {Row, Card} from 'antd';
 import Grid from '@material-ui/core/Grid';
 
 // assets (temp)
-import MS_logo from '../../images/MS_logo.png';
+import MS_logo from 'images/MS_logo.png';
 
 import './styles/RHomeDetailsStyles.less';
 
