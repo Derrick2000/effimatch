@@ -103,14 +103,14 @@ const rightMenuData = [
       text: 'Jobs',
     },
   },
-  {
-    name: 'Community',
-    className: 'navbar-item',
-    children: {
-      href: '#Community',
-      text: 'Community',
-    },
-  },
+  // {
+  //   name: 'Community',
+  //   className: 'navbar-item',
+  //   children: {
+  //     href: '#Community',
+  //     text: 'Community',
+  //   },
+  // },
   {
     name: 'Sign In',
     className: 'navbar-item',
