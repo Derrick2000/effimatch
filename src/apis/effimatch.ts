@@ -89,14 +89,16 @@ export const getAllJobsUsingGet = createRequestConfig<
   {
     pageNum?: number;
     pageSize?: number;
+    search?: string;
   },
   Job[]
->('getAllJobsUsingGet', ({pageNum, pageSize}) => ({
+>('getAllJobsUsingGet', ({pageNum, pageSize, search}) => ({
   url: `/v1/jobs`,
   method: 'GET',
   params: {
     pageNum,
     pageSize,
+    search,
   },
 }));
 
@@ -147,12 +149,9 @@ export const sendVerificationMutedUsingPost = createRequestConfig<{
 /**
  * sendVerification
  */
-export const sendVerificationUsingPost = createRequestConfig<
-  {
-    requestBody: RegistrationRequest;
-  },
-  string
->('sendVerificationUsingPost', ({requestBody}) => ({
+export const sendVerificationUsingPost = createRequestConfig<{
+  requestBody: RegistrationRequest;
+}>('sendVerificationUsingPost', ({requestBody}) => ({
   url: `/v1/send-verification`,
   method: 'POST',
   data: requestBody,
@@ -186,8 +185,7 @@ export interface ApplicationUser {
 }
 
 export interface ChangeApplicationUserRoleRequest {
-  email?: string;
-  new_role?: string;
+  newRole?: string;
 }
 
 export interface GrantedAuthority {

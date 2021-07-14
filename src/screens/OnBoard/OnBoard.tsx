@@ -1,47 +1,37 @@
 import React from 'react';
-
-// componenet
 import InputBar from '../../components/InputBar/InputBar';
-
-// antd
 import {Button, Select, Radio, Row, Col, Tag} from 'antd';
-
-// style
 import './styles/onboard.less';
-import axios from 'axios';
-
-// redux
-import {useSelector} from 'react-redux';
 import {logoutUser} from '../../actions/authAction';
+import {
+  changeRoleUsingPost,
+  finishedInitialSettingsUsingPost,
+} from 'apis/effimatch';
+import {useRequest} from 'apis/useRequest';
 
 const RadioGroup = Radio.Group;
-
-const handleChangeRole = (newRole: string, auth) => {
-  const changeRoleRequest = {
-    email: auth.user.sub,
-    newRole: 'R',
-  };
-
-  axios
-    .post('http://localhost:8080/v1/users/change-role', changeRoleRequest)
-    .then(() => {
-      // if success, change user info in server 'initial settings finished'
-      axios
-        .post('http://localhost:8080/v1/users/finished-initial-settings')
-        .then(() => {
-          // has to re-login after changing permissions
-          logoutUser();
-          window.location.href = '/sign-in';
-        });
-    })
-    .catch(e => console.log(e));
-};
 
 const Referrer: React.FC<any> = () => {
   const [position, setPosition] = React.useState('');
   const [location, setLocation] = React.useState('');
   const [company, setCompany] = React.useState('');
-  const auth = useSelector((state: any) => state.auth);
+
+  const [finishInitialSettings] = useRequest(finishedInitialSettingsUsingPost, {
+    onSuccess: () => {
+      // has to re-login after changing permissions
+      logoutUser();
+      window.location.href = '/sign-in';
+    },
+  });
+
+  const [changeRole] = useRequest(changeRoleUsingPost, {
+    onSuccess: () => {
+      finishInitialSettings(null);
+    },
+    onFail: e => {
+      console.log(e);
+    },
+  });
 
   const onInputPosition = (value: string) => {
     if (value !== '') {
@@ -62,7 +52,7 @@ const Referrer: React.FC<any> = () => {
   };
 
   const onSave = () => {
-    handleChangeRole('R', auth);
+    changeRole({requestBody: {newRole: 'R'}});
   };
 
   return (
@@ -113,7 +103,20 @@ const JobSeeker = () => {
   const [skills, setSkills] = React.useState(['']);
   const [location, setLocation] = React.useState('');
   const [jobType, setJobType] = React.useState('');
-  const auth = useSelector((state: any) => state.auth);
+
+  const [finishInitialSettings] = useRequest(finishedInitialSettingsUsingPost, {
+    onSuccess: () => {
+      // has to re-login after changing permissions
+      logoutUser();
+      window.location.href = '/sign-in';
+    },
+  });
+
+  const [changeRole] = useRequest(changeRoleUsingPost, {
+    onSuccess: () => {
+      finishInitialSettings(null);
+    },
+  });
 
   // handle question handling
   const onInputPosition = (value: string) => {
@@ -142,7 +145,7 @@ const JobSeeker = () => {
 
   // handle button click
   const onSave = () => {
-    handleChangeRole('JS', auth);
+    changeRole({requestBody: {newRole: 'JS'}});
   };
 
   // handle close tags

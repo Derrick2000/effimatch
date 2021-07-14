@@ -1,22 +1,18 @@
-// TODO: 根据要求完成这个page
-// 你应该会需要用到 components 里面的 Card
 import React from 'react';
-
-// screens and componets
 import TweenOne from 'rc-tween-one';
 import Footer from '../../../components/Footer/Footer';
 import Card from '../../../components/Card/Card';
 import ApplicationCard from '../../../components/Card/ApplicationCard';
 import JSHomeOnBoarding from '../../../components/JSHomeOnBoarding/JSHomeOnBoarding';
-// antd
 import {Row, Col} from 'antd';
-
-// assets (temp)
 import MS_logo from 'images/MS_logo.png';
 import Avatar from 'images/avatar.png';
-
 import './styles/JsHome.less';
-import axios from 'axios';
+import {useRequest} from 'apis/useRequest';
+import {
+  finishedTutorialUsingPost,
+  getOwnInformationUsingGet,
+} from 'apis/effimatch';
 
 interface CardData {
   title: string;
@@ -58,12 +54,6 @@ const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
   );
 };
 
-// title: string,
-//     avatar: string,
-//     logo: string,
-//     name: string,
-//     date: string
-
 const RenderApplicationCards: React.FC<applicationData[]> = (
   cardsData: applicationData[],
 ) => {
@@ -88,16 +78,16 @@ const RenderApplicationCards: React.FC<applicationData[]> = (
 const JsHome = () => {
   const [renderdata, setrenderdata] = React.useState(sentCardData);
   const [underlineButton, setUnderlineButton] = React.useState(1);
-  const [finishedOnBoarding, setFinishedOnboarding] = React.useState(false);
+
+  const [finishTutorial] = useRequest(finishedTutorialUsingPost);
+  const [getOwnInformation, userInfo] = useRequest(getOwnInformationUsingGet);
 
   React.useEffect(() => {
-    axios.get('http://localhost:8080/v1/users/get-own').then(r => {
-      setFinishedOnboarding(r.data.finishedTutorial);
-    });
+    getOwnInformation(undefined);
   }, []);
 
   const handleOnBoardingClose = () => {
-    axios.post('http://localhost:8080/v1/users/finished-tutorial');
+    finishTutorial(null);
   };
 
   return (
@@ -158,7 +148,7 @@ const JsHome = () => {
         </TweenOne>
       </div>
       <Footer />
-      {finishedOnBoarding ? null : (
+      {userInfo?.data.finishedTutorial ? null : (
         <JSHomeOnBoarding handleClose={handleOnBoardingClose} />
       )}
     </div>
@@ -176,14 +166,6 @@ for (let ii = 0; ii < 3; ii++) {
     avatar: Avatar,
   });
 }
-
-// interface applicationData {
-//     title: string,
-//     avatar: string,
-//     logo: string,
-//     name: string,
-//     date: string
-// }
 
 // dummy data for sent:
 const sentCardData: applicationData[] = [];

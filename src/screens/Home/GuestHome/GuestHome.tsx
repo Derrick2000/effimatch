@@ -15,7 +15,7 @@ import {Row, Col} from 'antd';
 import MS_logo from 'images/MS_logo.png';
 import Avatar from 'images/avatar.png';
 
-import './styles/home.less';
+import '../styles/home.less';
 
 interface CardData {
   title: string;

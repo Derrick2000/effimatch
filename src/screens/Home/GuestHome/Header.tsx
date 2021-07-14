@@ -5,7 +5,7 @@ import TweenOne from 'rc-tween-one';
 
 // components
 import SearchBar from 'components/SearchBar/SearchBar';
-import {ReactComponent as HeaderImg} from '../../images/searching-telescope.svg';
+import {ReactComponent as HeaderImg} from 'images/searching-telescope.svg';
 
 const Header = () => {
   return (

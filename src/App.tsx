@@ -4,7 +4,7 @@ import React from 'react';
 import './styles/index.less';
 
 // screens
-import Home from './screens/Home/GuestHome';
+import Home from './screens/Home';
 import NavBar from './components/NavBar/NavBar';
 import JsHome from './screens/Home/JsHome/JsHome';
 import Search from './screens/Search/Search';

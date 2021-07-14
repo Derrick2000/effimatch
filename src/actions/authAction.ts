@@ -2,13 +2,14 @@ import {SET_CURRENT_USER, USER_LOADING} from './types';
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
+import {baseURL} from 'config';
 
 interface UserData {
   email: string;
   password: string;
 }
 
-const AUTH_URL = 'http://localhost:8080/login';
+const AUTH_URL = `${baseURL}/login`;
 
 export const loginUser = (userData: UserData) => {
   return new Promise((resolve, reject) => {
@@ -57,4 +58,6 @@ export const logoutUser = () => (dispatch: any) => {
   setAuthToken('');
   // Set current user to empty object {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
+
+  window.location.reload();
 };

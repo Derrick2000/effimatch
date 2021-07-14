@@ -96,11 +96,11 @@ const NavBar = (props: NavBarProps) => {
 // 最右侧菜单的data
 const rightMenuData = [
   {
-    name: 'Jobs',
+    name: 'Search',
     className: 'navbar-item',
     children: {
       href: '/search',
-      text: 'Jobs',
+      text: 'Search',
     },
   },
   // {
