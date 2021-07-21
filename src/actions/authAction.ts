@@ -9,7 +9,7 @@ interface UserData {
   password: string;
 }
 
-const AUTH_URL = `${baseURL}/login`;
+const AUTH_URL = `${baseURL}/v1/authentication/login`;
 
 export const loginUser = (userData: UserData) => {
   return new Promise((resolve, reject) => {
@@ -17,13 +17,12 @@ export const loginUser = (userData: UserData) => {
       .post(AUTH_URL, userData)
       .then(res => {
         // Set token to localStorage
-        const token = res.headers.authorization; // the jwt token
+        const token = res.data.data.token; // the jwt token
         localStorage.setItem('jwtToken', token);
         // Set token to Auth header
         setAuthToken(token);
         // Decode token to get user data
         const decoded = jwt_decode(token);
-        console.log(decoded);
         // Set current user
         setCurrentUser(decoded);
         resolve('success');

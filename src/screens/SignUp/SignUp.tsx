@@ -3,7 +3,7 @@ import {ReactComponent as SignUpBackGround} from '../../images/sign_bg.svg';
 import {ReactComponent as SignUpPerson} from '../../images/sign_up_person.svg';
 import {Input, Button, notification} from 'antd';
 import './styles/signup.less';
-import {addUserUsingPost, sendVerificationUsingPost} from 'apis/effimatch';
+import {registerUsingPost, sendVerificationUsingPost} from 'apis/effimatch';
 import {useRequest} from 'apis/useRequest';
 
 const {Search} = Input;
@@ -42,7 +42,7 @@ const Signup: React.FC<any> = () => {
   const [sendVal, setSendVal] = React.useState('Get OTP');
   const [codeSent, setSent] = React.useState(false);
 
-  const [register] = useRequest(addUserUsingPost, {
+  const [register] = useRequest(registerUsingPost, {
     onSuccess: r => {
       console.log('sign up success: ', r.data);
       openSuccessNotification('bottomLeft');

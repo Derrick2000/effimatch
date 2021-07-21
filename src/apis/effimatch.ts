@@ -25,24 +25,12 @@ export const addTestUsingPost = createRequestConfig<{
 }));
 
 /**
- * addUser
- */
-export const addUserUsingPost = createRequestConfig<{
-  requestBody: RegistrationRequest;
-}>('addUserUsingPost', ({requestBody}) => ({
-  url: `/register`,
-  method: 'POST',
-  data: requestBody,
-  headers: {'Content-Type': 'application/json'},
-}));
-
-/**
  * changeRole
  */
 export const changeRoleUsingPost = createRequestConfig<{
   requestBody: ChangeApplicationUserRoleRequest;
 }>('changeRoleUsingPost', ({requestBody}) => ({
-  url: `/v1/users/change-role`,
+  url: `/change-role`,
   method: 'POST',
   data: requestBody,
   headers: {'Content-Type': 'application/json'},
@@ -64,7 +52,7 @@ export const deleteJobUsingDelete = createRequestConfig<{
 export const finishedInitialSettingsUsingPost = createRequestConfig(
   'finishedInitialSettingsUsingPost',
   () => ({
-    url: `/v1/users/finished-initial-settings`,
+    url: `/finished-initial-settings`,
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
   }),
@@ -76,7 +64,7 @@ export const finishedInitialSettingsUsingPost = createRequestConfig(
 export const finishedTutorialUsingPost = createRequestConfig(
   'finishedTutorialUsingPost',
   () => ({
-    url: `/v1/users/finished-tutorial`,
+    url: `/finished-tutorial`,
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
   }),
@@ -119,10 +107,7 @@ export const getAllTestsUsingGet = createRequestConfig<undefined, Test[]>(
 export const getOwnInformationUsingGet = createRequestConfig<
   undefined,
   ApplicationUser
->('getOwnInformationUsingGet', () => ({
-  url: `/v1/users/get-own`,
-  method: 'GET',
-}));
+>('getOwnInformationUsingGet', () => ({url: `/get-own`, method: 'GET'}));
 
 /**
  * getTestById
@@ -135,12 +120,27 @@ export const getTestByIdUsingGet = createRequestConfig<
 >('getTestByIdUsingGet', ({id}) => ({url: `/v1/tests/${id}`, method: 'GET'}));
 
 /**
- * sendVerificationMuted
+ * login
  */
-export const sendVerificationMutedUsingPost = createRequestConfig<{
+export const loginUsingPost = createRequestConfig<
+  {
+    requestBody: LoginRequest;
+  },
+  AuthenticationTokenResponse
+>('loginUsingPost', ({requestBody}) => ({
+  url: `/v1/authentication/login`,
+  method: 'POST',
+  data: requestBody,
+  headers: {'Content-Type': 'application/json'},
+}));
+
+/**
+ * register
+ */
+export const registerUsingPost = createRequestConfig<{
   requestBody: RegistrationRequest;
-}>('sendVerificationMutedUsingPost', ({requestBody}) => ({
-  url: `/v1/send-verification-muted`,
+}>('registerUsingPost', ({requestBody}) => ({
+  url: `/v1/authentication/register`,
   method: 'POST',
   data: requestBody,
   headers: {'Content-Type': 'application/json'},
@@ -152,7 +152,7 @@ export const sendVerificationMutedUsingPost = createRequestConfig<{
 export const sendVerificationUsingPost = createRequestConfig<{
   requestBody: RegistrationRequest;
 }>('sendVerificationUsingPost', ({requestBody}) => ({
-  url: `/v1/send-verification`,
+  url: `/v1/authentication/send-verification`,
   method: 'POST',
   data: requestBody,
   headers: {'Content-Type': 'application/json'},
@@ -184,6 +184,10 @@ export interface ApplicationUser {
   username?: string;
 }
 
+export interface AuthenticationTokenResponse {
+  token?: string;
+}
+
 export interface ChangeApplicationUserRoleRequest {
   newRole?: string;
 }
@@ -204,6 +208,11 @@ export interface Job {
   publisherEmail?: string;
   requiredExperience?: string;
   updatedAt?: string;
+}
+
+export interface LoginRequest {
+  email?: string;
+  password?: string;
 }
 
 export interface RegistrationRequest {
