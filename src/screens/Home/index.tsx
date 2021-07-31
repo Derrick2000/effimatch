@@ -6,7 +6,7 @@ import RHome from 'screens/Home/RHome/RHome';
 
 const Home = () => {
   const auth = useSelector((state: any) => state.auth);
-  const [userRole, setUserRole] = React.useState('loading');
+  const [userRole, setUserRole] = React.useState('');
 
   React.useLayoutEffect(() => {
     if (!auth || !auth.user || !auth.user.authorities) return;
@@ -22,14 +22,12 @@ const Home = () => {
     }
   }, [auth]);
 
-  if (userRole === 'loading') {
-    return <div />;
+  if (!userRole) {
+    return <GuestHome />;
   } else if (userRole === 'JS') {
     return <JsHome />;
   } else if (userRole === 'R') {
     return <RHome />;
-  } else if (!userRole) {
-    return <GuestHome />;
   } else {
     return <p>User permission error</p>;
   }

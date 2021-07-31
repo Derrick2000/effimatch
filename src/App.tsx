@@ -1,3 +1,4 @@
+import './styles/index.less';
 import {getOwnInformationUsingGet} from 'apis/effimatch';
 import {useRequest} from 'apis/useRequest';
 import {enquireScreen} from 'enquire-js';
@@ -22,7 +23,6 @@ import Search from './screens/Search/Search';
 import SignIn from './screens/SignIn/SignIn';
 import SignUp from './screens/SignUp/SignUp';
 import store from './store';
-import './styles/index.less';
 import setAuthToken from './utils/setAuthToken';
 
 function App() {
