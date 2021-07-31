@@ -4,7 +4,10 @@
   "requestCreateMethod": "createRequestConfig",
   "timeout": 180000,
   "apiSpecsPaths": [
-    {"path": "http://localhost:8080/v2/api-docs", "name": "effimatch"}
+    {
+      "path": "https://effimatch-server.ucsdtriplec.cn/v2/api-docs",
+      "name": "effimatch"
+    }
   ],
   "options": {
     "withComments": true,
