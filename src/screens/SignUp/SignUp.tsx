@@ -5,6 +5,7 @@ import {Input, Button, notification} from 'antd';
 import './styles/signup.less';
 import {registerUsingPost, sendVerificationUsingPost} from 'apis/effimatch';
 import {useRequest} from 'apis/useRequest';
+import {loginUser} from '../../actions/authAction';
 
 const {Search} = Input;
 
@@ -43,15 +44,19 @@ const Signup: React.FC<any> = () => {
   const [codeSent, setSent] = React.useState(false);
 
   const [register] = useRequest(registerUsingPost, {
-    onSuccess: r => {
-      console.log('sign up success: ', r.data);
+    onSuccess: () => {
       openSuccessNotification('bottomLeft');
       setLoading(false);
-      window.location.href = '/sign-in';
+      loginUser({email, password})
+        .then(() => {
+          window.location.href = '/';
+        })
+        .catch(() => {
+          openErrorNotification('bottomLeft', 'Invalid login');
+          setLoading(false);
+        });
     },
-    onFail: e => {
-      console.error('sign up error: ', e);
-      // openErrorNotification('bottomLeft', e..data);
+    onFail: () => {
       setLoading(false);
     },
   });

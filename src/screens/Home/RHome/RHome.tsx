@@ -47,14 +47,14 @@ const RHomeSignedIn = () => {
       <div className="RHome-Signed-In-content-wrapper">
         <TweenOne animation={{x: -200, type: 'from', ease: 'easeOutQuad'}}>
           <div className="RHome-Signed-In-cards-title">
-            <h1 className="RHome-Signed-In-cards-title-h1">Opportunities</h1>
+            <h1 className="RHome-Signed-In-cards-title-h1">My Postings</h1>
             <Button
               type="primary"
               onClick={() => {
                 window.location.href = '/new-job';
               }}
               className="RHome-Signed-In-cards-title-button">
-              Post Opportunity
+              Post New Opportunity
             </Button>
           </div>
 

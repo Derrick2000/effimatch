@@ -263,7 +263,7 @@ const OnBoard: React.FC<any> = () => {
   return (
     <div className="onboard-wrapper">
       <div className="onboard-content">
-        <p className="onboard-content-header">
+        {/* <p className="onboard-content-header">
           <strong>Upload Resume</strong>
         </p>
         <div className="onboard-content-uploadbox">
@@ -273,7 +273,7 @@ const OnBoard: React.FC<any> = () => {
             </strong>
           </p>
           <p className="onboard-content-uploadbox-text">Support PDF and DOCX</p>
-        </div>
+        </div> */}
         <p className="onboard-content-question">
           <strong>Are you a referrer or job seeker?</strong>
         </p>

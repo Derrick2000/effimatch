@@ -182,8 +182,7 @@ const NewJob: React.FC<any> = () => {
   };
 
   return (
-    <div
-      style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+    <div className="addpost-wrapper">
       <div className="addpost-content">
         <p className="addpost-content-question">
           <strong>Job Title</strong>
@@ -268,16 +267,22 @@ const NewJob: React.FC<any> = () => {
         {!doNotUseLogo && companyLogo && (
           <Image
             width={110}
-            height={100}
-            style={{marginTop: 10, paddingRight: 10}}
+            height={130}
+            style={{marginTop: 10, paddingBottom: 30}}
             src={companyLogo!}
           />
         )}
 
         {companyLogo && (
-          <Checkbox onChange={() => setDoNotUseLogo(!doNotUseLogo)}>
-            <strong>Do not use logo</strong>
-          </Checkbox>
+          <div>
+            <Checkbox onChange={() => setDoNotUseLogo(!doNotUseLogo)}>
+              <strong>Do not include logo</strong>
+            </Checkbox>
+            <br />
+            <a href="https://clearbit.com" target="_blank" rel="noreferrer">
+              Logos provided by Clearbit
+            </a>
+          </div>
         )}
 
         <p className="addpost-content-question">
