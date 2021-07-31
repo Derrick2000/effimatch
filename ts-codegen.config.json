@@ -4,7 +4,7 @@
   "requestCreateMethod": "createRequestConfig",
   "timeout": 180000,
   "apiSpecsPaths": [
-    {"path": "http://localhost:29000/v2/api-docs", "name": "effimatch"}
+    {"path": "http://localhost:8080/v2/api-docs", "name": "effimatch"}
   ],
   "options": {
     "withComments": true,

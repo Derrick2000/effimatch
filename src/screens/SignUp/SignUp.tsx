@@ -26,7 +26,7 @@ const openSuccessNotification = (placement: any) => {
 
 const openCodeNotification = (placement: any) => {
   notification.success({
-    message: 'Code',
+    message: 'Code sent',
     description: 'We have send an OTP to your email.',
     placement,
   });
@@ -62,6 +62,7 @@ const Signup: React.FC<any> = () => {
     },
     onFail: e => {
       openErrorNotification('bottomLeft', e);
+      setLoading(false);
     },
   });
 

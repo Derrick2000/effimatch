@@ -1,15 +1,18 @@
+/**
+ * It would take time to refactor this whole thing.
+ * Next time when handling forms, please try to use libraries such as yup.
+ */
+
+import {Button, DatePicker, Radio, Image, Checkbox} from 'antd';
+import InputBar from 'components/InputBar/InputBar';
 import React from 'react';
 import ReactQuill, {Quill} from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-
-// componenet
-import InputBar from 'components/InputBar/InputBar';
-
-// antd
-import {Button, Radio, DatePicker} from 'antd';
-
-// style
-import './styles/addpost.less';
+import './styles/new-job.less';
+import useDebounce from 'utils/useDebounce';
+import useSearchCompany from './useSearchCompany';
+import {addJobUsingPost} from 'apis/effimatch';
+import {useRequest} from 'apis/useRequest';
 
 const RadioGroup = Radio.Group;
 
@@ -40,11 +43,6 @@ class Counter {
     if (length >= 1000) {
       this.quill.history.undo();
     }
-
-    let label = this.options.unit;
-    if (length !== 1) {
-      label += 's';
-    }
     this.container.innerText = length + '/1000';
   }
 }
@@ -58,23 +56,36 @@ const modules = {
   },
 };
 
-const AddPost: React.FC<any> = () => {
+const NewJob: React.FC<any> = () => {
+  const [jobTitlePresent, setJobTitlePresent] = React.useState(false);
   const [jobDescPresent, setJobDescPresent] = React.useState(false);
   const [typePresent, setTypePresent] = React.useState(false);
   const [locationPresent, setLocationPresent] = React.useState(false);
   const [companyPresent, setCompanyPresent] = React.useState(false);
   const [datePresent, setDatePresent] = React.useState(false);
+  const [doNotUseLogo, setDoNotUseLogo] = React.useState(false);
 
-  const [type, setType] = React.useState(0);
-  const [position, setPosition] = React.useState('');
+  const [jobTitle, setJobTitle] = React.useState('');
+  const [requiredExperience, setType] = React.useState(0);
+  const [jobLink, setJobLink] = React.useState('');
   const [location, setLocation] = React.useState('');
-  const [company, setCompany] = React.useState('');
-  const [date, setDate] = React.useState('');
-  const [value, setValue] = React.useState('');
+  const [companyName, setCompanyName] = React.useState('');
+  const [applicationDeadline, setApplicationDeadline] = React.useState('');
+  const [jobDescription, setValue] = React.useState('');
+  const [companyLogo, setCompanyLogo] = React.useState(undefined);
 
-  const onInputPosition = (value: string) => {
+  const [submitJob] = useRequest(addJobUsingPost, {
+    onSuccess: () => {
+      window.location.href = '/#';
+    },
+    onFail: e => {
+      console.log(e);
+    },
+  });
+
+  const onInputJobLink = (value: string) => {
     if (value !== '') {
-      setPosition(value);
+      setJobLink(value);
     }
   };
 
@@ -84,24 +95,45 @@ const AddPost: React.FC<any> = () => {
     }
   };
 
-  const onInputCompany = (value: string) => {
+  const searchCompany = useSearchCompany(companyName);
+
+  const searchCompanyAndUpdateLogo = () => {
+    searchCompany().then(r => {
+      setCompanyLogo(r.logo);
+    });
+  };
+
+  const searchCompanyDebounced = useDebounce(searchCompanyAndUpdateLogo, 300);
+
+  const onInputCompanyName = (value: string) => {
     if (value !== '') {
-      setCompany(value);
+      setCompanyName(value);
+      searchCompanyDebounced();
     }
   };
 
-  const onInputDate = (date: any, dateString: string) => {
-    setDate(dateString);
+  const onInputDate = (date: any) => {
+    setApplicationDeadline(date.toDate());
+  };
+
+  const onInputJobTitle = (value: string) => {
+    if (value !== '') {
+      setJobTitle(value);
+    }
+  };
+
+  const mapRequiredExperience = (num: number) => {
+    return ['', 'Internship', 'New Grad', 'Senior'][num];
   };
 
   const onSave = () => {
     let submit = true;
 
-    if (value == '') {
+    if (jobDescription == '') {
       submit = false;
       setJobDescPresent(true);
     }
-    if (type == 0) {
+    if (requiredExperience == 0) {
       submit = false;
       setTypePresent(true);
     }
@@ -109,13 +141,17 @@ const AddPost: React.FC<any> = () => {
       submit = false;
       setLocationPresent(true);
     }
-    if (company == '') {
+    if (companyName == '') {
       submit = false;
       setCompanyPresent(true);
     }
-    if (date == '') {
+    if (applicationDeadline == '') {
       submit = false;
       setDatePresent(true);
+    }
+    if (jobTitle == '') {
+      submit = false;
+      setJobTitlePresent(false);
     }
 
     if (submit) {
@@ -124,18 +160,20 @@ const AddPost: React.FC<any> = () => {
       setLocationPresent(false);
       setCompanyPresent(false);
       setDatePresent(false);
+      setJobTitlePresent(false);
 
-      console.log({
-        value: value,
-        type: type,
-        position: position,
+      const newJob = {
+        jobTitle: jobTitle,
+        jobDescription: jobDescription,
+        requiredExperience: mapRequiredExperience(requiredExperience),
+        jobLink: jobLink,
         location: location,
-        company: company,
-        date: date,
-      });
+        companyName: companyName,
+        companyLogo: doNotUseLogo ? undefined : companyLogo,
+        applicationDeadline: applicationDeadline,
+      };
 
-      // go /#
-      window.location.href = '/#';
+      submitJob({requestBody: newJob});
     }
   };
 
@@ -144,18 +182,27 @@ const AddPost: React.FC<any> = () => {
   };
 
   return (
-    <div className="addpost-wrapper">
+    <div
+      style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
       <div className="addpost-content">
-        <p className="addpost-content-header">
+        <p className="addpost-content-question">
+          <strong>Job Title</strong>
+        </p>
+        <InputBar
+          input={onInputJobTitle}
+          placehold="Enter the title of your job"
+          autocomplete={false}
+        />
+        {jobTitlePresent ? (
+          <p className="addpost-content-error">This field is required</p>
+        ) : null}
+
+        <p className="addpost-content-question">
           <strong>Job Description</strong>
         </p>
-
-        <link
-          rel="stylesheet"
-          href="//cdn.quilljs.com/1.2.6/quill.snow.css"></link>
         <ReactQuill
           theme="snow"
-          value={value}
+          value={jobDescription}
           onChange={setValue}
           className="addpost-content-box"
           modules={modules}
@@ -170,7 +217,7 @@ const AddPost: React.FC<any> = () => {
         <p className="addpost-content-question">
           <strong>Required year of experience:</strong>
         </p>
-        <RadioGroup onChange={onChange} value={type}>
+        <RadioGroup onChange={onChange} value={requiredExperience}>
           <Radio value={1} className="addpost-content-radio">
             Internship
           </Radio>
@@ -189,7 +236,7 @@ const AddPost: React.FC<any> = () => {
           <strong>Add job link here</strong>
         </p>
         <InputBar
-          input={onInputPosition}
+          input={onInputJobLink}
           placehold="Type a position to start"
           autocomplete={false}
         />
@@ -210,13 +257,28 @@ const AddPost: React.FC<any> = () => {
           <strong>Company</strong>
         </p>
         <InputBar
-          input={onInputCompany}
+          input={onInputCompanyName}
           placehold="Type your company name"
           autocomplete={false}
         />
         {companyPresent ? (
           <p className="addpost-content-error">This field is required</p>
         ) : null}
+
+        {!doNotUseLogo && companyLogo && (
+          <Image
+            width={110}
+            height={100}
+            style={{marginTop: 10, paddingRight: 10}}
+            src={companyLogo!}
+          />
+        )}
+
+        {companyLogo && (
+          <Checkbox onChange={() => setDoNotUseLogo(!doNotUseLogo)}>
+            <strong>Do not use logo</strong>
+          </Checkbox>
+        )}
 
         <p className="addpost-content-question">
           <strong>Application deadline</strong>
@@ -230,11 +292,8 @@ const AddPost: React.FC<any> = () => {
           <p className="addpost-content-error">This field is required</p>
         ) : null}
 
-        <div className="addpost-button">
-          <Button
-            type="primary"
-            onClick={onSave}
-            className="addpost-button-button">
+        <div className="addpost-button-wrapper">
+          <Button type="primary" onClick={onSave} className="addpost-button">
             Post
           </Button>
         </div>
@@ -243,4 +302,4 @@ const AddPost: React.FC<any> = () => {
   );
 };
 
-export default AddPost;
+export default NewJob;

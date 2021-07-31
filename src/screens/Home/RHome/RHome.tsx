@@ -1,18 +1,10 @@
-// TODO: 根据要求完成这个page
-// 你应该会需要用到 components 里面的 Card
-import React from 'react';
-
-// screens and componets
-import TweenOne from 'rc-tween-one';
-import Footer from 'components/Footer/Footer';
+import {Button, Card} from 'antd';
 import RequestCard from 'components/Card/RequestCard';
-// antd
-import {Card, Button} from 'antd';
-
-// assets (temp)
+import Footer from 'components/Footer/Footer';
 import MS_logo from 'images/MS_logo.png';
-
-import './styles/RHomeSignedInStyles.less';
+import TweenOne from 'rc-tween-one';
+import React from 'react';
+import './styles/RHome.less';
 
 interface requestCardData {
   logo: string;
@@ -25,12 +17,6 @@ interface requestSectionData {
   company: string;
   requests: requestCardData[];
 }
-
-// title: string,
-//     avatar: string,
-//     logo: string,
-//     name: string,
-//     date: string
 
 const RenderRequestCards: React.FC<requestSectionData[]> = (
   sectionData: requestSectionData[],
@@ -65,7 +51,7 @@ const RHomeSignedIn = () => {
             <Button
               type="primary"
               onClick={() => {
-                window.location.href = '/addpost';
+                window.location.href = '/new-job';
               }}
               className="RHome-Signed-In-cards-title-button">
               Post Opportunity

@@ -1,85 +1,75 @@
+import {getOwnInformationUsingGet} from 'apis/effimatch';
+import {useRequest} from 'apis/useRequest';
+import {enquireScreen} from 'enquire-js';
+import {createBrowserHistory} from 'history';
+import jwt_decode from 'jwt-decode';
 import React from 'react';
-
-// style
-import './styles/index.less';
-
-// screens
-import Home from './screens/Home';
-import NavBar from './components/NavBar/NavBar';
-import JsHome from './screens/Home/JsHome/JsHome';
-import Search from './screens/Search/Search';
-import Referers from './screens/Referers/Referers';
-import postDetails from './screens/post-details/post-details';
-import getReferredSingle from './screens/get-referred-single/get-referred-single';
-import OnBoard from './screens/OnBoard/OnBoard';
-import RHomeSignedIn from './screens/Home/R-Home-Signed-In/RHomeSignedIn';
-import RHomeDetails from './screens/Home/RHomeDetails/RHomeDetails';
-import AddPost from './screens/AddPost/AddPost';
+import {Provider} from 'react-redux';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import Review from 'screens/Review/Review';
 import ReviewDetails from 'screens/ReviewDetails/ReviewDetails';
-
+import {logoutUser, setCurrentUser} from './actions/authAction';
+import NavBar from './components/NavBar/NavBar';
+import NewJob from './screens/NewJob/NewJob';
+import getReferredSingle from './screens/get-referred-single/get-referred-single';
+import Home from './screens/Home';
+import RHomeDetails from './screens/Home/RHomeDetails/RHomeDetails';
+import OnBoard from './screens/OnBoard/OnBoard';
+import Popup from './screens/PopUpTest/PopUpTest';
+import postDetails from './screens/post-details/post-details';
+import Referers from './screens/Referers/Referers';
+import Search from './screens/Search/Search';
 import SignIn from './screens/SignIn/SignIn';
 import SignUp from './screens/SignUp/SignUp';
-
-// testing-screens
-import Popup from './screens/PopUpTest/PopUpTest';
-
-import {enquireScreen} from 'enquire-js';
-
-// import redux stuff
 import store from './store';
+import './styles/index.less';
 import setAuthToken from './utils/setAuthToken';
-import jwt_decode from 'jwt-decode';
-import {setCurrentUser, logoutUser} from './actions/authAction';
-import {Provider} from 'react-redux';
-
-// router
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import {createBrowserHistory} from 'history';
-import axios from 'axios';
-import Review from 'screens/Review/Review';
-const history = createBrowserHistory();
-
-// Check for token to keep user logged in
-if (localStorage.jwtToken) {
-  // Set auth token header auth
-  const token = localStorage.jwtToken;
-  setAuthToken(token);
-  // Decode token and get user info and exp
-  const decoded = jwt_decode(token);
-  // Set user and isAuthenticated
-  store.dispatch(setCurrentUser(decoded));
-
-  // if the user have not set his role
-  if (
-    decoded !== null &&
-    decoded.authorities.length === 0 &&
-    history.location.pathname !== '/onboard' &&
-    history.location.pathname !== '/sign-in'
-  ) {
-    // check if the user actually finished initial settings, but did not re-signin
-    axios.get('http://localhost:8080/v1/users/get-own').then(r => {
-      const finishedInitialSettings = r.data.finishedInitialSettings;
-      if (!finishedInitialSettings) window.location.href = '/onboard';
-    });
-  }
-
-  // Check for expired token
-  const currentTime = Date.now() / 1000; // to get in milliseconds
-
-  if (decoded.exp < currentTime) {
-    // Logout user
-    store.dispatch(logoutUser());
-  }
-}
 
 function App() {
   const [isMobile, setIsMobile] = React.useState(false);
+  const history = createBrowserHistory();
+
+  const [checkIfNeedsRedirection] = useRequest(getOwnInformationUsingGet, {
+    onSuccess: r => {
+      const finishedInitialSettings = r.data.finishedInitialSettings;
+      if (!finishedInitialSettings) window.location.href = '/onboard';
+    },
+  });
 
   React.useEffect(() => {
     // responsive to mobile screen
     enquireScreen((mobileState: boolean) => {
       setIsMobile(mobileState);
     });
+
+    // Check for token to keep user logged in
+    if (localStorage.jwtToken) {
+      // Set auth token header auth
+      const token = localStorage.jwtToken;
+      setAuthToken(token);
+      // Decode token and get user info and exp
+      const decoded = jwt_decode(token);
+      // Set user and isAuthenticated
+      store.dispatch(setCurrentUser(decoded));
+
+      // if the user have not set his role
+      if (
+        decoded !== null &&
+        decoded.authorities.length === 0 &&
+        history.location.pathname !== '/onboard' &&
+        history.location.pathname !== '/sign-in'
+      ) {
+        checkIfNeedsRedirection(undefined);
+      }
+
+      // Check for expired token
+      const currentTime = Date.now() / 1000;
+
+      if (decoded.exp < currentTime) {
+        // Logout user
+        store.dispatch(logoutUser());
+      }
+    }
   }, []);
 
   return (
@@ -88,10 +78,6 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact={true} path="/" component={Home} />
-        </Switch>
-
-        <Switch>
-          <Route exact={true} path="/js-home" component={JsHome} />
         </Switch>
 
         <Switch>
@@ -127,10 +113,6 @@ function App() {
         </Switch>
 
         <Switch>
-          <Route exact={true} path="/RHomeSignedIn" component={RHomeSignedIn} />
-        </Switch>
-
-        <Switch>
           <Route exact={true} path="/onboard" component={OnBoard} />
         </Switch>
 
@@ -138,7 +120,7 @@ function App() {
           <Route exact={true} path="/RHomeDetails" component={RHomeDetails} />
         </Switch>
         <Switch>
-          <Route exact={true} path="/addpost" component={AddPost} />
+          <Route exact={true} path="/new-job" component={NewJob} />
         </Switch>
 
         <Switch>

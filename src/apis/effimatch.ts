@@ -1,6 +1,18 @@
 import {createRequestConfig} from 'apis/createRequestConfig';
 
 /**
+ * addCompany
+ */
+export const addCompanyUsingPost = createRequestConfig<{
+  requestBody: Company;
+}>('addCompanyUsingPost', ({requestBody}) => ({
+  url: `/v1/companies`,
+  method: 'POST',
+  data: requestBody,
+  headers: {'Content-Type': 'application/json'},
+}));
+
+/**
  * addJob
  */
 export const addJobUsingPost = createRequestConfig<{
@@ -13,24 +25,12 @@ export const addJobUsingPost = createRequestConfig<{
 }));
 
 /**
- * addTest
- */
-export const addTestUsingPost = createRequestConfig<{
-  requestBody: Test;
-}>('addTestUsingPost', ({requestBody}) => ({
-  url: `/v1/tests`,
-  method: 'POST',
-  data: requestBody,
-  headers: {'Content-Type': 'application/json'},
-}));
-
-/**
  * changeRole
  */
 export const changeRoleUsingPost = createRequestConfig<{
   requestBody: ChangeApplicationUserRoleRequest;
 }>('changeRoleUsingPost', ({requestBody}) => ({
-  url: `/change-role`,
+  url: `/v1/users/change-role`,
   method: 'POST',
   data: requestBody,
   headers: {'Content-Type': 'application/json'},
@@ -52,7 +52,7 @@ export const deleteJobUsingDelete = createRequestConfig<{
 export const finishedInitialSettingsUsingPost = createRequestConfig(
   'finishedInitialSettingsUsingPost',
   () => ({
-    url: `/finished-initial-settings`,
+    url: `/v1/users/finished-initial-settings`,
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
   }),
@@ -64,11 +64,22 @@ export const finishedInitialSettingsUsingPost = createRequestConfig(
 export const finishedTutorialUsingPost = createRequestConfig(
   'finishedTutorialUsingPost',
   () => ({
-    url: `/finished-tutorial`,
+    url: `/v1/users/finished-tutorial`,
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
   }),
 );
+
+/**
+ * getAllCompanies
+ */
+export const getAllCompaniesUsingGet = createRequestConfig<
+  undefined,
+  Company[]
+>('getAllCompaniesUsingGet', () => ({
+  url: `/v1/companies`,
+  method: 'GET',
+}));
 
 /**
  * getAllJobs
@@ -91,33 +102,15 @@ export const getAllJobsUsingGet = createRequestConfig<
 }));
 
 /**
- * getAllTests
- */
-export const getAllTestsUsingGet = createRequestConfig<undefined, Test[]>(
-  'getAllTestsUsingGet',
-  () => ({
-    url: `/v1/tests`,
-    method: 'GET',
-  }),
-);
-
-/**
  * getOwnInformation
  */
 export const getOwnInformationUsingGet = createRequestConfig<
   undefined,
   ApplicationUser
->('getOwnInformationUsingGet', () => ({url: `/get-own`, method: 'GET'}));
-
-/**
- * getTestById
- */
-export const getTestByIdUsingGet = createRequestConfig<
-  {
-    id: number;
-  },
-  Test
->('getTestByIdUsingGet', ({id}) => ({url: `/v1/tests/${id}`, method: 'GET'}));
+>('getOwnInformationUsingGet', () => ({
+  url: `/v1/users/get-own`,
+  method: 'GET',
+}));
 
 /**
  * login
@@ -192,12 +185,19 @@ export interface ChangeApplicationUserRoleRequest {
   newRole?: string;
 }
 
+export interface Company {
+  companyName?: string;
+  id?: number;
+  logoUrl?: string;
+}
+
 export interface GrantedAuthority {
   authority?: string;
 }
 
 export interface Job {
-  applicationDeadline?: Timestamp;
+  applicationDeadline?: string;
+  companyLogo?: string;
   companyName?: string;
   createdAt?: string;
   id?: number;
@@ -220,23 +220,4 @@ export interface RegistrationRequest {
   email?: string;
   password?: string;
   username?: string;
-}
-
-export interface Test {
-  content?: string;
-  id?: number;
-  title?: string;
-}
-
-export interface Timestamp {
-  date?: number;
-  day?: number;
-  hours?: number;
-  minutes?: number;
-  month?: number;
-  nanos?: number;
-  seconds?: number;
-  time?: number;
-  timezoneOffset?: number;
-  year?: number;
 }
