@@ -6,10 +6,12 @@ import TweenOne from 'rc-tween-one';
 import Footer from 'components/Footer/Footer';
 import Companies from './Companies';
 import Card from 'components/Card/Card';
+import {useRequest} from 'apis/useRequest';
+import {getAllJobsUsingGet} from 'apis/effimatch';
 
 // antd
 import QueueAnim from 'rc-queue-anim';
-import {Row, Col} from 'antd';
+import {Row, Col, Button} from 'antd';
 
 // assets (temp)
 import MS_logo from 'images/MS_logo.png';
@@ -23,6 +25,7 @@ interface CardData {
   avatar: string;
   logo: string;
   name: string;
+  id: number;
 }
 
 const RenderCards = (cardsData: CardData[]) => {
@@ -44,6 +47,7 @@ const RenderCards = (cardsData: CardData[]) => {
                 logo={item.logo}
                 avatar={item.avatar}
                 name={item.name}
+                id={item.id}
               />
             </Col>
           ))}
@@ -53,30 +57,49 @@ const RenderCards = (cardsData: CardData[]) => {
   );
 };
 
-const GuestHome = () => (
-  <div className="home-wrapper">
-    <div className="home-content-wrapper">
-      <Header />
+const GuestHome = () => {
+  const [cardData, setCardData] = React.useState<CardData[]>([]);
 
-      <TweenOne animation={{x: -200, type: 'from', ease: 'easeOutQuad'}}>
-        <Companies />
-        {RenderCards(cardData)}
-      </TweenOne>
-    </div>
-    <Footer />
-  </div>
-);
-
-const cardData: CardData[] = [];
-
-for (let ii = 0; ii < 3; ii++) {
-  cardData.push({
-    title: 'Design Positions',
-    company: 'Microsoft',
-    name: 'referer 1',
-    logo: MS_logo,
-    avatar: Avatar,
+  const [getCardData] = useRequest(getAllJobsUsingGet, {
+    onSuccess: d => {
+      const cards: CardData[] = [];
+      console.log(d.data);
+      for (let ii = 0; ii < d.data.length; ii++) {
+        cards.push({
+          title: d.data[ii].jobTitle || 'Design Positions',
+          company: d.data[ii].companyName || 'Microsoft',
+          name: 'referer 1',
+          logo: d.data[ii].companyLogo || MS_logo,
+          avatar: Avatar,
+          id: d.data[ii].id || 0,
+        });
+      }
+      setCardData(cards);
+    },
+    onFail: e => {
+      console.log(e);
+    },
   });
-}
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      await getCardData({pageNum: undefined, pageSize: 3, search: undefined});
+    };
+    fetchData();
+  }, [getCardData]);
+
+  return (
+    <div className="home-wrapper">
+      <div className="home-content-wrapper">
+        <Header />
+        <TweenOne animation={{x: -200, type: 'from', ease: 'easeOutQuad'}}>
+          <Companies />
+          {RenderCards(cardData)}
+        </TweenOne>
+      </div>
+      <Footer />
+    </div>
+  );
+};
 
 export default GuestHome;

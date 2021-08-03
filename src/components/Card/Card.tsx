@@ -9,6 +9,7 @@ interface CardProps {
   logo: string;
   avatar: string;
   name: string;
+  id: number;
 }
 
 type authState = {
@@ -19,7 +20,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
   const auth: authState = useSelector((state: any) => state.auth);
 
   const getRedirectPath = () => {
-    return auth.isAuthenticated ? '/post-details' : '/sign-in';
+    return auth.isAuthenticated ? '/jobs/' + props.id : '/sign-in';
   };
 
   return (

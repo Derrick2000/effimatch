@@ -12,6 +12,7 @@ import {useRequest} from 'apis/useRequest';
 import {
   finishedTutorialUsingPost,
   getOwnInformationUsingGet,
+  getAllJobsUsingGet,
 } from 'apis/effimatch';
 
 interface CardData {
@@ -20,6 +21,7 @@ interface CardData {
   avatar: string;
   logo: string;
   name: string;
+  id: number;
 }
 
 interface applicationData {
@@ -46,6 +48,7 @@ const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
               logo={item.logo}
               avatar={item.avatar}
               name={item.name}
+              id={item.id}
             />
           </Col>
         ))}
@@ -82,9 +85,36 @@ const JsHome = () => {
   const [finishTutorial] = useRequest(finishedTutorialUsingPost);
   const [getOwnInformation, userInfo] = useRequest(getOwnInformationUsingGet);
 
+  const [referralCardData, setCardData] = React.useState<CardData[]>([]);
+
+  const [getCardData] = useRequest(getAllJobsUsingGet, {
+    onSuccess: d => {
+      const cards: CardData[] = [];
+      console.log(d.data);
+      for (let ii = 0; ii < d.data.length; ii++) {
+        cards.push({
+          title: d.data[ii].jobTitle || 'Design Positions',
+          company: d.data[ii].companyName || 'Microsoft',
+          name: 'referer 1',
+          logo: d.data[ii].companyLogo || MS_logo,
+          avatar: Avatar,
+          id: d.data[ii].id || 0,
+        });
+      }
+      setCardData(cards);
+    },
+    onFail: e => {
+      console.log(e);
+    },
+  });
+
   React.useEffect(() => {
+    const fetchData = async () => {
+      await getCardData({pageNum: undefined, pageSize: 3, search: undefined});
+    };
+    fetchData();
     getOwnInformation(undefined);
-  }, []);
+  }, [getCardData, getOwnInformation]);
 
   const handleOnBoardingClose = () => {
     finishTutorial(null);
@@ -154,18 +184,6 @@ const JsHome = () => {
     </div>
   );
 };
-
-// dummy data for "get referral cards"
-const referralCardData: CardData[] = [];
-for (let ii = 0; ii < 3; ii++) {
-  referralCardData.push({
-    title: 'Design Positions',
-    company: 'Microsoft',
-    name: 'referer 1',
-    logo: MS_logo,
-    avatar: Avatar,
-  });
-}
 
 // dummy data for sent:
 const sentCardData: applicationData[] = [];

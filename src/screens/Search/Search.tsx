@@ -4,6 +4,8 @@ import React from 'react';
 import Card from '../../components/Card/Card';
 import LoadCard from '../../components/LoadCard/LoadCard';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import {useRequest} from 'apis/useRequest';
+import {getAllJobsUsingGet} from 'apis/effimatch';
 
 // antd
 import {Row, Col} from 'antd';
@@ -23,6 +25,7 @@ interface CardData {
   avatar: string;
   logo: string;
   name: string;
+  id: number;
 }
 
 const RenderCards = (cardsData: CardData[], header: boolean, load: boolean) => {
@@ -43,6 +46,7 @@ const RenderCards = (cardsData: CardData[], header: boolean, load: boolean) => {
                 logo={item.logo}
                 avatar={item.avatar}
                 name={item.name}
+                id={item.id}
               />
             ) : (
               <LoadCard></LoadCard>
@@ -59,6 +63,34 @@ const Search: React.FC<any> = () => {
   const [header, setHeader] = React.useState(true);
   const [load, setLoad] = React.useState(false);
   const [jobTag, setJob] = React.useState(new Array<string>()); // edited by William. The initial jobTab array should be empty
+  const [cardData, setCardData] = React.useState<CardData[]>([]);
+
+  const [getCardData] = useRequest(getAllJobsUsingGet, {
+    onSuccess: d => {
+      const cards: CardData[] = [];
+      for (let ii = 0; ii < d.data.length; ii++) {
+        cards.push({
+          title: d.data[ii].jobTitle || 'Design Positions',
+          company: d.data[ii].companyName || 'Microsoft',
+          name: 'referer 1',
+          logo: d.data[ii].companyLogo || MS_logo,
+          avatar: Avatar,
+          id: d.data[ii].id || 0,
+        });
+      }
+      setCardData(cards);
+    },
+    onFail: e => {
+      console.log(e);
+    },
+  });
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      await getCardData({pageNum: undefined, pageSize: 3, search: undefined});
+    };
+    fetchData();
+  }, [getCardData]);
 
   const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -111,17 +143,5 @@ const Search: React.FC<any> = () => {
     </div>
   );
 };
-
-const cardData: CardData[] = [];
-
-for (let ii = 0; ii < 6; ii++) {
-  cardData.push({
-    title: 'Design Positions',
-    company: 'Microsoft',
-    name: 'referer 1',
-    logo: MS_logo,
-    avatar: Avatar,
-  });
-}
 
 export default Search;
