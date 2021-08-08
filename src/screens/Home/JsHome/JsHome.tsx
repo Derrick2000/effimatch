@@ -155,7 +155,7 @@ const JsHome = () => {
                     setrenderdata(viewedCardData);
                     setUnderlineButton(2);
                   }}>
-                  Viewed
+                  Accepted
                 </div>
               </Col>
 
@@ -169,7 +169,7 @@ const JsHome = () => {
                     setrenderdata(acceptedCardData);
                     setUnderlineButton(3);
                   }}>
-                  Accepted
+                  Closed
                 </div>
               </Col>
             </Row>
