@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import TweenOne from 'rc-tween-one';
 import Footer from '../../../components/Footer/Footer';
 import Card from '../../../components/Card/Card';
@@ -13,16 +13,11 @@ import {
   finishedTutorialUsingPost,
   getOwnInformationUsingGet,
   getAllJobsUsingGet,
+  Job,
+  getAllApplicationsUsingGet,
+  ApplicationResponse as Application,
+  GetAllApplicationsUsingGetStatus as ApplicationStatusType,
 } from 'apis/effimatch';
-
-interface CardData {
-  title: string;
-  company: string;
-  avatar: string;
-  logo: string;
-  name: string;
-  id: number;
-}
 
 interface applicationData {
   title: string;
@@ -31,7 +26,7 @@ interface applicationData {
   date: string;
 }
 
-const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
+const RenderCards = (cardsData?: Job[]) => {
   return (
     <div className="home-cards-wrapper">
       <div className="home-cards-title">
@@ -40,14 +35,14 @@ const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
         </h1>
       </div>
       <Row justify="space-between">
-        {cardsData.map((item: CardData, i: number) => (
+        {cardsData?.map((item: Job, i: number) => (
           <Col md={6} xs={24} className="home-card-block" key={i.toString()}>
             <Card
-              title={item.title}
-              company={item.company}
-              logo={item.logo}
-              avatar={item.avatar}
-              name={item.name}
+              title={item.jobTitle}
+              company={item.companyName}
+              logo={MS_logo}
+              avatar={Avatar}
+              name={'Referrer 1'}
               id={item.id}
             />
           </Col>
@@ -57,19 +52,17 @@ const RenderCards: React.FC<CardData[]> = (cardsData: CardData[]) => {
   );
 };
 
-const RenderApplicationCards: React.FC<applicationData[]> = (
-  cardsData: applicationData[],
-) => {
+const RenderApplicationCards = (cardsData?: Application[]) => {
   return (
     <div className="application-cards-wrapper">
       <Row justify="space-between" gutter={[16, 16]}>
-        {cardsData.map((item: applicationData, i: number) => (
+        {cardsData?.map((item: Application, i: number) => (
           <Col md={12} xs={24} className="home-card-block" key={i.toString()}>
             <ApplicationCard
-              title={item.title}
-              logo={item.logo}
-              name={item.name}
-              date={item.date}
+              title={item.companyName}
+              logo={MS_logo}
+              name={item.companyName}
+              date={item.createdAt}
             />
           </Col>
         ))}
@@ -79,42 +72,46 @@ const RenderApplicationCards: React.FC<applicationData[]> = (
 };
 
 const JsHome = () => {
-  const [renderdata, setrenderdata] = React.useState(sentCardData);
-  const [underlineButton, setUnderlineButton] = React.useState(1);
+  const [
+    applicationStatus,
+    setApplicationStatus,
+  ] = React.useState<ApplicationStatusType>(ApplicationStatusType.SENT);
+  const [allApplicationData, setAllApplicationData] = useState({
+    [ApplicationStatusType.SENT]: [],
+    [ApplicationStatusType.ACCEPTED]: [],
+    [ApplicationStatusType.CLOSED]: [],
+  });
 
   const [finishTutorial] = useRequest(finishedTutorialUsingPost);
   const [getOwnInformation, userInfo] = useRequest(getOwnInformationUsingGet);
 
-  const [referralCardData, setCardData] = React.useState<CardData[]>([]);
-
-  const [getCardData] = useRequest(getAllJobsUsingGet, {
-    onSuccess: d => {
-      const cards: CardData[] = [];
-      console.log(d.data);
-      for (let ii = 0; ii < d.data.length; ii++) {
-        cards.push({
-          title: d.data[ii].jobTitle || 'Design Positions',
-          company: d.data[ii].companyName || 'Microsoft',
-          name: 'referer 1',
-          logo: d.data[ii].companyLogo || MS_logo,
-          avatar: Avatar,
-          id: d.data[ii].id || 0,
-        });
-      }
-      setCardData(cards);
+  const [getPositionsDataAndOwnInformation, positionsData] = useRequest(
+    getAllJobsUsingGet,
+    {
+      onSuccess: () => {
+        getOwnInformation(undefined);
+      },
     },
-    onFail: e => {
-      console.log(e);
+  );
+
+  const [getApplicationsByStatus] = useRequest(getAllApplicationsUsingGet, {
+    onSuccess: res => {
+      setAllApplicationData(data => ({
+        ...data,
+        [applicationStatus]: res.data,
+      }));
     },
   });
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      await getCardData({pageNum: undefined, pageSize: 3, search: undefined});
-    };
-    fetchData();
-    getOwnInformation(undefined);
-  }, [getCardData, getOwnInformation]);
+  useEffect(() => {
+    getPositionsDataAndOwnInformation({pageSize: 3});
+  }, []);
+
+  useEffect(() => {
+    if (allApplicationData[applicationStatus].length === 0) {
+      getApplicationsByStatus({status: applicationStatus});
+    }
+  }, [applicationStatus]);
 
   const handleOnBoardingClose = () => {
     finishTutorial(null);
@@ -124,7 +121,7 @@ const JsHome = () => {
     <div className="JsHome-wrapper">
       <div className="home-content-wrapper">
         <TweenOne animation={{x: -200, type: 'from', ease: 'easeOutQuad'}}>
-          {RenderCards(referralCardData)}
+          {RenderCards(positionsData?.data)}
 
           <div className="home-cards-title">
             <h1 className="home-cards-title-h1">Your Applications</h1>
@@ -135,11 +132,11 @@ const JsHome = () => {
                 <div
                   className="application-button"
                   style={{
-                    textDecoration: underlineButton == 1 ? 'underline' : 'none',
+                    textDecoration:
+                      applicationStatus === 'SENT' ? 'underline' : 'none',
                   }}
                   onClick={() => {
-                    setrenderdata(sentCardData);
-                    setUnderlineButton(1);
+                    setApplicationStatus(ApplicationStatusType.SENT);
                   }}>
                   Sent
                 </div>
@@ -149,11 +146,11 @@ const JsHome = () => {
                 <div
                   className="application-button"
                   style={{
-                    textDecoration: underlineButton == 2 ? 'underline' : 'none',
+                    textDecoration:
+                      applicationStatus === 'ACCEPTED' ? 'underline' : 'none',
                   }}
                   onClick={() => {
-                    setrenderdata(viewedCardData);
-                    setUnderlineButton(2);
+                    setApplicationStatus(ApplicationStatusType.ACCEPTED);
                   }}>
                   Accepted
                 </div>
@@ -163,18 +160,18 @@ const JsHome = () => {
                 <div
                   className="application-button"
                   style={{
-                    textDecoration: underlineButton == 3 ? 'underline' : 'none',
+                    textDecoration:
+                      applicationStatus === 'CLOSED' ? 'underline' : 'none',
                   }}
                   onClick={() => {
-                    setrenderdata(acceptedCardData);
-                    setUnderlineButton(3);
+                    setApplicationStatus(ApplicationStatusType.CLOSED);
                   }}>
                   Closed
                 </div>
               </Col>
             </Row>
           </div>
-          {RenderApplicationCards(renderdata)}
+          {RenderApplicationCards(allApplicationData[applicationStatus])}
         </TweenOne>
       </div>
       <Footer />
@@ -184,36 +181,5 @@ const JsHome = () => {
     </div>
   );
 };
-
-// dummy data for sent:
-const sentCardData: applicationData[] = [];
-for (let ii = 0; ii < 2; ii++) {
-  sentCardData.push({
-    title: 'Frontend Engineer',
-    logo: MS_logo,
-    name: 'referer 2',
-    date: 'Jan 23',
-  });
-}
-// dummy data for viewed:
-const viewedCardData: applicationData[] = [];
-for (let ii = 0; ii < 3; ii++) {
-  viewedCardData.push({
-    title: 'Software Engineer',
-    logo: MS_logo,
-    name: 'referer 1',
-    date: 'Jan 23',
-  });
-}
-// dummy data for accepted:
-const acceptedCardData: applicationData[] = [];
-for (let ii = 0; ii < 4; ii++) {
-  acceptedCardData.push({
-    title: 'Software Engineer',
-    logo: MS_logo,
-    name: 'referer 3',
-    date: 'Jan 23',
-  });
-}
 
 export default JsHome;

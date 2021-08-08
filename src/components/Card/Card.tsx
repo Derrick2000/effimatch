@@ -4,12 +4,12 @@ import './cardStyle.less';
 import {useSelector} from 'react-redux';
 
 interface CardProps {
-  title: string;
-  company: string;
-  logo: string;
-  avatar: string;
-  name: string;
-  id: number;
+  title?: string;
+  company?: string;
+  logo?: string;
+  avatar?: string;
+  name?: string;
+  id?: number;
 }
 
 type authState = {

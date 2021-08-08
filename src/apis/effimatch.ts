@@ -1,12 +1,12 @@
 import {createRequestConfig} from 'apis/createRequestConfig';
 
 /**
- * addCompany
+ * addApplication
  */
-export const addCompanyUsingPost = createRequestConfig<{
-  requestBody: Company;
-}>('addCompanyUsingPost', ({requestBody}) => ({
-  url: `/v1/companies`,
+export const addApplicationUsingPost = createRequestConfig<{
+  requestBody: CreateApplicationRequest;
+}>('addApplicationUsingPost', ({requestBody}) => ({
+  url: `/v1/applications`,
   method: 'POST',
   data: requestBody,
   headers: {'Content-Type': 'application/json'},
@@ -71,14 +71,19 @@ export const finishedTutorialUsingPost = createRequestConfig(
 );
 
 /**
- * getAllCompanies
+ * getAllApplications
  */
-export const getAllCompaniesUsingGet = createRequestConfig<
-  undefined,
-  Company[]
->('getAllCompaniesUsingGet', () => ({
-  url: `/v1/companies`,
+export const getAllApplicationsUsingGet = createRequestConfig<
+  {
+    status: keyof typeof GetAllApplicationsUsingGetStatus;
+  },
+  ApplicationResponse[]
+>('getAllApplicationsUsingGet', ({status}) => ({
+  url: `/v1/applications`,
   method: 'GET',
+  params: {
+    status,
+  },
 }));
 
 /**
@@ -106,7 +111,7 @@ export const getAllJobsUsingGet = createRequestConfig<
  */
 export const getOwnInformationUsingGet = createRequestConfig<
   undefined,
-  ApplicationUser
+  EffimatchUser
 >('getOwnInformationUsingGet', () => ({
   url: `/v1/users/get-own`,
   method: 'GET',
@@ -164,17 +169,12 @@ export const updateJobByIdUsingPut = createRequestConfig<{
   headers: {'Content-Type': 'application/json'},
 }));
 
-export interface ApplicationUser {
-  accountNonExpired?: boolean;
-  accountNonLocked?: boolean;
-  authorities?: GrantedAuthority[];
-  credentialsNonExpired?: boolean;
-  enabled?: boolean;
-  finishedInitialSettings?: boolean;
-  finishedTutorial?: boolean;
-  nickname?: string;
-  password?: string;
-  username?: string;
+export interface ApplicationResponse {
+  companyLogo?: string;
+  companyName?: string;
+  createdAt?: string;
+  jobId?: string;
+  jobTitle?: string;
 }
 
 export interface AuthenticationTokenResponse {
@@ -185,10 +185,32 @@ export interface ChangeApplicationUserRoleRequest {
   newRole?: string;
 }
 
-export interface Company {
-  companyName?: string;
+export interface CreateApplicationRequest {
+  jobId?: number;
+  note?: string;
+}
+
+export interface EffimatchUser {
+  accountNonExpired?: boolean;
+  accountNonLocked?: boolean;
+  authorities?: GrantedAuthority[];
+  credentialsNonExpired?: boolean;
+  enabled?: boolean;
+  finishedInitialSettings?: boolean;
+  finishedTutorial?: boolean;
+  grantedAuthorities?: GrantedAuthority[];
   id?: number;
-  logoUrl?: string;
+  jobSeeker?: JobSeeker;
+  nickname?: string;
+  password?: string;
+  referrer?: Referrer;
+  username?: string;
+}
+
+export enum GetAllApplicationsUsingGetStatus {
+  'SENT' = 'SENT',
+  'ACCEPTED' = 'ACCEPTED',
+  'CLOSED' = 'CLOSED',
 }
 
 export interface GrantedAuthority {
@@ -196,6 +218,7 @@ export interface GrantedAuthority {
 }
 
 export interface Job {
+  active?: boolean;
   applicationDeadline?: string;
   companyLogo?: string;
   companyName?: string;
@@ -210,9 +233,29 @@ export interface Job {
   updatedAt?: string;
 }
 
+export interface JobSeeker {
+  id?: number;
+  jobType?: keyof typeof JobSeekerJobType;
+  location?: string;
+  positionTypes?: string[];
+  skills?: string[];
+}
+
+export enum JobSeekerJobType {
+  'INTERNSHIP' = 'INTERNSHIP',
+  'FULL_TIME' = 'FULL_TIME',
+}
+
 export interface LoginRequest {
   email?: string;
   password?: string;
+}
+
+export interface Referrer {
+  companyName?: string;
+  id?: number;
+  location?: string;
+  position?: string;
 }
 
 export interface RegistrationRequest {
