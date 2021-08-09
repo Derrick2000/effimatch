@@ -13,20 +13,13 @@ import {
   finishedTutorialUsingPost,
   getOwnInformationUsingGet,
   getAllJobsUsingGet,
-  Job,
+  JobCardResponse,
   getAllApplicationsUsingGet,
   ApplicationResponse as Application,
   GetAllApplicationsUsingGetStatus as ApplicationStatusType,
 } from 'apis/effimatch';
 
-interface applicationData {
-  title: string;
-  logo: string;
-  name: string;
-  date: string;
-}
-
-const RenderCards = (cardsData?: Job[]) => {
+const RenderCards = (cardsData?: JobCardResponse[]) => {
   return (
     <div className="home-cards-wrapper">
       <div className="home-cards-title">
@@ -35,14 +28,14 @@ const RenderCards = (cardsData?: Job[]) => {
         </h1>
       </div>
       <Row justify="space-between">
-        {cardsData?.map((item: Job, i: number) => (
+        {cardsData?.map((item: JobCardResponse, i: number) => (
           <Col md={6} xs={24} className="home-card-block" key={i.toString()}>
             <Card
-              title={item.jobTitle}
-              company={item.companyName}
-              logo={MS_logo}
-              avatar={Avatar}
-              name={'Referrer 1'}
+              title={item.job_title}
+              company={item.company_name}
+              logo={item.company_logo ?? MS_logo}
+              avatar={item.avatar ?? Avatar}
+              name={item.username ?? 'Referrer name'}
               id={item.id}
             />
           </Col>

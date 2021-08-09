@@ -5,7 +5,7 @@ import Card from '../../components/Card/Card';
 import LoadCard from '../../components/LoadCard/LoadCard';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import {useRequest} from 'apis/useRequest';
-import {getAllJobsUsingGet} from 'apis/effimatch';
+import {getAllJobsUsingGet, JobCardResponse} from 'apis/effimatch';
 
 // antd
 import {Row, Col} from 'antd';
@@ -28,7 +28,11 @@ interface CardData {
   id: number;
 }
 
-const RenderCards = (cardsData: CardData[], header: boolean, load: boolean) => {
+const RenderCards = (
+  cardsData?: JobCardResponse[],
+  header?: boolean,
+  load?: boolean,
+) => {
   return (
     <div className="search-cards-wrapper">
       {header && (
@@ -37,15 +41,15 @@ const RenderCards = (cardsData: CardData[], header: boolean, load: boolean) => {
         </div>
       )}
       <Row justify="space-between">
-        {cardsData.map((item: CardData, i: number) => (
+        {cardsData?.map((item: JobCardResponse, i: number) => (
           <Col md={6} xs={24} className="search-cards-block" key={i.toString()}>
             {!load ? (
               <Card
-                title={item.title}
-                company={item.company}
-                logo={item.logo}
-                avatar={item.avatar}
-                name={item.name}
+                title={item.job_title}
+                company={item.company_name}
+                logo={item.company_logo ?? MS_logo}
+                avatar={item.avatar ?? Avatar}
+                name={item.username ?? 'Referrer name'}
                 id={item.id}
               />
             ) : (
@@ -63,27 +67,8 @@ const Search: React.FC<any> = () => {
   const [header, setHeader] = React.useState(true);
   const [load, setLoad] = React.useState(false);
   const [jobTag, setJob] = React.useState(new Array<string>()); // edited by William. The initial jobTab array should be empty
-  const [cardData, setCardData] = React.useState<CardData[]>([]);
 
-  const [getCardData] = useRequest(getAllJobsUsingGet, {
-    onSuccess: d => {
-      const cards: CardData[] = [];
-      for (let ii = 0; ii < d.data.length; ii++) {
-        cards.push({
-          title: d.data[ii].jobTitle || 'Design Positions',
-          company: d.data[ii].companyName || 'Microsoft',
-          name: 'referer 1',
-          logo: d.data[ii].companyLogo || MS_logo,
-          avatar: Avatar,
-          id: d.data[ii].id || 0,
-        });
-      }
-      setCardData(cards);
-    },
-    onFail: e => {
-      console.log(e);
-    },
-  });
+  const [getCardData, cardData] = useRequest(getAllJobsUsingGet);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -137,7 +122,7 @@ const Search: React.FC<any> = () => {
             </Row>
           </div>
 
-          {RenderCards(cardData, header, load)}
+          {RenderCards(cardData?.data, header, load)}
         </TweenOne>
       </div>
     </div>

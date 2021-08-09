@@ -7,7 +7,7 @@ import Footer from 'components/Footer/Footer';
 import Companies from './Companies';
 import Card from 'components/Card/Card';
 import {useRequest} from 'apis/useRequest';
-import {getAllJobsUsingGet} from 'apis/effimatch';
+import {getAllJobsUsingGet, JobCardResponse} from 'apis/effimatch';
 
 // antd
 import QueueAnim from 'rc-queue-anim';
@@ -19,16 +19,7 @@ import Avatar from 'images/avatar.png';
 
 import '../styles/home.less';
 
-interface CardData {
-  title: string;
-  company: string;
-  avatar: string;
-  logo: string;
-  name: string;
-  id: number;
-}
-
-const RenderCards = (cardsData: CardData[]) => {
+const RenderCards = (cardsData?: JobCardResponse[]) => {
   return (
     <div className="home-cards-wrapper">
       <QueueAnim key="queue" type="bottom" leaveReverse interval={50}>
@@ -39,14 +30,14 @@ const RenderCards = (cardsData: CardData[]) => {
           </a>
         </div>
         <Row justify="space-between">
-          {cardsData.map((item: CardData, i: number) => (
+          {cardsData?.map((item: JobCardResponse, i: number) => (
             <Col md={6} xs={24} className="home-card-block" key={i.toString()}>
               <Card
-                title={item.title}
-                company={item.company}
-                logo={item.logo}
-                avatar={item.avatar}
-                name={item.name}
+                title={item.job_title}
+                company={item.company_name}
+                logo={item.company_logo ?? MS_logo}
+                avatar={item.avatar ?? Avatar}
+                name={item.username ?? 'Referrer name'}
                 id={item.id}
               />
             </Col>
@@ -58,28 +49,7 @@ const RenderCards = (cardsData: CardData[]) => {
 };
 
 const GuestHome = () => {
-  const [cardData, setCardData] = React.useState<CardData[]>([]);
-
-  const [getCardData] = useRequest(getAllJobsUsingGet, {
-    onSuccess: d => {
-      const cards: CardData[] = [];
-      console.log(d.data);
-      for (let ii = 0; ii < d.data.length; ii++) {
-        cards.push({
-          title: d.data[ii].jobTitle || 'Design Positions',
-          company: d.data[ii].companyName || 'Microsoft',
-          name: 'referer 1',
-          logo: d.data[ii].companyLogo || MS_logo,
-          avatar: Avatar,
-          id: d.data[ii].id || 0,
-        });
-      }
-      setCardData(cards);
-    },
-    onFail: e => {
-      console.log(e);
-    },
-  });
+  const [getCardData, cardData] = useRequest(getAllJobsUsingGet);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -94,7 +64,7 @@ const GuestHome = () => {
         <Header />
         <TweenOne animation={{x: -200, type: 'from', ease: 'easeOutQuad'}}>
           <Companies />
-          {RenderCards(cardData)}
+          {RenderCards(cardData?.data)}
         </TweenOne>
       </div>
       <Footer />
