@@ -95,7 +95,7 @@ export const getAllJobsUsingGet = createRequestConfig<
     pageSize?: number;
     search?: string;
   },
-  Job[]
+  JobCardResponse[]
 >('getAllJobsUsingGet', ({pageNum, pageSize, search}) => ({
   url: `/v1/jobs`,
   method: 'GET',
@@ -105,6 +105,16 @@ export const getAllJobsUsingGet = createRequestConfig<
     search,
   },
 }));
+
+/**
+ * getJobById
+ */
+export const getJobByIdUsingGet = createRequestConfig<
+  {
+    id: number;
+  },
+  Job
+>('getJobByIdUsingGet', ({id}) => ({url: `/v1/jobs/${id}`, method: 'GET'}));
 
 /**
  * getOwnInformation
@@ -194,6 +204,7 @@ export interface EffimatchUser {
   accountNonExpired?: boolean;
   accountNonLocked?: boolean;
   authorities?: GrantedAuthority[];
+  avatar?: string;
   credentialsNonExpired?: boolean;
   enabled?: boolean;
   finishedInitialSettings?: boolean;
@@ -231,6 +242,15 @@ export interface Job {
   publisherEmail?: string;
   requiredExperience?: string;
   updatedAt?: string;
+}
+
+export interface JobCardResponse {
+  avatar?: string;
+  company_logo?: string;
+  company_name?: string;
+  id?: number;
+  job_title?: string;
+  username?: string;
 }
 
 export interface JobSeeker {
