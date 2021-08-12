@@ -89,7 +89,11 @@ function App() {
         </Switch>
 
         <Switch>
-          <Route exact={true} path="/post-details" component={postDetails} />
+          <Route
+            exact={true}
+            path="/post-details/:id"
+            component={postDetails}
+          />
         </Switch>
 
         <Switch>

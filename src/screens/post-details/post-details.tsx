@@ -12,6 +12,8 @@ import Grid from '@material-ui/core/Grid';
 // assets (temp)
 import icon from 'images/avatar.png';
 
+import {useParams} from 'react-router-dom';
+
 interface PostDetailData {
   jobTitle: string;
   location: string;
@@ -68,23 +70,31 @@ const AvatarAndButtons = () => (
   </div>
 );
 
-const Referers = () => (
-  <div className="post-details-pagewrapper">
-    <div className="post-details-content-wrapper">
-      <TweenOne animation={{x: -200, type: 'from', ease: 'easeOutQuad'}}>
-        <Grid container>
-          <Grid item md={4} className="post-details-side-wrapper">
-            <AvatarAndButtons />
-          </Grid>
+const Referers = () => {
+  const {id} = useParams();
 
-          <Grid item md={8} className="post-details-main-wrapper">
-            <div>{RenderDetailSection(dummy)}</div>
+  React.useEffect(() => {
+    console.log('id is', id);
+  }, []);
+
+  return (
+    <div className="post-details-pagewrapper">
+      <div className="post-details-content-wrapper">
+        <TweenOne animation={{x: -200, type: 'from', ease: 'easeOutQuad'}}>
+          <Grid container>
+            <Grid item md={4} className="post-details-side-wrapper">
+              <AvatarAndButtons />
+            </Grid>
+
+            <Grid item md={8} className="post-details-main-wrapper">
+              <div>{RenderDetailSection(dummy)}</div>
+            </Grid>
           </Grid>
-        </Grid>
-      </TweenOne>
+        </TweenOne>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const dummy: PostDetailData = {
   jobTitle: 'Software Development Engineer',
