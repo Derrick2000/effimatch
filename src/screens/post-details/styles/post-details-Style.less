@@ -1,10 +1,9 @@
 // 为了避免跟其他的css class命名冲突
 @component: post-details;
 
-
 .@{component} {
   &-pagewrapper {
-    height: 90vh;
+    height: 100vh;
     position: relative;
     margin: auto;
     padding: 0 60px;
@@ -23,7 +22,7 @@
       display: flex;
       justify-content: center;
       text-align: center;
-      padding-bottom: 50px
+      padding-bottom: 50px;
     }
 
     &-card {
@@ -46,13 +45,52 @@
     color: white;
   }
 
-  &-title{
-    &-description{
-      padding-bottom: 40px;
+  &-description {
+    font-family: Avenir;
+    font-size: 24px;
+    line-height: 37px;
+    font-weight: bold;
+  }
+
+  &-title {
+    &-header {
+      font-family: Avenir;
+      font-size: 32px;
+      line-height: 37px;
+      font-weight: bold;
+      padding-bottom: 10px;
+    }
+
+    &-content {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 20px;
+      /* main-text */
+
+      font-family: Work Sans;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 18px;
+      line-height: 25px;
+
+      &-description {
+        display: flex;
+      }
+      &-share {
+        cursor: pointer;
+        display: flex;
+        padding-left: 5px;
+
+        img {
+          width: 25px;
+          height: 25px;
+          padding-right: 5px;
+        }
+      }
     }
   }
 }
 
-.ant-card-body{
+.ant-card-body {
   padding: 0px;
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import PopUp from '../../components/PopUp/PopUp';
+import ReferralModal from '../../components/ReferralModal/ReferralModal';
 import {Button} from 'antd';
 
 const PopUpTest = () => {
@@ -67,14 +68,6 @@ const PopUpTest = () => {
       />
 
       {/* Pop up for Button 3 */}
-      <PopUp
-        // REQUIRED
-        visiable={test3}
-        setClose={show3}
-        // OPTIONAL
-        onClick={() => alert('TESTING 3')}
-        text="TESTING TEXT 3"
-      />
     </div>
   );
 };

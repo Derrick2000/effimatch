@@ -1,80 +1,154 @@
 import React from 'react';
 import './styles/post-details-Style.less';
 // screens and componets
+import ReferralModal from 'components/ReferralModal/ReferralModal';
 import TweenOne from 'rc-tween-one';
+import {useRequest} from 'apis/useRequest';
+import {
+  getJobByIdUsingGet,
+  addApplicationUsingPost,
+  CreateApplicationRequest,
+  Job,
+} from 'apis/effimatch';
 
 // antd
-import {Button, Card} from 'antd';
+import {Button, Card, notification} from 'antd';
 
 // material ui
 import Grid from '@material-ui/core/Grid';
+import parse from 'html-react-parser';
 
 // assets (temp)
 import icon from 'images/avatar.png';
+import share from 'images/share.png';
 
 import {useParams} from 'react-router-dom';
 
-interface PostDetailData {
-  jobTitle: string;
-  location: string;
-  gradYear: string;
-  minQualification: string;
-  preferQualification: string;
-}
+const openErrorNotification = (placement: any, errorMsg: string) => {
+  notification.info({
+    message: 'Note',
+    description: 'An error has occured.\n' + errorMsg,
+    placement,
+  });
+};
 
-const RenderDetailSection: React.FC<PostDetailData> = (
-  postInfo: PostDetailData,
-) => (
-  <div>
-    <h1 className="post-details-title-header">{postInfo.jobTitle}</h1>
-    <p className="post-details-title-description">
-      {postInfo.location} | {postInfo.gradYear} Grad
-    </p>
-    <h3>Minimum qualifications:</h3>
-    <p className="post-details-title-description">
-      {postInfo.minQualification}
-    </p>
-    <h3>Preferred qualifications:</h3>
-    <p>{postInfo.preferQualification}</p>
-  </div>
-);
+const openSuccessNotification = (placement: any) => {
+  notification.info({
+    message: 'Note',
+    description: 'Note sent successfully.',
+    placement,
+  });
+};
 
-const AvatarAndButtons = () => (
-  <div className="post-details-side">
-    <Card
-      className="post-details-side-card"
-      cover={
-        <img
-          alt="avatar"
-          src={icon}
-          style={{borderRadius: '50px', width: '140px'}}
-        />
-      }
-      bordered={false}
-      hoverable={false}
-      bodyStyle={{padding: '0 10'}}
-    />
+const openCopyNotification = (placement: any) => {
+  notification.info({
+    message: 'Link Copied!',
+    placement,
+  });
+};
 
-    <Button
-      type="primary"
-      className="post-details-side-button post-details-primary-button"
-      style={{borderRadius: '10px', width: '140px'}}>
-      Get Referred
-    </Button>
-    <br />
-    <Button
-      className="post-details-side-button"
-      style={{borderRadius: '10px', width: '140px'}}>
-      View my Linkedin
-    </Button>
-  </div>
-);
+const RenderDetailSection = (postInfo?: Job) => {
+  const copyLink = () => {
+    navigator.clipboard.writeText(postInfo?.jobLink ?? '');
+    openCopyNotification('bottomLeft');
+  };
+  return (
+    <div>
+      <h1 className="post-details-title-header">{postInfo?.jobTitle ?? ''}</h1>
+      <div className="post-details-title-content">
+        <div className="post-details-title-content-description">
+          <p>
+            {postInfo?.location ?? ''} | {postInfo?.requiredExperience ?? ''}
+          </p>
+        </div>
+        <div className="post-details-title-content-share" onClick={copyLink}>
+          <img src={share} alt="logo" />
+          <p>Share</p>
+        </div>
+      </div>
+      <p className="post-details-description">Job Description:</p>
+      <div>{parse(postInfo?.jobDescription ?? '')}</div>
+    </div>
+  );
+};
+
+const AvatarAndButtons = (companyLogo: string) => {
+  const {id} = useParams();
+  const [showNote, setNote] = React.useState(false);
+  const [addNote] = useRequest(addApplicationUsingPost);
+
+  const setShow = () => {
+    setNote(!showNote);
+  };
+
+  const submitNote = (note: string) => {
+    if (note.length == 0) {
+      openErrorNotification('bottomLeft', 'Invalid note');
+    }
+    const application: CreateApplicationRequest = {
+      jobId: id,
+      note: note,
+    };
+    addNote({requestBody: application})
+      .then(() => {
+        openSuccessNotification('bottomLeft');
+        setShow();
+      })
+      .catch((e: string) => {
+        openErrorNotification('bottomLeft', e);
+        setShow();
+      });
+  };
+
+  return (
+    <div className="post-details-side">
+      <Card
+        className="post-details-side-card"
+        cover={
+          <img
+            alt="avatar"
+            src={companyLogo ?? icon}
+            style={{borderRadius: '50px', width: '140px'}}
+          />
+        }
+        bordered={false}
+        hoverable={false}
+        bodyStyle={{padding: '0 10'}}
+      />
+
+      <Button
+        type="primary"
+        className="post-details-side-button post-details-primary-button"
+        onClick={setShow}
+        style={{borderRadius: '10px', width: '140px'}}>
+        Get Referred
+      </Button>
+      <br />
+      <Button
+        className="post-details-side-button"
+        style={{borderRadius: '10px', width: '140px'}}>
+        View my Linkedin
+      </Button>
+
+      <ReferralModal
+        visiable={showNote}
+        setClose={setShow}
+        onSubmit={submitNote}
+      />
+    </div>
+  );
+};
 
 const Referers = () => {
   const {id} = useParams();
+  const [getJobData, jobData] = useRequest(getJobByIdUsingGet);
 
   React.useEffect(() => {
-    console.log('id is', id);
+    const fetchData = async () => {
+      await getJobData({id: id});
+      console.log(jobData);
+    };
+    fetchData();
   }, []);
 
   return (
@@ -83,27 +157,17 @@ const Referers = () => {
         <TweenOne animation={{x: -200, type: 'from', ease: 'easeOutQuad'}}>
           <Grid container>
             <Grid item md={4} className="post-details-side-wrapper">
-              <AvatarAndButtons />
+              <div>{AvatarAndButtons(jobData?.data.companyLogo ?? '')}</div>
             </Grid>
 
             <Grid item md={8} className="post-details-main-wrapper">
-              <div>{RenderDetailSection(dummy)}</div>
+              <div>{RenderDetailSection(jobData?.data)}</div>
             </Grid>
           </Grid>
         </TweenOne>
       </div>
     </div>
   );
-};
-
-const dummy: PostDetailData = {
-  jobTitle: 'Software Development Engineer',
-  location: 'San Francisco',
-  gradYear: '2021',
-  minQualification:
-    "Bachelor's degree in Computer Science, related technical field or equivalent practical experience.\nExperience in computer science, data structures, algorithms and software design.\nExperience in Software Development and coding in a general purpose programming language.",
-  preferQualification:
-    'Extensive experience programming in C, C++, Java and/or Python.\nExperience with UNIX/Linux or Windows environments, distributed systems, machine learning, information retrieval and TCP/IP.',
 };
 
 export default Referers;

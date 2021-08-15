@@ -20,7 +20,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
   const auth: authState = useSelector((state: any) => state.auth);
 
   const getRedirectPath = () => {
-    return auth.isAuthenticated ? '/jobs/' + props.id : '/sign-in';
+    return auth.isAuthenticated ? '/post-details/' + props.id : '/sign-in';
   };
 
   return (
