@@ -5,7 +5,6 @@ pipeline {
             steps {
                 sh 'yarn' 
                 sh 'yarn build'
-                sh 'mv ./build /root/jenkins-test'
             }
         }
     }
