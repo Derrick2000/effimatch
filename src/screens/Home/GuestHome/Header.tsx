@@ -7,6 +7,10 @@ import TweenOne from 'rc-tween-one';
 import SearchBar from 'components/SearchBar/SearchBar';
 import {ReactComponent as HeaderImg} from 'images/searching-telescope.svg';
 
+const navigateToSearchPage = value => {
+  window.location.href = `/search?q=${value}`;
+};
+
 const Header = () => {
   return (
     <TweenOne animation={{x: 200, type: 'from', ease: 'easeOutQuad'}}>
@@ -16,7 +20,7 @@ const Header = () => {
             Get your <span className="home-header-title-orange">dream job</span>
           </h1>
           <h1>by referral today!</h1>
-          <SearchBar />
+          <SearchBar search={navigateToSearchPage} />
         </div>
 
         <div className="home-header-image">

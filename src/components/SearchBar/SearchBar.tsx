@@ -9,30 +9,12 @@ interface Props {
 
 const SearchBar: React.FC<Props> = (props: Props) => {
   const [value, setValue] = React.useState('');
-  // const [, setOptions] = React.useState<{ value: string }[]>([]);
-
-  // 假的 没啥用 用来演示auto complete的效果
-  // const mockVal = (str: string, repeat = 1) => {
-  //     return {
-  //       value: str.repeat(repeat),
-  //     };
-  // };
-
-  // const onSearch = (searchText: string) => {
-  //     setOptions(
-  //       !searchText ? [] : [mockVal(searchText), mockVal(searchText, 2), mockVal(searchText, 3)],
-  //     );
-  // };
-
-  // const onSelect = (data: string) => {
-  //     console.log('onSelect', data);
-  // };
 
   const onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     setValue(ev.target.value);
   };
 
-  const onClick = () => {
+  const handleSearch = () => {
     // to avoid exception when 'search()' is undefined
     if (props.search) {
       props.search(value);
@@ -43,7 +25,7 @@ const SearchBar: React.FC<Props> = (props: Props) => {
   // detect user key down input
   const onDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {
-      onClick();
+      handleSearch();
     }
   };
 
@@ -60,7 +42,7 @@ const SearchBar: React.FC<Props> = (props: Props) => {
         style={{width: props.buttonWidth}}
         type="primary"
         className="search-bar-button"
-        onClick={onClick}>
+        onClick={handleSearch}>
         Search
       </Button>
     </div>

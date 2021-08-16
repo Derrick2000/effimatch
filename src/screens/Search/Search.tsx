@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 // componenet
 import Card from '../../components/Card/Card';
@@ -6,6 +6,7 @@ import LoadCard from '../../components/LoadCard/LoadCard';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import {useRequest} from 'apis/useRequest';
 import {getAllJobsUsingGet, JobCardResponse} from 'apis/effimatch';
+import useQueryParams from 'utils/useQueryParams';
 
 // antd
 import {Row, Col} from 'antd';
@@ -59,20 +60,27 @@ const RenderCards = (
   );
 };
 
-const Search: React.FC<any> = () => {
-  const [, setSearch] = React.useState(false);
-  const [header, setHeader] = React.useState(true);
-  const [load, setLoad] = React.useState(false);
-  const [jobTag, setJob] = React.useState(new Array<string>()); // edited by William. The initial jobTab array should be empty
+const Search = () => {
+  const [, setSearch] = useState(false);
+  const [header, setHeader] = useState(true);
+  const [load, setLoad] = useState(false);
+  const [jobTag, setJob] = useState(new Array<string>()); // edited by William. The initial jobTab array should be empty
 
   const [getCardData, cardData] = useRequest(getAllJobsUsingGet);
 
-  React.useEffect(() => {
+  const query = useQueryParams();
+  const [searchString, setSearchString] = useState(query.get('q') ?? '');
+
+  useEffect(() => {
     const fetchData = async () => {
-      await getCardData({pageNum: undefined, pageSize: 3, search: undefined});
+      await getCardData({
+        pageNum: undefined,
+        pageSize: 3,
+        search: searchString,
+      });
     };
     fetchData();
-  }, [getCardData]);
+  }, [searchString]);
 
   const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -81,6 +89,8 @@ const Search: React.FC<any> = () => {
     if (value !== '') {
       setJob(jobTag => [...jobTag, value]);
     }
+
+    setSearchString(value);
 
     setHeader(false);
     setLoad(true);
@@ -103,8 +113,8 @@ const Search: React.FC<any> = () => {
         </TweenOne>
 
         <TweenOne animation={{x: -200, type: 'from', ease: 'linear'}}>
-          {/* Edited by William. Also need to display tags when search is in progress */}
-          <div className="search-tags-wrapper">
+          {/* Tags. Temporarily dis-enabled */}
+          {/* <div className="search-tags-wrapper">
             <Row justify="start">
               {jobTag.map((item: string, i: number) => (
                 <Col className="search-tags-block" key={i.toString()}>
@@ -117,7 +127,7 @@ const Search: React.FC<any> = () => {
                 </Col>
               ))}
             </Row>
-          </div>
+          </div> */}
 
           {RenderCards(cardData?.data, header, load)}
         </TweenOne>
