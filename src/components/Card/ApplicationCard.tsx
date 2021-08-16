@@ -3,6 +3,7 @@ import './ApplicationCardStyle.less';
 import moment from 'moment';
 
 interface applicationData {
+  id?: string;
   title?: string;
   logo?: string;
   name?: string;
@@ -10,23 +11,21 @@ interface applicationData {
 }
 
 const ApplicationCard = (props: applicationData) => {
+  const {id, title, logo, name, date} = props;
+
   return (
-    <a className="appcard-block-group" href="/#">
+    <a className="appcard-block-group" href={`/jobs/${id}`}>
       <div className="appcard-info-wrapper">
         <div className="appcard-info-block">
-          <img
-            src={props.logo}
-            className="appcard-info-block-image"
-            alt="logo"
-          />
+          <img src={logo} className="appcard-info-block-image" alt="logo" />
           <div className="appcard-info-block-title">
-            <h1>{props.title}</h1>
-            <p>{`@ ${props.name}`}</p>
+            <h1>{title}</h1>
+            <p>{`@ ${name}`}</p>
           </div>
         </div>
 
         <p className="appcard-info-date">
-          {moment(props.date).format('DD MMM, YYYY')}
+          {moment(date).format('DD MMM, YYYY')}
         </p>
       </div>
     </a>

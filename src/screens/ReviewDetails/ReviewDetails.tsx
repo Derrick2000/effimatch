@@ -10,7 +10,7 @@ const ReviewDetails = () => {
   return (
     <div className="reviewdetails-wrapper">
       <div className="reviewdetails-content">
-        <a className="reviewdetails-back" href="/post-details">
+        <a className="reviewdetails-back" href="/jobs">
           Back
         </a>
         <div className="reviewdetails-info">

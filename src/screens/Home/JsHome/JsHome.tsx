@@ -61,7 +61,8 @@ const RenderApplicationCards = (cardsData?: Application[]) => {
         {cardsData?.map((item: Application, i: number) => (
           <Col md={12} xs={24} className="home-card-block" key={i.toString()}>
             <ApplicationCard
-              title={item.companyName}
+              id={item.jobId}
+              title={item.jobTitle}
               logo={item.companyLogo ?? MS_logo}
               name={item.companyName}
               date={item.createdAt}
