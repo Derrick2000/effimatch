@@ -4,7 +4,7 @@ import Footer from '../../../components/Footer/Footer';
 import Card from '../../../components/Card/Card';
 import ApplicationCard from '../../../components/Card/ApplicationCard';
 import JSHomeOnBoarding from '../../../components/JSHomeOnBoarding/JSHomeOnBoarding';
-import {Row, Col} from 'antd';
+import {Row, Col, Empty} from 'antd';
 import MS_logo from 'images/MS_logo.png';
 import Avatar from 'images/avatar.png';
 import LoadCard from 'components/LoadCard/LoadCard';
@@ -55,20 +55,24 @@ const RenderCards = (cardsData?: JobCardResponse[]) => {
 };
 
 const RenderApplicationCards = (cardsData?: Application[]) => {
-  return (
+  return cardsData?.length !== 0 ? (
     <div className="application-cards-wrapper">
       <Row justify="space-between" gutter={[16, 16]}>
         {cardsData?.map((item: Application, i: number) => (
           <Col md={12} xs={24} className="home-card-block" key={i.toString()}>
             <ApplicationCard
               title={item.companyName}
-              logo={MS_logo}
+              logo={item.companyLogo ?? MS_logo}
               name={item.companyName}
               date={item.createdAt}
             />
           </Col>
         ))}
       </Row>
+    </div>
+  ) : (
+    <div className="application-cards-empty">
+      <Empty />
     </div>
   );
 };
