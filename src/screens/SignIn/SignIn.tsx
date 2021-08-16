@@ -1,9 +1,8 @@
 import React from 'react';
-
 import {ReactComponent as SignUpBackGround} from '../../images/sign_bg.svg';
 import {ReactComponent as SignInPerson} from '../../images/sign_in_person.svg';
-
 import {Input, Button, notification} from 'antd';
+import {useEventListener} from 'utils/useEventListener';
 
 // redux
 import {loginUser} from '../../actions/authAction';
@@ -30,6 +29,14 @@ const SignIn: React.FC<any> = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [loading, setLoading] = React.useState(false);
+
+  const handleEnterPressed = (e: KeyboardEvent) => {
+    if (e.code === 'Enter') {
+      login();
+    }
+  };
+
+  useEventListener('keydown', handleEnterPressed);
 
   const login = () => {
     const userInfo = {
@@ -83,6 +90,7 @@ const SignIn: React.FC<any> = () => {
           </Button>
           <Button
             className="signin-box-linkedinBut"
+            onKeyDown={e => console.log(e)}
             // onClick={signWithLinkedIn}
           >
             Continue with LinkedIn

@@ -6,6 +6,7 @@ import './styles/signup.less';
 import {registerUsingPost, sendVerificationUsingPost} from 'apis/effimatch';
 import {useRequest} from 'apis/useRequest';
 import {loginUser} from '../../actions/authAction';
+import {useEventListener} from 'utils/useEventListener';
 
 const {Search} = Input;
 
@@ -60,6 +61,14 @@ const Signup: React.FC<any> = () => {
       setLoading(false);
     },
   });
+
+  const handleEnterPressed = (e: KeyboardEvent) => {
+    if (e.code === 'Enter') {
+      signUp();
+    }
+  };
+
+  useEventListener('keydown', handleEnterPressed);
 
   const [sendVerificationMuted] = useRequest(sendVerificationUsingPost, {
     onSuccess: () => {
