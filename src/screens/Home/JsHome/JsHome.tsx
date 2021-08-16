@@ -10,8 +10,6 @@ import Avatar from 'images/avatar.png';
 import './styles/JsHome.less';
 import {useRequest} from 'apis/useRequest';
 import {
-  finishedTutorialUsingPost,
-  getOwnInformationUsingGet,
   getAllJobsUsingGet,
   JobCardResponse,
   getAllApplicationsUsingGet,
@@ -75,17 +73,7 @@ const JsHome = () => {
     [ApplicationStatusType.CLOSED]: [],
   });
 
-  const [finishTutorial] = useRequest(finishedTutorialUsingPost);
-  const [getOwnInformation, userInfo] = useRequest(getOwnInformationUsingGet);
-
-  const [getPositionsDataAndOwnInformation, positionsData] = useRequest(
-    getAllJobsUsingGet,
-    {
-      onSuccess: () => {
-        getOwnInformation(undefined);
-      },
-    },
-  );
+  const [getPositionsData, positionsData] = useRequest(getAllJobsUsingGet);
 
   const [getApplicationsByStatus] = useRequest(getAllApplicationsUsingGet, {
     onSuccess: res => {
@@ -97,7 +85,7 @@ const JsHome = () => {
   });
 
   useEffect(() => {
-    getPositionsDataAndOwnInformation({pageSize: 3});
+    getPositionsData({pageSize: 3});
   }, []);
 
   useEffect(() => {
@@ -105,10 +93,6 @@ const JsHome = () => {
       getApplicationsByStatus({status: applicationStatus});
     }
   }, [applicationStatus]);
-
-  const handleOnBoardingClose = () => {
-    finishTutorial(null);
-  };
 
   return (
     <div className="JsHome-wrapper">
@@ -168,9 +152,7 @@ const JsHome = () => {
         </TweenOne>
       </div>
       <Footer />
-      {userInfo?.data.finishedTutorial ? null : (
-        <JSHomeOnBoarding handleClose={handleOnBoardingClose} />
-      )}
+      <JSHomeOnBoarding />
     </div>
   );
 };

@@ -1,23 +1,41 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Modal} from 'antd';
 import {CheckOutlined, SmileOutlined} from '@ant-design/icons';
 import './JSHomeOnBoarding.less';
 import {ReactComponent as ScooterWithBackpack} from '../../images/ScooterWithBackpack.svg';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
+import {useRequest} from 'apis/useRequest';
+import {
+  finishedTutorialUsingPost,
+  getOwnInformationUsingGet,
+} from 'apis/effimatch';
 
-const OnBoardingModal = props => {
-  const [showOnBoard, setShowOnBoard] = React.useState(true);
+const JSHomeOnBoarding = () => {
+  return <OnBoardingModal />;
+};
 
-  // added by William
+const OnBoardingModal = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [getOwnInformation] = useRequest(getOwnInformationUsingGet, {
+    onSuccess: r => {
+      setShowModal(!r.data.finishedTutorial!);
+    },
+  });
+  const [finishTutorial] = useRequest(finishedTutorialUsingPost);
+
+  useEffect(() => {
+    getOwnInformation(undefined);
+  }, []);
+
   const handleClose = () => {
-    props.handleClose();
-    setShowOnBoard(false);
+    finishTutorial(undefined);
+    setShowModal(false);
   };
 
   return (
     <Modal
-      visible={showOnBoard}
+      visible={showModal}
       width={720}
       footer={null}
       closable={false}
@@ -66,10 +84,6 @@ const OnBoardingModal = props => {
       </Grid>
     </Modal>
   );
-};
-
-const JSHomeOnBoarding: React.FC<any> = props => {
-  return <OnBoardingModal {...props} />;
 };
 
 export default JSHomeOnBoarding;
