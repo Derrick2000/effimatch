@@ -19,15 +19,6 @@ import Avatar from 'images/avatar.png';
 // style
 import './styles/search.less';
 
-interface CardData {
-  title: string;
-  company: string;
-  avatar: string;
-  logo: string;
-  name: string;
-  id: number;
-}
-
 const RenderCards = (
   cardsData?: JobCardResponse[],
   header?: boolean,
@@ -41,22 +32,28 @@ const RenderCards = (
         </div>
       )}
       <Row justify="space-between">
-        {cardsData?.map((item: JobCardResponse, i: number) => (
-          <Col md={6} xs={24} className="search-cards-block" key={i.toString()}>
-            {!load ? (
-              <Card
-                title={item.job_title}
-                company={item.company_name}
-                logo={item.company_logo ?? MS_logo}
-                avatar={item.avatar ?? Avatar}
-                name={item.username ?? 'Referrer name'}
-                id={item.id}
-              />
-            ) : (
-              <LoadCard></LoadCard>
-            )}
-          </Col>
-        ))}
+        {cardsData && !load
+          ? cardsData?.map((item: JobCardResponse, i: number) => (
+              <Col
+                md={6}
+                xs={24}
+                className="search-cards-block"
+                key={i.toString()}>
+                <Card
+                  title={item.job_title}
+                  company={item.company_name}
+                  logo={item.company_logo ?? MS_logo}
+                  avatar={item.avatar ?? Avatar}
+                  name={item.username ?? 'Referrer name'}
+                  id={item.id}
+                />
+              </Col>
+            ))
+          : [1, 2, 3].map(ii => (
+              <Col md={6} xs={24} className="home-card-block" key={ii}>
+                <LoadCard key={ii} />
+              </Col>
+            ))}
       </Row>
     </div>
   );
