@@ -8,10 +8,11 @@ import Companies from './Companies';
 import Card from 'components/Card/Card';
 import {useRequest} from 'apis/useRequest';
 import {getAllJobsUsingGet, JobCardResponse} from 'apis/effimatch';
+import LoadCard from 'components/LoadCard/LoadCard';
 
 // antd
 import QueueAnim from 'rc-queue-anim';
-import {Row, Col, Button} from 'antd';
+import {Row, Col} from 'antd';
 
 // assets (temp)
 import MS_logo from 'images/MS_logo.png';
@@ -30,18 +31,28 @@ const RenderCards = (cardsData?: JobCardResponse[]) => {
           </a>
         </div>
         <Row justify="space-between">
-          {cardsData?.map((item: JobCardResponse, i: number) => (
-            <Col md={6} xs={24} className="home-card-block" key={i.toString()}>
-              <Card
-                title={item.job_title}
-                company={item.company_name}
-                logo={item.company_logo ?? MS_logo}
-                avatar={item.avatar ?? Avatar}
-                name={item.username ?? 'Referrer name'}
-                id={item.id}
-              />
-            </Col>
-          ))}
+          {cardsData
+            ? cardsData?.map((item: JobCardResponse, i: number) => (
+                <Col
+                  md={6}
+                  xs={24}
+                  className="home-card-block"
+                  key={i.toString()}>
+                  <Card
+                    title={item.job_title}
+                    company={item.company_name}
+                    logo={item.company_logo ?? MS_logo}
+                    avatar={item.avatar ?? Avatar}
+                    name={item.username ?? 'Referrer name'}
+                    id={item.id}
+                  />
+                </Col>
+              ))
+            : [1, 2, 3].map(ii => (
+                <Col md={6} xs={24} className="home-card-block" key={ii}>
+                  <LoadCard key={ii} />
+                </Col>
+              ))}
         </Row>
       </QueueAnim>
     </div>

@@ -30,7 +30,12 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
           <h1>{props.title}</h1>
           <p>@ {props.company}</p>
         </div>
-        <img src={props.logo} alt="logo" />
+        <img
+          src={props.logo}
+          alt="logo"
+          className="card-image"
+          style={{maxWidth: 60, maxHeight: 40}}
+        />
       </div>
 
       <div className="card-avatar-wrapper">

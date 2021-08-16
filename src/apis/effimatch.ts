@@ -158,7 +158,7 @@ export const registerUsingPost = createRequestConfig<{
  * sendVerification
  */
 export const sendVerificationUsingPost = createRequestConfig<{
-  requestBody: RegistrationRequest;
+  requestBody: SendVerificationCodeRequest;
 }>('sendVerificationUsingPost', ({requestBody}) => ({
   url: `/v1/authentication/send-verification`,
   method: 'POST',
@@ -283,4 +283,8 @@ export interface RegistrationRequest {
   email?: string;
   password?: string;
   username?: string;
+}
+
+export interface SendVerificationCodeRequest {
+  email?: string;
 }
