@@ -7,6 +7,7 @@ import JSHomeOnBoarding from '../../../components/JSHomeOnBoarding/JSHomeOnBoard
 import {Row, Col} from 'antd';
 import MS_logo from 'images/MS_logo.png';
 import Avatar from 'images/avatar.png';
+import LoadCard from 'components/LoadCard/LoadCard';
 import './styles/JsHome.less';
 import {useRequest} from 'apis/useRequest';
 import {
@@ -26,18 +27,28 @@ const RenderCards = (cardsData?: JobCardResponse[]) => {
         </h1>
       </div>
       <Row justify="space-between">
-        {cardsData?.map((item: JobCardResponse, i: number) => (
-          <Col md={6} xs={24} className="home-card-block" key={i.toString()}>
-            <Card
-              title={item.job_title}
-              company={item.company_name}
-              logo={item.company_logo ?? MS_logo}
-              avatar={item.avatar ?? Avatar}
-              name={item.username ?? 'Referrer name'}
-              id={item.id}
-            />
-          </Col>
-        ))}
+        {cardsData
+          ? cardsData?.map((item: JobCardResponse, i: number) => (
+              <Col
+                md={6}
+                xs={24}
+                className="home-card-block"
+                key={i.toString()}>
+                <Card
+                  title={item.job_title}
+                  company={item.company_name}
+                  logo={item.company_logo ?? MS_logo}
+                  avatar={item.avatar ?? Avatar}
+                  name={item.username ?? 'Referrer name'}
+                  id={item.id}
+                />
+              </Col>
+            ))
+          : [1, 2, 3].map(ii => (
+              <Col md={6} xs={24} className="home-card-block" key={ii}>
+                <LoadCard key={ii} />
+              </Col>
+            ))}
       </Row>
     </div>
   );
