@@ -1,5 +1,5 @@
 import React from 'react';
-import {ReactComponent as SignUpBackGround} from '../../images/sign_bg.svg';
+import SignUpBackGround from '../../images/sign_bg.svg';
 import {ReactComponent as SignUpPerson} from '../../images/sign_up_person.svg';
 import {Input, Button, notification} from 'antd';
 import './styles/signup.less';
@@ -34,7 +34,7 @@ const openCodeNotification = (placement: any) => {
   });
 };
 
-const Signup: React.FC<any> = () => {
+const Signup = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [username, setUsername] = React.useState('');
@@ -149,8 +149,7 @@ const Signup: React.FC<any> = () => {
   };
 
   return (
-    <div className="signup-wrapper">
-      <SignUpBackGround className="signup-wrapper-bg" />
+    <div className="signup-wrapper" style={{backgroundImage:`url(${SignUpBackGround})`}}>
 
       <SignUpPerson className="signup-wrapper-person" />
       <div className="signup-box">
@@ -185,7 +184,7 @@ const Signup: React.FC<any> = () => {
             className="signup-box-form-input"
             maxLength={25}
           />
-          <p className="signup-box-form-text">One time password</p>
+          <p className="signup-box-form-text">Verification Code (OTP)</p>
           <Search
             placeholder="Enter OTP Here"
             enterButton={

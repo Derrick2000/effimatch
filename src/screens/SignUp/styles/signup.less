@@ -3,40 +3,39 @@
 
 .@{signup} {
   &-wrapper {
+    background-color: @background-color;
     position: fixed;
     overflow: hidden;
-
-    &-bg {
-      position: relative;
-      display: inline-block;
-      width: 100vw;
-      height: 100vh;
-      top: 0;
-      left: 0;
-      background: @background-color;
-    }
+    width: 100vw;
+    height: 100vh;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: scroll;
 
     &-person {
-      position: absolute;
+      position: fixed;
       left: -530px;
-      bottom: 100px;
-      width: 100vw;
-      height: 85vh;
+      bottom: 20px;
+      width: 100%;
+      height: 80%;
       z-index: 1;
     }
   }
 
   &-box {
-    padding: 20px 50px 40px;
-    position: absolute;
-    width: 550px;
-    // height: 630px;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-
-    background: #ffffff;
+    margin-top: 20em;
+    padding-top: 20px;
+    min-width: 400px;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 20vh;
+    background:white;
     box-shadow: -2px -2px 1px rgba(233, 233, 233, 0.25),
       2px 2px 1px rgba(233, 233, 233, 0.25);
 
@@ -73,12 +72,12 @@
     &-sub-header {
       font-size: 24px;
       font-weight: 500;
+      padding: 0 40px;
     }
 
     &-form {
+      z-index: 2;
       &-text {
-        margin-left: 80px;
-
         padding-top: 10px;
         font-family: Work Sans;
         font-style: normal;
@@ -87,14 +86,12 @@
         line-height: 19px;
       }
       &-input {
-        margin-left: 80px;
         width: 290px;
         border-radius: @border-radius;
       }
 
       &-code {
         padding-bottom: 10px;
-        margin-left: 80px;
         width: 290px;
       }
     }
@@ -112,6 +109,7 @@
     &-linkedinBut {
       background-color: #0a66c2;
       color: white;
+      margin-bottom: 40px;
     }
 
     &-linkedinBut:hover {
