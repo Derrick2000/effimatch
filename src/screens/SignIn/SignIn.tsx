@@ -18,7 +18,7 @@ const openErrorNotification = (placement: any, errorMsg: string) => {
 };
 
 const openSuccessNotification = (placement: any) => {
-  notification.info({
+  notification.success({
     message: 'Sign In',
     description: 'Signed in successfully.',
     placement,

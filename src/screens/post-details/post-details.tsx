@@ -33,7 +33,7 @@ const openErrorNotification = (placement: any, errorMsg: string) => {
 };
 
 const openSuccessNotification = (placement: any) => {
-  notification.info({
+  notification.success({
     message: 'Note',
     description: 'Note sent successfully.',
     placement,
@@ -41,7 +41,7 @@ const openSuccessNotification = (placement: any) => {
 };
 
 const openCopyNotification = (placement: any) => {
-  notification.info({
+  notification.success({
     message: 'Link Copied!',
     placement,
   });
