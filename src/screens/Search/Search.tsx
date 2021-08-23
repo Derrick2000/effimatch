@@ -9,7 +9,7 @@ import {getAllJobsUsingGet, JobCardResponse} from 'apis/effimatch';
 import useQueryParams from 'utils/useQueryParams';
 
 // antd
-import {Row, Col} from 'antd';
+import {Row, Col, Empty} from 'antd';
 import {Tag} from 'antd';
 import TweenOne from 'rc-tween-one';
 
@@ -56,6 +56,7 @@ const RenderCards = (
               </Col>
             ))}
       </Row>
+      {cardsData?.length === 0 && !load ? <Empty /> : null}
     </div>
   );
 };
