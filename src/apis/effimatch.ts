@@ -25,6 +25,18 @@ export const addJobUsingPost = createRequestConfig<{
 }));
 
 /**
+ * changePassword
+ */
+export const changePasswordUsingPatch = createRequestConfig<{
+  requestBody: ChangePasswordRequest;
+}>('changePasswordUsingPatch', ({requestBody}) => ({
+  url: `/v1/users/change-password`,
+  method: 'PATCH',
+  data: requestBody,
+  headers: {'Content-Type': 'application/json'},
+}));
+
+/**
  * changeRole
  */
 export const changeRoleUsingPost = createRequestConfig<{
@@ -128,6 +140,17 @@ export const getOwnInformationUsingGet = createRequestConfig<
 }));
 
 /**
+ * getOwnJobs
+ */
+export const getOwnJobsUsingGet = createRequestConfig<
+  undefined,
+  JobCardResponse[]
+>('getOwnJobsUsingGet', () => ({
+  url: `/v1/jobs/own`,
+  method: 'GET',
+}));
+
+/**
  * login
  */
 export const loginUsingPost = createRequestConfig<
@@ -193,6 +216,11 @@ export interface AuthenticationTokenResponse {
 
 export interface ChangeApplicationUserRoleRequest {
   newRole?: string;
+}
+
+export interface ChangePasswordRequest {
+  newPassword?: string;
+  otp?: string;
 }
 
 export interface CreateApplicationRequest {

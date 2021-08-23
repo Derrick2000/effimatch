@@ -2,6 +2,7 @@ import React from 'react';
 import './RequestCardStyle.less';
 import {Button} from 'antd/lib';
 interface requestCardData {
+  jobId?: number;
   logo: string;
   name: string;
   description: string;
@@ -9,18 +10,21 @@ interface requestCardData {
 }
 
 const RequestCard: React.FC<requestCardData> = (props: requestCardData) => {
+
+  const {jobId, logo, name, description, closable} = props;
+
   return (
-    <a className="request-card-block-group" href="/#">
+    <a className="request-card-block-group" href={`/jobs/${jobId}`}>
       <div className="request-card-info-wrapper">
         <div className="request-card-info-block">
           <img
-            src={props.logo}
+            src={logo}
             className="request-card-info-block-image"
             alt="logo"
           />
           <div className="request-card-info-block-title">
-            <h1>{props.name}</h1>
-            <p>{props.description}</p>
+            <h1>{name}</h1>
+            <p>{description}</p>
           </div>
         </div>
 
@@ -28,7 +32,7 @@ const RequestCard: React.FC<requestCardData> = (props: requestCardData) => {
           <Button type="default" className="request-card-info-section-button">
             View
           </Button>
-          {props.closable ? (
+          {closable ? (
             <Button type="default" className="request-card-info-section-button">
               Close
             </Button>

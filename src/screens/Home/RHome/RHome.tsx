@@ -3,7 +3,9 @@ import RequestCard from 'components/Card/RequestCard';
 import Footer from 'components/Footer/Footer';
 import MS_logo from 'images/MS_logo.png';
 import TweenOne from 'rc-tween-one';
-import React from 'react';
+import React, {useEffect} from 'react';
+import {getOwnJobsUsingGet, JobCardResponse} from 'apis/effimatch';
+import { useRequest } from 'apis/useRequest';
 import './styles/RHome.less';
 
 interface requestCardData {
@@ -12,27 +14,19 @@ interface requestCardData {
   description: string;
 }
 
-interface requestSectionData {
-  title: string;
-  company: string;
-  requests: requestCardData[];
-}
-
-const RenderRequestCards: React.FC<requestSectionData[]> = (
-  sectionData: requestSectionData[],
-) => {
+const RenderRequestCards = (jobs?: JobCardResponse[]) => {
   return (
-    // Edited by William. 这样视觉效果更好
     <Card className="RHome-Signed-In-application-section">
-      {sectionData[0].requests.map((item: requestCardData, i: number) => (
+      {jobs?.map((item: JobCardResponse, i: number) => (
         <Card.Grid
           className="RHome-Signed-In-application-section-card"
           key={i.toString()}
           style={{width: '100%', height: '100%'}}>
           <RequestCard
-            logo={item.logo}
-            name={item.name}
-            description={item.description}
+            jobId={item.id}
+            logo={item.company_logo ?? MS_logo}
+            name={item.company_name ?? 'Company Name'}
+            description={'Open now'}
             closable={true}
           />
         </Card.Grid>
@@ -42,6 +36,13 @@ const RenderRequestCards: React.FC<requestSectionData[]> = (
 };
 
 const RHomeSignedIn = () => {
+
+  const [getOwnJobs, ownJobsData] = useRequest(getOwnJobsUsingGet);
+
+  useEffect(() => {
+    getOwnJobs(undefined);
+  }, []);
+
   return (
     <div className="RHome-Signed-In-all-wrapper">
       <div className="RHome-Signed-In-content-wrapper">
@@ -58,21 +59,13 @@ const RHomeSignedIn = () => {
             </Button>
           </div>
 
-          {RenderRequestCards(dummuRequestSectionData)}
+          {RenderRequestCards(ownJobsData?.data)}
         </TweenOne>
       </div>
       <Footer />
     </div>
   );
 };
-
-// interface applicationData {
-//     title: string,
-//     avatar: string,
-//     logo: string,
-//     name: string,
-//     date: string
-// }
 
 // dummy data for sent:
 const dummuRequestCardData: requestCardData[] = [];
@@ -84,13 +77,5 @@ for (let ii = 0; ii < 2; ii++) {
   });
 }
 
-const dummuRequestSectionData: requestSectionData[] = [];
-for (let ii = 0; ii < 1; ii++) {
-  dummuRequestSectionData.push({
-    company: 'Microsoft',
-    title: 'Software Engineer',
-    requests: dummuRequestCardData,
-  });
-}
 
 export default RHomeSignedIn;
