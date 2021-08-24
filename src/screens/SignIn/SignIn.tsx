@@ -90,11 +90,12 @@ const SignIn: React.FC<any> = () => {
           </Button>
           <Button
             className="signin-box-linkedinBut"
-            onKeyDown={e => console.log(e)}
-            // onClick={signWithLinkedIn}
-          >
+            onKeyDown={e => console.log(e)}>
             Continue with LinkedIn
           </Button>
+          <a className="signin-box-forgot" href="/reset-password">
+            Forgot password?
+          </a>
         </div>
       </div>
 

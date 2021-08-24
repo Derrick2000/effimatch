@@ -24,6 +24,7 @@ import SignIn from './screens/SignIn/SignIn';
 import SignUp from './screens/SignUp/SignUp';
 import store from './store';
 import setAuthToken from './utils/setAuthToken';
+import ForgotPassword from 'screens/ForgotPassword/ForgotPassword';
 
 function App() {
   const [isMobile, setIsMobile] = React.useState(false);
@@ -129,6 +130,14 @@ function App() {
 
         <Switch>
           <Route exact={true} path="/reviewdetail" component={ReviewDetails} />
+        </Switch>
+
+        <Switch>
+          <Route
+            exact={true}
+            path="/reset-password"
+            component={ForgotPassword}
+          />
         </Switch>
       </BrowserRouter>
     </Provider>
