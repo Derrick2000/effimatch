@@ -1,5 +1,5 @@
 import React from 'react';
-import {ReactComponent as ForgotPasswordBackground} from 'images/sign_bg.svg';
+import ForgotPasswordBackground from 'images/sign_bg.svg';
 import {ReactComponent as ResetPerson} from 'images/forgot_pw_person.svg';
 import {Input, Button, notification} from 'antd';
 import './styles/forgotPassword.less';
@@ -113,8 +113,9 @@ const ForgotPassword: React.FC<any> = () => {
   };
 
   return (
-    <div className="forgotPassword-wrapper">
-      <ForgotPasswordBackground className="forgotPassword-wrapper-bg" />
+    <div
+      className="forgotPassword-wrapper"
+      style={{backgroundImage: `url(${ForgotPasswordBackground})`}}>
       <div className="forgotPassword-box">
         <h2 className="forgotPassword-box-header-base forgotPassword-box-sub-header">
           Reset your password
