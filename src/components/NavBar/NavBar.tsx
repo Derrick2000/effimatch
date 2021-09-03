@@ -198,7 +198,7 @@ const UserAvatar: React.FC<any> = () => {
     <Menu>
       <Menu.Item>
         <a rel="noopener noreferrer" href="/onboard">
-          Change Role (temp)
+          Change Role
         </a>
       </Menu.Item>
       <Menu.Item danger onClick={onLogOut}>
