@@ -49,7 +49,7 @@ const openCopyNotification = (placement: any) => {
 
 const RenderDetailSection = (postInfo?: Job) => {
   const copyLink = () => {
-    navigator.clipboard.writeText(postInfo?.jobLink ?? '');
+    navigator.clipboard.writeText(window.location.href);
     openCopyNotification('bottomLeft');
   };
   return (
@@ -72,13 +72,21 @@ const RenderDetailSection = (postInfo?: Job) => {
   );
 };
 
-const AvatarAndButtons = (companyLogo: string) => {
+const AvatarAndButtons = (companyLogo: string, jobLink: string) => {
   const {id} = useParams();
   const [showNote, setNote] = React.useState(false);
   const [addNote] = useRequest(addApplicationUsingPost);
 
   const setShow = () => {
     setNote(!showNote);
+  };
+
+  const goToOfficialJobPage = () => {
+    jobLink =
+      jobLink.startsWith('http://') || jobLink.startsWith('https://')
+        ? jobLink
+        : 'http://' + jobLink;
+    window.open(jobLink, '_blank');
   };
 
   const submitNote = (note: string) => {
@@ -124,11 +132,14 @@ const AvatarAndButtons = (companyLogo: string) => {
         Get Referred
       </Button>
       <br />
-      <Button
-        className="post-details-side-button"
-        style={{borderRadius: '10px', width: '140px'}}>
-        View my Linkedin
-      </Button>
+      {jobLink !== '' && (
+        <Button
+          className="post-details-side-button"
+          style={{borderRadius: '10px', width: '140px'}}
+          onClick={goToOfficialJobPage}>
+          View Job
+        </Button>
+      )}
 
       <ReferralModal
         visiable={showNote}
@@ -157,7 +168,12 @@ const Referers = () => {
         <TweenOne animation={{x: -200, type: 'from', ease: 'easeOutQuad'}}>
           <Grid container>
             <Grid item md={4} className="post-details-side-wrapper">
-              <div>{AvatarAndButtons(jobData?.data.companyLogo ?? '')}</div>
+              <div>
+                {AvatarAndButtons(
+                  jobData?.data.companyLogo ?? '',
+                  jobData?.data.jobLink ?? '',
+                )}
+              </div>
             </Grid>
 
             <Grid item md={8} className="post-details-main-wrapper">
