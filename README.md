@@ -39,6 +39,8 @@
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
+  - [Build](#build)
+  - [Other Scripts](#other-scripts)
 - [Maintainence](#maintainence)
   - [Manage Member Information](#manage-member-information)
   - [Update Timeline](#update-timeline)
@@ -133,21 +135,41 @@ $ git clone https://gitlab.com/ucsd-triple-c/referral-frontend.git
 # install dependencies
 $ yarn
 ```
-2. Build and start the server
+3. Start the app
+- local environment
 
 ```bash
 # serve with hot reload at localhost:3000
-$ yarn start
+$ yarn start:local  
+```  
 
-# build for production
-$ yarn build
+- dev environment
+```bash
+# serve with hot reload at localhost:3000
+$ yarn start:dev
+```  
 
+### Build
+- local environment
+```bash
+# build with local environment
+$ yarn build:local
+```
+
+- dev environment
+```bash
+# build with dev environment
+$ yarn build:dev
+```  
+
+### Other Scripts
+```bash
 # generate api client using ts-codegen
 $ yarn api
 
 # check style before committing
 $ yarn pre-commit
-```
+```  
 
 ## Maintainence
 The repository on GitHub is a mirror of our development repository on GitLab. You can view code and submit issues here. If you want to join the active development team, please [contact](#contact) the tech lead.
