@@ -21,7 +21,7 @@ const Footer = () => {
           <span>
             ©2020{' '}
             <a href="/" rel="noreferrer" target="_blank">
-              Referral Project
+              Effimatch
             </a>{' '}
             All Rights Reserved
           </span>
