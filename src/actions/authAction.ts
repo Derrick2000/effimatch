@@ -2,14 +2,13 @@ import {SET_CURRENT_USER, USER_LOADING} from './types';
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
-import {baseURL} from 'config';
 
 interface UserData {
   email: string;
   password: string;
 }
 
-const AUTH_URL = `${baseURL}/v1/authentication/login`;
+const AUTH_URL = `${process.env.REACT_APP_API_ENDPOINT}/v1/authentication/login`;
 
 export const loginUser = (userData: UserData) => {
   return new Promise((resolve, reject) => {

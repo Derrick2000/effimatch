@@ -18,6 +18,7 @@
     "craco": "0.0.3",
     "craco-less": "^1.17.1",
     "enquire-js": "^0.2.1",
+    "env-cmd": "^10.1.0",
     "history": "^5.0.0",
     "html-react-parser": "^1.2.8",
     "is-empty": "^1.2.0",
@@ -39,8 +40,10 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
+    "start:local": "env-cmd -f .env.local craco start",
+    "start:dev": "env-cmd -f .env.dev craco start",
+    "build:local": "env-cmd -f .env.local craco build",
+    "build:dev": "env-cmd -f .env.dev craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",

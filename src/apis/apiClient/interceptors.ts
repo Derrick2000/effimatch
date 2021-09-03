@@ -1,4 +1,3 @@
 import axios from 'axios';
-import {baseURL} from 'config';
 
-axios.defaults.baseURL = baseURL;
+axios.defaults.baseURL = process.env.REACT_APP_API_ENDPOINT;
