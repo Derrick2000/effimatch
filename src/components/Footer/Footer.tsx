@@ -19,7 +19,7 @@ const Footer = () => {
           // {...dataSource.copyright}
         >
           <span>
-            ©2020{' '}
+            ©2021{' '}
             <a href="/" rel="noreferrer" target="_blank">
               Effimatch
             </a>{' '}
