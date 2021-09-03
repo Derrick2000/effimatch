@@ -13,6 +13,17 @@ export const addApplicationUsingPost = createRequestConfig<{
 }));
 
 /**
+ * addInterest
+ */
+export const addInterestUsingPost = createRequestConfig<{
+  job_id: number;
+}>('addInterestUsingPost', ({job_id}) => ({
+  url: `/v1/interest/add/${job_id}`,
+  method: 'POST',
+  headers: {'Content-Type': 'application/json'},
+}));
+
+/**
  * addJob
  */
 export const addJobUsingPost = createRequestConfig<{
@@ -119,6 +130,30 @@ export const getAllJobsUsingGet = createRequestConfig<
 }));
 
 /**
+ * getInterestedJobs
+ */
+export const getInterestedJobsUsingGet = createRequestConfig<undefined, Job[]>(
+  'getInterestedJobsUsingGet',
+  () => ({
+    url: `/v1/interest/get-jobs`,
+    method: 'GET',
+  }),
+);
+
+/**
+ * getInterestedUsers
+ */
+export const getInterestedUsersUsingGet = createRequestConfig<
+  {
+    job_id: number;
+  },
+  EffimatchUser[]
+>('getInterestedUsersUsingGet', ({job_id}) => ({
+  url: `/v1/interest/get-users/${job_id}`,
+  method: 'GET',
+}));
+
+/**
  * getJobById
  */
 export const getJobByIdUsingGet = createRequestConfig<
@@ -178,6 +213,16 @@ export const registerUsingPost = createRequestConfig<{
 }));
 
 /**
+ * removeInterest
+ */
+export const removeInterestUsingDelete = createRequestConfig<{
+  job_id: number;
+}>('removeInterestUsingDelete', ({job_id}) => ({
+  url: `/v1/interest/remove/${job_id}`,
+  method: 'DELETE',
+}));
+
+/**
  * sendVerification
  */
 export const sendVerificationUsingPost = createRequestConfig<{
@@ -219,6 +264,7 @@ export interface ChangeApplicationUserRoleRequest {
 }
 
 export interface ChangePasswordRequest {
+  email?: string;
   newPassword?: string;
   otp?: string;
 }

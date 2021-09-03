@@ -17,6 +17,7 @@ interface RequestOptions<TReq, TResp> {
     requestConfig: AxiosResponse<ApiResponseWrapper<TResp>>,
   ) => void;
   onFail?: (error: any, params: TReq, axiosResp: AxiosError) => void;
+  onFinally?: () => void;
 }
 
 interface ApiResponseWrapper<TData> {
@@ -80,6 +81,9 @@ export const useRequest = <
           optionsRef.current?.onFail &&
             optionsRef.current?.onFail(err.response?.data, params, err);
           return Promise.reject(err);
+        })
+        .finally(() => {
+          optionsRef.current?.onFinally && optionsRef.current?.onFinally();
         });
     };
   }, []);

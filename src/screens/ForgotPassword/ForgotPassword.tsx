@@ -3,9 +3,11 @@ import ForgotPasswordBackground from 'images/sign_bg.svg';
 import {ReactComponent as ResetPerson} from 'images/forgot_pw_person.svg';
 import {Input, Button, notification} from 'antd';
 import './styles/forgotPassword.less';
-import {registerUsingPost, sendVerificationUsingPost} from 'apis/effimatch';
+import {
+  sendVerificationUsingPost,
+  changePasswordUsingPatch,
+} from 'apis/effimatch';
 import {useRequest} from 'apis/useRequest';
-import {loginUser} from '../../actions/authAction';
 import {useEventListener} from 'utils/useEventListener';
 
 const {Search} = Input;
@@ -13,7 +15,7 @@ const {Search} = Input;
 const openErrorNotification = (placement: any, errorMsg: string) => {
   notification.error({
     message: 'Reset password',
-    description: 'An error has occured.\n' + errorMsg,
+    description: `An error has occured.\n ${errorMsg}`,
     placement,
   });
 };
@@ -43,20 +45,18 @@ const ForgotPassword: React.FC<any> = () => {
   const [sendVal, setSendVal] = React.useState('Get OTP');
   const [codeSent, setSent] = React.useState(false);
 
-  const [register] = useRequest(registerUsingPost, {
+  const [sendChangePasswordRequest] = useRequest(changePasswordUsingPatch, {
     onSuccess: () => {
       openSuccessNotification('bottomLeft');
       setLoading(false);
-      loginUser({email, password})
-        .then(() => {
-          window.location.href = '/';
-        })
-        .catch(() => {
-          openErrorNotification('bottomLeft', 'Invalid login');
-          setLoading(false);
-        });
+      setTimeout(() => {
+        window.location.href = '/sign-in';
+      }, 2000);
     },
-    onFail: () => {
+    onFail: e => {
+      openErrorNotification('bottomLeft', e.message);
+    },
+    onFinally: () => {
       setLoading(false);
     },
   });
@@ -93,9 +93,16 @@ const ForgotPassword: React.FC<any> = () => {
     }, 1000);
   };
 
-  const sendCode = () => {
+  const validateEmail = (email: string) => {
     if (!new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(email)) {
       openErrorNotification('bottomLeft', 'Invalid Email');
+      return false;
+    }
+    return true;
+  };
+
+  const sendCode = () => {
+    if (!validateEmail(email)) {
       return;
     }
 
@@ -108,8 +115,19 @@ const ForgotPassword: React.FC<any> = () => {
   };
 
   const resetPassword = () => {
+    if (!validateEmail(email)) {
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      openErrorNotification('bottomLeft', 'Password does not match.');
+      return;
+    }
+
     setLoading(true);
-    console.log('TODO');
+    sendChangePasswordRequest({
+      requestBody: {email: email, newPassword: password, otp: code},
+    });
   };
 
   return (
@@ -127,14 +145,14 @@ const ForgotPassword: React.FC<any> = () => {
             value={email}
             className="forgotPassword-box-form-input"
           />
-          <p className="forgotPassword-box-form-text">Password</p>
+          <p className="forgotPassword-box-form-text">New Password</p>
           <Input.Password
             onChange={e => setPassword(e.target.value)}
             value={password}
             className="forgotPassword-box-form-input"
             maxLength={25}
           />
-          <p className="forgotPassword-box-form-text">Re-enter Password</p>
+          <p className="forgotPassword-box-form-text">Confirm New Password</p>
           <Input.Password
             onChange={e => setConfirmPW(e.target.value)}
             value={confirmPassword}
@@ -163,7 +181,7 @@ const ForgotPassword: React.FC<any> = () => {
           type="primary"
           loading={loading}
           onClick={resetPassword}>
-          Reset password
+          Reset Password
         </Button>
       </div>
       <ResetPerson className="forgotPassword-wrapper-person" />
