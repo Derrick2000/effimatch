@@ -4,7 +4,7 @@ pipeline {
         stage('BUILD') { 
             steps {
                 sh 'yarn' 
-                sh 'yarn build'
+                sh 'yarn build:dev'
             }
         }
     }
