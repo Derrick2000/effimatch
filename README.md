@@ -17,6 +17,13 @@
     <a href="https://github.com/ucsdtriplec/effimatch/issues">Report Bug</a>
     ·
     <a href="https://github.com/ucsdtriplec/effimatch/issues">Request Feature</a>
+    <br/>  
+    <br/>  
+   <img alt="GitHub" src="https://img.shields.io/github/license/ucsdtriplec/effimatch">  
+    <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/ucsdtriplec/effimatch">  
+    <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/ucsdtriplec/effimatch">  
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/ucsdtriplec/effimatch">  
+    <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/ucsdtriplec/effimatch">  
   </p>
 
   <br/>
