@@ -41,7 +41,6 @@ export const loginUser = (userData: UserData) => {
 
 // Set logged in user
 export const setCurrentUser = (userinfo: any) => {
-  console.log('userinfo', userinfo);
   return {
     type: SET_CURRENT_USER,
     payload: userinfo,
