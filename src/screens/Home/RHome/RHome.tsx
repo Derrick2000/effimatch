@@ -5,7 +5,7 @@ import MS_logo from 'images/MS_logo.png';
 import TweenOne from 'rc-tween-one';
 import React, {useEffect} from 'react';
 import {getOwnJobsUsingGet, JobCardResponse} from 'apis/effimatch';
-import { useRequest } from 'apis/useRequest';
+import {useRequest} from 'apis/useRequest';
 import './styles/RHome.less';
 
 interface requestCardData {
@@ -25,7 +25,7 @@ const RenderRequestCards = (jobs?: JobCardResponse[]) => {
           <RequestCard
             jobId={item.id}
             logo={item.company_logo ?? MS_logo}
-            name={item.company_name ?? 'Company Name'}
+            name={item.job_title ?? 'Job title'}
             description={'Open now'}
             closable={true}
           />
@@ -36,7 +36,6 @@ const RenderRequestCards = (jobs?: JobCardResponse[]) => {
 };
 
 const RHomeSignedIn = () => {
-
   const [getOwnJobs, ownJobsData] = useRequest(getOwnJobsUsingGet);
 
   useEffect(() => {
@@ -76,6 +75,5 @@ for (let ii = 0; ii < 2; ii++) {
     description: 'Open now',
   });
 }
-
 
 export default RHomeSignedIn;
