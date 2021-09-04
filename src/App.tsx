@@ -51,7 +51,8 @@ function App() {
       // Decode token and get user info and exp
       const decoded = jwt_decode(token);
       // Set user and isAuthenticated
-      store.dispatch(setCurrentUser(decoded));
+      const userInfo = JSON.parse(localStorage.getItem('userInfo')!);
+      store.dispatch(setCurrentUser({...decoded, ...userInfo}));
 
       // if the user have not set his role
       if (

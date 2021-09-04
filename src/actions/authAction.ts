@@ -9,12 +9,13 @@ interface UserData {
 }
 
 const AUTH_URL = `${process.env.REACT_APP_API_ENDPOINT}/v1/authentication/login`;
+const OWN_INFO_URL = `${process.env.REACT_APP_API_ENDPOINT}/v1/users/get-own`;
 
 export const loginUser = (userData: UserData) => {
   return new Promise((resolve, reject) => {
     axios
       .post(AUTH_URL, userData)
-      .then(res => {
+      .then(async res => {
         // Set token to localStorage
         const token = res.data.data.token; // the jwt token
         localStorage.setItem('jwtToken', token);
@@ -23,21 +24,27 @@ export const loginUser = (userData: UserData) => {
         // Decode token to get user data
         const decoded = jwt_decode(token);
         // Set current user
-        setCurrentUser(decoded);
+        const userInfoResp = await axios.get(OWN_INFO_URL);
+        localStorage.setItem(
+          'userInfo',
+          JSON.stringify(userInfoResp.data.data),
+        );
+
+        setCurrentUser({...decoded, ...userInfoResp.data.data});
         resolve('success');
       })
-      .catch(err => {
-        console.log(err);
+      .catch(() => {
         reject();
       });
   });
 };
 
 // Set logged in user
-export const setCurrentUser = (decoded: any) => {
+export const setCurrentUser = (userinfo: any) => {
+  console.log('userinfo', userinfo);
   return {
     type: SET_CURRENT_USER,
-    payload: decoded,
+    payload: userinfo,
   };
 };
 
