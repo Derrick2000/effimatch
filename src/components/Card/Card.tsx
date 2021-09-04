@@ -1,7 +1,8 @@
 import React from 'react';
 import {Button} from 'antd/lib';
-import './cardStyle.less';
 import {useSelector} from 'react-redux';
+import {Avatar} from 'antd';
+import './cardStyle.less';
 
 interface CardProps {
   title?: string;
@@ -16,7 +17,7 @@ type authState = {
   isAuthenticated: boolean;
 };
 
-const Card: React.FC<CardProps> = (props: CardProps) => {
+const Card = (props: CardProps) => {
   const auth: authState = useSelector((state: any) => state.auth);
 
   const getRedirectPath = () => {
@@ -28,7 +29,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
       <div className="card-header-wrapper">
         <div className="card-header-title">
           <h1>{props.title}</h1>
-          <p>@ {props.company}</p>
+          <p>@{props.company}</p>
         </div>
         <img
           src={props.logo}
@@ -39,7 +40,14 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
       </div>
 
       <div className="card-avatar-wrapper">
-        <img src={props.avatar} alt="avatar" />
+        {props.avatar ? (
+          <img src={props.avatar} style={{borderRadius: 10}} alt="avatar" />
+        ) : (
+          <Avatar style={{borderRadius: 10}} shape="square">
+            {'D'}
+          </Avatar>
+        )}
+
         <p className="card-avatar-text">{props.name}</p>
       </div>
 

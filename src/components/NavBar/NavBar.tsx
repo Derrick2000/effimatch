@@ -103,14 +103,6 @@ const rightMenuData = [
       text: 'Search',
     },
   },
-  // {
-  //   name: 'Community',
-  //   className: 'navbar-item',
-  //   children: {
-  //     href: '#Community',
-  //     text: 'Community',
-  //   },
-  // },
   {
     name: 'Sign In',
     className: 'navbar-item',
@@ -129,7 +121,7 @@ const rightMenuData = [
   },
 ];
 
-const rightMenuChildren: React.ReactNode = rightMenuData.map(item => (
+const rightMenuChildren = rightMenuData.map(item => (
   <Item key={item.name} className="navbar-item">
     <a href={item.children.href} className="navbar-item-block">
       {item.children.text}
@@ -164,32 +156,17 @@ const loggedInRightMenuData = [
   },
 ];
 
-const renderLoggedInRightMenu: React.ReactNode = loggedInRightMenuData.map(
-  item => (
-    <Item key={item.name} className="navbar-item">
-      <a href={item.children.href} className="navbar-item-block">
-        {item.children.text}
-      </a>
-    </Item>
-  ),
-);
+const renderLoggedInRightMenu = loggedInRightMenuData.map(item => (
+  <Item key={item.name} className="navbar-item">
+    <a href={item.children.href} className="navbar-item-block">
+      {item.children.text}
+    </a>
+  </Item>
+));
 
-// const LoggedInRightMenu = () => {
-//   return (
-//     <div style={{ display: 'inline' }}>
-//       {loggedInRightMenuData.map((item) => (
-//         <Item key={item.name} className="navbar-item">
-//           <a href={item.children.href} className='navbar-item-block'>
-//             {item.children.text}
-//           </a>
-//         </Item>
-//       )
-//       )}
-//     </div>
-//   )
-// }
+const UserAvatar = () => {
+  const auth = useSelector((state: any) => state.auth);
 
-const UserAvatar: React.FC<any> = () => {
   const onLogOut = () => {
     store.dispatch(logoutUser());
   };
@@ -209,7 +186,7 @@ const UserAvatar: React.FC<any> = () => {
 
   return (
     <Dropdown overlay={menu} className="navbar-avatar">
-      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+      <Avatar>{auth.user.nickname[0].toUpperCase()}</Avatar>
     </Dropdown>
   );
 };

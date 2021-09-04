@@ -16,7 +16,6 @@ import {Row, Col} from 'antd';
 
 // assets (temp)
 import MS_logo from 'images/MS_logo.png';
-import Avatar from 'images/avatar.png';
 
 import '../styles/home.less';
 
@@ -42,7 +41,7 @@ const RenderCards = (cardsData?: JobCardResponse[]) => {
                     title={item.job_title}
                     company={item.company_name}
                     logo={item.company_logo ?? MS_logo}
-                    avatar={item.avatar ?? Avatar}
+                    avatar={item.avatar}
                     name={item.username ?? 'Referrer name'}
                     id={item.id}
                   />

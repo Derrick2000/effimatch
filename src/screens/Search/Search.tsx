@@ -44,7 +44,7 @@ const RenderCards = (
                   title={item.job_title}
                   company={item.company_name}
                   logo={item.company_logo ?? MS_logo}
-                  avatar={item.avatar ?? Avatar}
+                  avatar={item.avatar}
                   name={item.username ?? 'Referrer name'}
                   id={item.id}
                 />
