@@ -149,8 +149,9 @@ const Signup = () => {
   };
 
   return (
-    <div className="signup-wrapper" style={{backgroundImage:`url(${SignUpBackGround})`}}>
-
+    <div
+      className="signup-wrapper"
+      style={{backgroundImage: `url(${SignUpBackGround})`}}>
       <SignUpPerson className="signup-wrapper-person" />
       <div className="signup-box">
         <h1 className="signup-box-header-base signup-box-header">Sign up</h1>
@@ -206,9 +207,9 @@ const Signup = () => {
           loading={loading}>
           Create Account
         </Button>
-        <Button className="signup-box-linkedinBut" onClick={signWithLinkedIn}>
+        {/* <Button className="signup-box-linkedinBut" onClick={signWithLinkedIn}>
           Continue with LinkedIn
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

@@ -88,11 +88,11 @@ const SignIn: React.FC<any> = () => {
             loading={loading}>
             Log In
           </Button>
-          <Button
+          {/* <Button
             className="signin-box-linkedinBut"
             onKeyDown={e => console.log(e)}>
             Continue with LinkedIn
-          </Button>
+          </Button> */}
           <a className="signin-box-forgot" href="/reset-password">
             Forgot password?
           </a>
