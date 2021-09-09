@@ -17,7 +17,12 @@ const ApplicationCard = (props: applicationData) => {
     <a className="appcard-block-group" href={`/jobs/${id}`}>
       <div className="appcard-info-wrapper">
         <div className="appcard-info-block">
-          <img src={logo} className="appcard-info-block-image" alt="logo" />
+          <img
+            src={logo}
+            className="appcard-info-block-image"
+            alt="logo"
+            style={{maxWidth: 60, maxHeight: 40}}
+          />
           <div className="appcard-info-block-title">
             <h1>{title}</h1>
             <p>{`@ ${name}`}</p>

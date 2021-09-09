@@ -10,7 +10,6 @@ interface requestCardData {
 }
 
 const RequestCard: React.FC<requestCardData> = (props: requestCardData) => {
-
   const {jobId, logo, name, description, closable} = props;
 
   return (
@@ -21,6 +20,7 @@ const RequestCard: React.FC<requestCardData> = (props: requestCardData) => {
             src={logo}
             className="request-card-info-block-image"
             alt="logo"
+            style={{maxWidth: 65, maxHeight: 45}}
           />
           <div className="request-card-info-block-title">
             <h1>{name}</h1>
