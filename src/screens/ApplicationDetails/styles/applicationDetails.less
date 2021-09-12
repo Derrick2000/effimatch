@@ -1,0 +1,87 @@
+@current-page: application-details;
+
+.@{current-page} {
+  &-wrapper {
+    height: 100vh;
+    width: 100%;
+    background-color: @background-color;
+  }
+  &-content {
+    max-width: 1200px;
+    padding: 0 150px;
+    will-change: transform;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 30px;
+  }
+  &-back {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    color: black;
+  }
+
+  &-info {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 40px;
+    background: #ffffff;
+
+    box-shadow: -2px -2px 4px rgba(172, 172, 172, 0.15),
+      2px 2px 4px rgba(172, 172, 172, 0.15);
+    border-radius: 8px;
+  }
+
+  &-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+
+    &-note {
+      padding-left: 30px;
+      width: 130px;
+      height: 28px;
+      font-weight: 500;
+      font-size: 24px;
+    }
+
+    &-info {
+      padding-left: 30px;
+      margin-top: auto;
+      line-height: 1;
+      margin-bottom: auto;
+      h1 {
+        font-size: 22px;
+        font-weight: bold;
+      }
+    }
+  }
+
+  &-button-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 40px;
+  }
+
+  &-button-refer {
+    flex-shrink: 1;
+    max-width: 160px;
+  }
+
+  &-button-reject {
+    flex-shrink: 2;
+    max-width: 90px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .@{current-page} {
+    &-content {
+      padding: 10px;
+    }
+  }
+}

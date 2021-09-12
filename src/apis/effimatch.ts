@@ -16,9 +16,9 @@ export const addApplicationUsingPost = createRequestConfig<{
  * addInterest
  */
 export const addInterestUsingPost = createRequestConfig<{
-  job_id: number;
-}>('addInterestUsingPost', ({job_id}) => ({
-  url: `/v1/interest/add/${job_id}`,
+  jobId: number;
+}>('addInterestUsingPost', ({jobId}) => ({
+  url: `/v1/interest/jobs/${jobId}`,
   method: 'POST',
   headers: {'Content-Type': 'application/json'},
 }));
@@ -130,26 +130,52 @@ export const getAllJobsUsingGet = createRequestConfig<
 }));
 
 /**
- * getInterestedJobs
+ * getApplicationDetailsById
  */
-export const getInterestedJobsUsingGet = createRequestConfig<undefined, Job[]>(
-  'getInterestedJobsUsingGet',
-  () => ({
-    url: `/v1/interest/get-jobs`,
-    method: 'GET',
-  }),
-);
+export const getApplicationDetailsByIdUsingGet = createRequestConfig<
+  {
+    applicationId: number;
+  },
+  ApplicationDetailsResponse
+>('getApplicationDetailsByIdUsingGet', ({applicationId}) => ({
+  url: `/v1/applications/${applicationId}`,
+  method: 'GET',
+}));
+
+/**
+ * getInterestedJobsForCurrentUser
+ */
+export const getInterestedJobsForCurrentUserUsingGet = createRequestConfig<
+  undefined,
+  Job[]
+>('getInterestedJobsForCurrentUserUsingGet', () => ({
+  url: `/v1/interest/jobs-for-current-user`,
+  method: 'GET',
+}));
+
+/**
+ * getInterestedUsersCount
+ */
+export const getInterestedUsersCountUsingGet = createRequestConfig<
+  {
+    jobId: number;
+  },
+  number
+>('getInterestedUsersCountUsingGet', ({jobId}) => ({
+  url: `/v1/interest/jobs/${jobId}/users-count`,
+  method: 'GET',
+}));
 
 /**
  * getInterestedUsers
  */
 export const getInterestedUsersUsingGet = createRequestConfig<
   {
-    job_id: number;
+    jobId: number;
   },
   EffimatchUser[]
->('getInterestedUsersUsingGet', ({job_id}) => ({
-  url: `/v1/interest/get-users/${job_id}`,
+>('getInterestedUsersUsingGet', ({jobId}) => ({
+  url: `/v1/interest/jobs/${jobId}/users`,
   method: 'GET',
 }));
 
@@ -216,9 +242,9 @@ export const registerUsingPost = createRequestConfig<{
  * removeInterest
  */
 export const removeInterestUsingDelete = createRequestConfig<{
-  job_id: number;
-}>('removeInterestUsingDelete', ({job_id}) => ({
-  url: `/v1/interest/remove/${job_id}`,
+  jobId: number;
+}>('removeInterestUsingDelete', ({jobId}) => ({
+  url: `/v1/interest/jobs/${jobId}`,
   method: 'DELETE',
 }));
 
@@ -246,6 +272,21 @@ export const updateJobByIdUsingPut = createRequestConfig<{
   data: requestBody,
   headers: {'Content-Type': 'application/json'},
 }));
+
+export interface ApplicationDetailsResponse {
+  applicationStatus?: keyof typeof ApplicationDetailsResponseApplicationStatus;
+  avatar?: string;
+  email?: string;
+  id?: number;
+  note?: string;
+  username?: string;
+}
+
+export enum ApplicationDetailsResponseApplicationStatus {
+  'SENT' = 'SENT',
+  'ACCEPTED' = 'ACCEPTED',
+  'CLOSED' = 'CLOSED',
+}
 
 export interface ApplicationResponse {
   companyLogo?: string;

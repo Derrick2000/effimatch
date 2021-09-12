@@ -1,4 +1,5 @@
 import './styles/index.less';
+import {useLayoutEffect} from 'react';
 import {getOwnInformationUsingGet} from 'apis/effimatch';
 import {useRequest} from 'apis/useRequest';
 import {enquireScreen} from 'enquire-js';
@@ -8,7 +9,7 @@ import React from 'react';
 import {Provider} from 'react-redux';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Review from 'screens/Review/Review';
-import ReviewDetails from 'screens/ReviewDetails/ReviewDetails';
+import ApplicationDetails from 'screens/ApplicationDetails';
 import {logoutUser, setCurrentUser} from './actions/authAction';
 import NavBar from './components/NavBar/NavBar';
 import NewJob from './screens/NewJob/NewJob';
@@ -37,7 +38,7 @@ function App() {
     },
   });
 
-  React.useEffect(() => {
+  useLayoutEffect(() => {
     // responsive to mobile screen
     enquireScreen((mobileState: boolean) => {
       setIsMobile(mobileState);
@@ -130,7 +131,11 @@ function App() {
         </Switch>
 
         <Switch>
-          <Route exact={true} path="/reviewdetail" component={ReviewDetails} />
+          <Route
+            exact={true}
+            path="/postings/:jobId/applications/:applicationId"
+            component={ApplicationDetails}
+          />
         </Switch>
 
         <Switch>
