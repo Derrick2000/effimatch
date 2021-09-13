@@ -13,7 +13,7 @@ const RequestCard: React.FC<requestCardData> = (props: requestCardData) => {
   const {jobId, logo, name, description, closable} = props;
 
   return (
-    <a className="request-card-block-group" href={`/jobs/${jobId}`}>
+    <a className="request-card-block-group" href={`/postings/${jobId}`}>
       <div className="request-card-info-wrapper">
         <div className="request-card-info-block">
           <img

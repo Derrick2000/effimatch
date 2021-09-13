@@ -122,7 +122,7 @@ function App() {
         </Switch>
 
         <Switch>
-          <Route exact={true} path="/reviewapp" component={Review} />
+          <Route exact={true} path="/postings/:id" component={Review} />
         </Switch>
 
         <Switch>

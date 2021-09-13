@@ -225,6 +225,19 @@ export const getOwnJobsUsingGet = createRequestConfig<
 }));
 
 /**
+ * getUserCounts
+ */
+export const getUserCounts = createRequestConfig<
+  {
+    id: number;
+  },
+  number
+>('getUserCounts', ({id}) => ({
+  url: `/v1/interested/jobs/${id}/users-count`,
+  method: 'GET',
+}));
+
+/**
  * login
  */
 export const loginUsingPost = createRequestConfig<

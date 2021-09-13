@@ -1,8 +1,11 @@
 import React from 'react';
+import {useParams} from 'react-router-dom';
 
 // screens and components
 import RequestCard from 'components/Card/RequestCard';
 import SummaryCard from 'components/Card/SummaryCard';
+import {useRequest} from 'apis/useRequest';
+import {getJobByIdUsingGet} from 'apis/effimatch';
 
 // antd
 import {Button, Card} from 'antd';
@@ -69,6 +72,22 @@ const RenderRequestCards: React.FC<requestSectionData[]> = (
 };
 
 const Review = () => {
+  const {id} = useParams();
+  const [getJob, job] = useRequest(getJobByIdUsingGet);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      await getJob({id: id});
+      console.log(id);
+      console.log(job);
+    };
+    fetchData();
+  }, []);
+
+  const toJob = () => {
+    window.location.href = '/jobs/' + id;
+  };
+
   return (
     <div className="review-wrapper">
       <div className="review-wrapper-content">
@@ -79,8 +98,11 @@ const Review = () => {
           </div>
 
           <div>
-            <Button type="primary" className="review-title-linkBut">
-              Link to job post
+            <Button
+              type="primary"
+              className="review-title-linkBut"
+              onClick={toJob}>
+              Job Details
             </Button>
             <a className="review-title-closeBut">Close</a>
           </div>
@@ -88,15 +110,7 @@ const Review = () => {
 
         <div className="review-content">
           <div className="review-content-wrapper">
-            <p className="review-content-title">About</p>
-            <div className="review-content-about">
-              <p>
-                Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                amet sint. Velit officia consequat duis enim velit mollit.
-                Exercitation veniam consequat sunt nostrud amet.
-              </p>
-            </div>
-            <p className="review-content-interst">Interested</p>
+            <p className="review-content-title">Interested</p>
             {RenderRequestCards(dummuRequestSectionData)}
           </div>
 
