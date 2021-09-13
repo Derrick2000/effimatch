@@ -25,7 +25,7 @@ const ApplicationCard = (props: applicationData) => {
           />
           <div className="appcard-info-block-title">
             <h1>{title}</h1>
-            <p>{`@ ${name}`}</p>
+            <p>{`@${name}`}</p>
           </div>
         </div>
 

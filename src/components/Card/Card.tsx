@@ -41,7 +41,7 @@ const Card = (props: CardProps) => {
 
       <div className="card-avatar-wrapper">
         {props.avatar ? (
-          <img src={props.avatar} style={{borderRadius: 10}} alt="avatar" />
+          <img src={props.avatar} alt="avatar" className="card-avatar-image" />
         ) : (
           <Avatar style={{borderRadius: 10}} shape="square">
             {'D'}

@@ -186,7 +186,11 @@ const UserAvatar = () => {
 
   return (
     <Dropdown overlay={menu} className="navbar-avatar">
-      <Avatar>{auth.user.nickname[0].toUpperCase()}</Avatar>
+      {auth.user.avatar ? (
+        <Avatar src={auth.user.avatar} />
+      ) : (
+        <Avatar>{auth.user.nickname[0].toUpperCase()}</Avatar>
+      )}
     </Dropdown>
   );
 };
