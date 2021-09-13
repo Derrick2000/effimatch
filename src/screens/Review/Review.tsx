@@ -5,13 +5,16 @@ import {useParams} from 'react-router-dom';
 import RequestCard from 'components/Card/RequestCard';
 import SummaryCard from 'components/Card/SummaryCard';
 import {useRequest} from 'apis/useRequest';
-import {getJobByIdUsingGet} from 'apis/effimatch';
+import {
+  getJobByIdUsingGet,
+  getInterestedUsersCountUsingGet,
+} from 'apis/effimatch';
 
 // antd
 import {Button, Card} from 'antd';
 
 // assets
-import {ReactComponent as FacebookLogo} from 'images/facebook_logo.svg';
+import icon from 'images/avatar.png';
 import Caldendar from 'images/calendar.png';
 import Check from 'images/check.png';
 import Person_logo from 'images/person.png';
@@ -74,12 +77,12 @@ const RenderRequestCards: React.FC<requestSectionData[]> = (
 const Review = () => {
   const {id} = useParams();
   const [getJob, job] = useRequest(getJobByIdUsingGet);
+  const [getNumUsers, numUsers] = useRequest(getInterestedUsersCountUsingGet);
 
   React.useEffect(() => {
     const fetchData = async () => {
       await getJob({id: id});
-      console.log(id);
-      console.log(job);
+      await getNumUsers({jobId: id});
     };
     fetchData();
   }, []);
@@ -93,8 +96,12 @@ const Review = () => {
       <div className="review-wrapper-content">
         <div className="review-title">
           <div>
-            <FacebookLogo className="review-title-logo" />
-            <p className="review-title-content">Software Developer</p>
+            <img
+              alt="avatar"
+              src={job?.data.companyLogo ?? icon}
+              className="review-title-logo"
+            />
+            <p className="review-title-content">{job?.data.jobTitle ?? ''}</p>
           </div>
 
           <div>
@@ -120,14 +127,14 @@ const Review = () => {
               <div className="review-summary-box-interest">
                 <SummaryCard
                   logo={Caldendar}
-                  numInterst={10}
+                  numInterst={numUsers?.data ?? 0}
                   description={'Interested'}
                 />
               </div>
               <div className="review-summary-box-refer">
                 <SummaryCard
                   logo={Check}
-                  numInterst={1}
+                  numInterst={0}
                   description={'Referred'}
                 />
               </div>
