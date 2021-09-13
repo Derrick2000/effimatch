@@ -1,9 +1,15 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
-import {getApplicationDetailsByIdUsingGet} from 'apis/effimatch';
+import {
+  getApplicationDetailsByIdUsingGet,
+  changeApplicationStatusByIdUsingPatch,
+  ChangeApplicationStatusRequestNewStatus,
+} from 'apis/effimatch';
 import {useRequest} from 'apis/useRequest';
 import {Avatar, Divider, Skeleton, Button} from 'antd';
 import parse from 'html-react-parser';
+import PopUp from 'components/PopUp/PopUp';
+import {PopUpType} from 'components/PopUp/PopUp';
 import './styles/applicationDetails.less';
 
 const ApplicationDetails = () => {
@@ -12,12 +18,87 @@ const ApplicationDetails = () => {
     getApplicationDetailsByIdUsingGet,
   );
 
+  const [changeApplicationStatus] = useRequest(
+    changeApplicationStatusByIdUsingPatch,
+    {
+      onSuccess: () => {
+        setWarningPopUpVisible(false);
+        setSuccessPopUpVisible(true);
+        setSuccessPopUpText(
+          warningPopUpType === PopUpType.smile
+            ? 'Thank you for referring!'
+            : 'Applicant rejected',
+        );
+      },
+    },
+  );
+
+  const [warningPopUpVisible, setWarningPopUpVisible] = useState(false);
+  const [successPopUpVisible, setSuccessPopUpVisible] = useState(false);
+  const [successPopUpText, setSuccessPopUpText] = useState('');
+
+  const [warningPopUpType, setWarningPopUpType] = useState<PopUpType>(
+    PopUpType.success,
+  );
+  const [warningPopUpText, setWarningPopUpText] = useState('');
+
+  const handleClickReferButton = () => {
+    setWarningPopUpType(PopUpType.smile);
+    setWarningPopUpText('Refer this applicant?');
+    setWarningPopUpVisible(true);
+  };
+
+  const handleClickRejectButton = () => {
+    setWarningPopUpType(PopUpType.meh);
+    setWarningPopUpText('Reject this applicant?');
+    setWarningPopUpVisible(true);
+  };
+
+  const handleRefer = () => {
+    changeApplicationStatus({
+      applicationId,
+      requestBody: {
+        newStatus: ChangeApplicationStatusRequestNewStatus.ACCEPTED,
+      },
+    });
+  };
+
+  const handleReject = () => {
+    changeApplicationStatus({
+      applicationId,
+      requestBody: {
+        newStatus: ChangeApplicationStatusRequestNewStatus.CLOSED,
+      },
+    });
+  };
+
+  const handleCloseSuccessPopUp = () => {
+    setSuccessPopUpVisible(false);
+    window.location.reload();
+  };
+
   useEffect(() => {
     getApplicationDetails({applicationId});
   }, [applicationId]);
 
   return (
     <div className="application-details-wrapper">
+      <PopUp
+        visible={warningPopUpVisible}
+        onCancel={() => setWarningPopUpVisible(false)}
+        onConfirm={
+          warningPopUpType === PopUpType.smile ? handleRefer : handleReject
+        }
+        confirmButtonText="Yes"
+        type={warningPopUpType}
+        text={warningPopUpText}
+      />
+      <PopUp
+        visible={successPopUpVisible}
+        type={PopUpType.success}
+        text={successPopUpText}
+        onCancel={handleCloseSuccessPopUp}
+      />
       <div className="application-details-content">
         <a className="application-details-back" href={`/postings/${jobId}`}>
           ← Back
@@ -53,19 +134,37 @@ const ApplicationDetails = () => {
             <div>{parse(applicationDetails?.data.note ?? '')}</div>
           </div>
         </div>
-        <div className="application-details-button-wrapper">
+        {applicationDetails?.data.applicationStatus === 'SENT' && (
+          <div className="application-details-button-wrapper">
+            <Button
+              type="primary"
+              className="card-button application-details-button-refer"
+              onClick={handleClickReferButton}>
+              Refer
+            </Button>
+            <Button
+              type={'default'}
+              className="card-button application-details-button-reject"
+              danger
+              onClick={handleClickRejectButton}>
+              Reject
+            </Button>
+          </div>
+        )}
+
+        {applicationDetails?.data.applicationStatus !== 'SENT' && (
           <Button
-            type="primary"
-            className="card-button application-details-button-refer">
-            Refer
+            type={'primary'}
+            className="card-button"
+            disabled
+            onClick={handleClickRejectButton}>
+            Already
+            {applicationDetails?.data.applicationStatus === 'ACCEPTED'
+              ? ' referred '
+              : ' rejected '}
+            by you
           </Button>
-          <Button
-            type={'default'}
-            className="card-button application-details-button-reject"
-            danger>
-            Reject
-          </Button>
-        </div>
+        )}
       </div>
     </div>
   );

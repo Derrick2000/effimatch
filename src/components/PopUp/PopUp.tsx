@@ -2,48 +2,77 @@ import React from 'react';
 import './popUp.less';
 
 import {Modal, Button} from 'antd';
-import {CheckCircleFilled} from '@ant-design/icons';
+import {
+  CheckCircleFilled,
+  WarningFilled,
+  SmileTwoTone,
+  MehTwoTone,
+} from '@ant-design/icons';
 
-interface Props {
-  visiable?: boolean;
+export enum PopUpType {
+  success,
+  warning,
+  smile,
+  meh,
+}
+interface PopUpProps {
+  visible?: boolean;
   text?: string;
-  onClick?: () => void;
-  setClose?: () => void;
+  onConfirm?: () => void;
+  confirmButtonText?: string;
+  onCancel?: () => void;
+  type: PopUpType;
 }
 
-const PopUp: React.FC<Props> = (props: Props) => {
-  const [showButton] = React.useState(props.onClick ? true : false);
-
-  const handleCancel = () => {
-    if (props.setClose) props.setClose();
-  };
-
-  const onClick = () => {
-    if (props.onClick) props.onClick();
-  };
+const PopUp = (props: PopUpProps) => {
+  const {
+    onCancel,
+    visible: visiable,
+    text,
+    onConfirm,
+    type,
+    confirmButtonText,
+  } = props;
 
   return (
     <div>
       <Modal
         centered
         closable
-        visible={props.visiable}
-        onCancel={handleCancel}
+        visible={visiable}
+        onCancel={onCancel}
         footer={null}
         width={550}
         bodyStyle={{
           height: 328,
         }}>
         <div className="pop-content-wrapper">
-          <CheckCircleFilled style={{fontSize: 65, color: '#CBE558'}} />
-          {props.text ? <p className="pop-content-text">{props.text}</p> : ''}
-          {showButton && (
-            <Button
-              className="pop-content-button"
-              type="primary"
-              onClick={onClick}>
-              <p className="pop-content-button-text">Add Positions</p>
-            </Button>
+          {type === PopUpType.success && (
+            <CheckCircleFilled style={{fontSize: 65, color: '#CBE558'}} />
+          )}
+          {type === PopUpType.warning && (
+            <WarningFilled style={{fontSize: 65, color: '#F6CD29'}} />
+          )}
+          {type === PopUpType.smile && (
+            <SmileTwoTone style={{fontSize: 65}} twoToneColor="#F6CD29" />
+          )}
+          {type === PopUpType.meh && (
+            <MehTwoTone style={{fontSize: 65}} twoToneColor="#F6CD29" />
+          )}
+          {text ? <p className="pop-content-text">{text}</p> : ''}
+
+          {onConfirm && (
+            <div className="pop-content-button-wrapper">
+              <Button
+                className="card-button"
+                type="primary"
+                onClick={onConfirm}>
+                {confirmButtonText}
+              </Button>
+              <Button className="card-button" type="default" onClick={onCancel}>
+                Cancel
+              </Button>
+            </div>
           )}
         </div>
       </Modal>

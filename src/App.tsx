@@ -17,7 +17,6 @@ import getReferredSingle from './screens/get-referred-single/get-referred-single
 import Home from './screens/Home';
 import RHomeDetails from './screens/Home/RHomeDetails/RHomeDetails';
 import OnBoard from './screens/OnBoard/OnBoard';
-import Popup from './screens/PopUpTest/PopUpTest';
 import postDetails from './screens/post-details/post-details';
 import Referers from './screens/Referers/Referers';
 import Search from './screens/Search/Search';
@@ -101,10 +100,6 @@ function App() {
             path="/get-referred-single"
             component={getReferredSingle}
           />
-        </Switch>
-
-        <Switch>
-          <Route exact={true} path="/popup-test" component={Popup} />
         </Switch>
 
         <Switch>

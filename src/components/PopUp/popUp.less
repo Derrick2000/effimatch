@@ -1,7 +1,7 @@
-@pop: pop;
+@currentPage: pop;
 @border-radius: 8px;
 
-.@{pop} {
+.@{currentPage} {
   &-content-wrapper {
     padding-top: 60px;
     text-align: center;
@@ -15,32 +15,13 @@
   }
 
   &-content-button {
-    margin: 0;
-    margin-top: 8px;
-    position: absolute;
-    top: 75%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    border-radius: @border-radius;
-    width: 156px;
-    height: 35px;
-
-    &-text {
-      font-style: normal;
-      font-weight: normal;
-      font-size: 16px;
-      line-height: 19px;
-      /* identical to box height */
-
-      color: #ffffff;
-
-      /* Inside Auto Layout */
-
-      flex: none;
-      order: 0;
-      flex-grow: 0;
-      margin: 0px 10px;
+    &-wrapper {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      gap: 50px;
+      padding-left: 20px;
+      padding-right: 20px;
     }
   }
 }

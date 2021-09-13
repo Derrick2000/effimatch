@@ -36,6 +36,19 @@ export const addJobUsingPost = createRequestConfig<{
 }));
 
 /**
+ * changeApplicationStatusById
+ */
+export const changeApplicationStatusByIdUsingPatch = createRequestConfig<{
+  applicationId: number;
+  requestBody: ChangeApplicationStatusRequest;
+}>('changeApplicationStatusByIdUsingPatch', ({applicationId, requestBody}) => ({
+  url: `/v1/applications/${applicationId}`,
+  method: 'PATCH',
+  data: requestBody,
+  headers: {'Content-Type': 'application/json'},
+}));
+
+/**
  * changePassword
  */
 export const changePasswordUsingPatch = createRequestConfig<{
@@ -298,6 +311,16 @@ export interface ApplicationResponse {
 
 export interface AuthenticationTokenResponse {
   token?: string;
+}
+
+export interface ChangeApplicationStatusRequest {
+  newStatus?: keyof typeof ChangeApplicationStatusRequestNewStatus;
+}
+
+export enum ChangeApplicationStatusRequestNewStatus {
+  'SENT' = 'SENT',
+  'ACCEPTED' = 'ACCEPTED',
+  'CLOSED' = 'CLOSED',
 }
 
 export interface ChangeApplicationUserRoleRequest {
