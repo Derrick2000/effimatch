@@ -19,8 +19,6 @@ import MS_logo from 'images/MS_logo.png';
 
 import '../styles/home.less';
 
-// test husky
-
 const RenderCards = (cardsData?: JobCardResponse[]) => {
   return (
     <div className="home-cards-wrapper">
