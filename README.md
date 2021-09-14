@@ -30,15 +30,14 @@
   <p>frontend build: </p>
   <a href='https://effimatch-jenkins.ucsdtriplec.cn/job/effimatch-frontend/'><img src='https://effimatch-jenkins.ucsdtriplec.cn/buildStatus/icon?job=effimatch-frontend'></a>
   <p>backend build: </p>
-  <a href='https://effimatch-jenkins.ucsdtriplec.cn/job/effimatch-backend/'><img src='https://effimatch-jenkins.ucsdtriplec.cn/buildStatus/icon?job=effimatch-backend'></a>  
+  <a href='https://effimatch-jenkins.ucsdtriplec.cn/job/effimatch-backend/'><img src='https://effimatch-jenkins.ucsdtriplec.cn/buildStatus/icon?job=effimatch-backend'></a>
 
 </p>
 
-  Note that we are only making our frontend open-source due to security reasons. If you want the access to our backend code, please [contact](#contact) the tech lead.
-
-
+Note that we are only making our frontend open-source due to security reasons. If you want the access to our backend code, please [contact](#contact) the tech lead.
 
 <!-- TABLE OF CONTENTS -->
+
 ## Table of Contents
 
 - [About The Project](#about-the-project)
@@ -59,59 +58,61 @@
 - [License](#license)
 - [Contact](#contact)
 
-
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
-EffiMatch is a platform to facilitate job referring process for both job-seekers and referrals.  
+EffiMatch is a platform to facilitate job referring process for both job-seekers and referrals.
 
-The users of our platform can log in as either referrer or job-seeker, and they can switch role whenever they want to.  
+The users of our platform can log in as either referrer or job-seeker, and they can switch role whenever they want to.
 
-Referrers are full-time employees who are willing to share the refer opportunities to apply for their companies. By sharing the refer opportunities, the referrers could potentially earn reward from their companies by successfully refer someone.  
+Referrers are full-time employees who are willing to share the refer opportunities to apply for their companies. By sharing the refer opportunities, the referrers could potentially earn reward from their companies by successfully refer someone.
 
-Job-seekers are people applying for jobs. They can search for refer opportunities to their target companies on the platform. 
+Job-seekers are people applying for jobs. They can search for refer opportunities to their target companies on the platform.
 
 ![image.png](https://i.loli.net/2021/09/02/fv6XSG5jdrU3Cxy.png)  
-![image.png](https://i.loli.net/2021/09/02/TlFn7f6vt9O5RjD.png)  
+![image.png](https://i.loli.net/2021/09/02/TlFn7f6vt9O5RjD.png)
 
 ### Built With
-* Front-end
-  * [React](https://reactjs.org/)
-  * [TypeScript](https://www.typescriptlang.org/)
-  * [Ant Design](https://ant.design/)
-  * Misc
-    * Redux
-    * React Router
-    * [Craco](https://github.com/gsoft-inc/craco/blob/master/packages/craco/README.md)
-    * Eslint
-    * Prettier
-    * Axios
-    * [ts-codegen](https://github.com/reeli/ts-codegen)
-    * [ClearBit logo API](https://clearbit.com/logo)
-    * [less](https://lesscss.org/)
 
-* Back-end
-  * Springboot
-    * Spring Data JPA
-    * Spring Security
-    * Redis
-  * MySQL
-    * MyBatis
-    * Flyway
-  * AWS
-    * S3
+- Front-end
 
-* CI/CD
-    * Jenkins
+  - [React](https://reactjs.org/)
+  - [TypeScript](https://www.typescriptlang.org/)
+  - [Ant Design](https://ant.design/)
+  - Misc
+    - Redux
+    - React Router
+    - [Craco](https://github.com/gsoft-inc/craco/blob/master/packages/craco/README.md)
+    - Eslint
+    - Prettier
+    - Axios
+    - [ts-codegen](https://github.com/reeli/ts-codegen)
+    - [ClearBit logo API](https://clearbit.com/logo)
+    - [less](https://lesscss.org/)
 
+- Back-end
 
+  - Springboot
+    - Spring Data JPA
+    - Spring Security
+    - Redis
+  - MySQL
+    - MyBatis
+    - Flyway
+  - AWS
+    - S3
+
+- CI/CD
+  - Jenkins
 
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 ### Prerequisites
 
-* yarn
+- yarn
 
 ```sh
 # macOS
@@ -126,67 +127,81 @@ $ curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/
 
 ### Installation
 
-1. Clone the repo  
+1. Clone the repo
 
-If you are in our GitHub repo: 
+If you are in our GitHub repo:
+
 ```sh
 $ git clone https://github.com/ucsdtriplec/effimatch.git
-```  
-If you are in our GitLab repo:  
+```
+
+If you are in our GitLab repo:
+
 ```sh
 $ git clone https://gitlab.com/ucsd-triple-c/referral-frontend.git
-```  
+```
 
 2. Install NPM packages
+
 ```bash
 # install dependencies
 $ yarn
 ```
+
 3. Start the app
+
 - local environment
 
 ```bash
 # serve with hot reload at localhost:3000
-$ yarn start:local  
-```  
+$ yarn start:local
+```
 
 - dev environment
+
 ```bash
 # serve with hot reload at localhost:3000
 $ yarn start:dev
-```  
+```
 
 ### Build
+
 - local environment
+
 ```bash
 # build with local environment
 $ yarn build:local
 ```
 
 - dev environment
+
 ```bash
 # build with dev environment
 $ yarn build:dev
-```  
+```
 
 ### Other Scripts
+
 ```bash
 # generate api client using ts-codegen
 $ yarn api
 
 # check style before committing
 $ yarn pre-commit
-```  
+```
 
 ## Maintainence
+
 The repository on GitHub is a mirror of our development repository on GitLab. You can view code and submit issues here. If you want to join the active development team, please [contact](#contact) the tech lead.
 
-
 <!-- ROADMAP -->
+
 ## Roadmap
 
 See the [open issues](https://github.com/ucsdtriplec/official-website/issues) for a list of proposed features (and known issues).
+
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -198,18 +213,21 @@ Contributions are what make the open source community such an amazing place to b
 5. Open a Pull Request
 
 <!-- LICENSE -->
+
 ## License
 
-This project is licensed under the **GPL-3 license**.  
+This project is licensed under the **GPL-3 license**.
 
 This means that you may copy, distribute and modify the software as long as you track changes/dates in source files. Any modifications to or software including (via compiler) GPL-licensed code must also be made available under the GPL along with build & install instructions.
 
 <!-- CONTACT -->
+
 ## Contact
 
 Dekun Ma (Tech Lead) - William@dekun.me
 
-GitLab Repository Links (for Triple C internal developers): 
+GitLab Repository Links (for Triple C internal developers):
+
 - [frontend repo](https://gitlab.com/ucsd-triple-c/referral-frontend)
 - [backend repo](https://gitlab.com/ucsd-triple-c/referral-backend)
 - [mailer service](https://gitlab.com/ucsd-triple-c/referral-mailer)

@@ -48,7 +48,8 @@
     "eject": "react-scripts eject",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "api": "npx ts-codegen && prettier --write src/apis/*.ts",
-    "pre-commit": "tsc --noEmit && lint-staged"
+    "pre-commit": "tsc --noEmit && lint-staged",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -78,7 +79,7 @@
   },
   "devDependencies": {
     "@ts-tool/ts-codegen-cli": "^3.1.5",
-    "husky": "^7.0.2",
+    "husky": "^7.0.0",
     "lint-staged": "^11.1.2"
   },
   "husky": {
