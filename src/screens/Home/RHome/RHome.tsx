@@ -23,8 +23,8 @@ const RenderRequestCards = (jobs?: JobCardResponse[]) => {
           key={i.toString()}
           style={{width: '100%', height: '100%'}}>
           <RequestCard
-            jobId={item.id}
-            logo={item.company_logo ?? MS_logo}
+            jobId={item.id!}
+            avatar={item.company_logo ?? MS_logo}
             name={item.job_title ?? 'Job title'}
             description={'Open now'}
             closable={true}
@@ -65,15 +65,5 @@ const RHomeSignedIn = () => {
     </div>
   );
 };
-
-// dummy data for sent:
-const dummuRequestCardData: requestCardData[] = [];
-for (let ii = 0; ii < 2; ii++) {
-  dummuRequestCardData.push({
-    logo: MS_logo,
-    name: 'Software Developer',
-    description: 'Open now',
-  });
-}
 
 export default RHomeSignedIn;

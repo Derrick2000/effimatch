@@ -1,14 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 
 // screens and components
-import RequestCard from 'components/Card/RequestCard';
 import SummaryCard from 'components/Card/SummaryCard';
 import {useRequest} from 'apis/useRequest';
 import {
   getJobByIdUsingGet,
   getInterestedUsersCountUsingGet,
+  getAcceptedApplicationsCountUsingGet,
+  getApplicantCardsUsingGet,
+  ApplicantCardResponse,
 } from 'apis/effimatch';
+import ApplicantCard from './ApplicantCard';
 
 // antd
 import {Button, Card} from 'antd';
@@ -52,21 +55,23 @@ for (let ii = 0; ii < 1; ii++) {
   });
 }
 
-const RenderRequestCards: React.FC<requestSectionData[]> = (
-  sectionData: requestSectionData[],
+const RenderRequestCards = (
+  sectionData: ApplicantCardResponse[],
+  jobId: number,
 ) => {
   return (
     <Card className="review-content-cards">
-      {sectionData[0].requests.map((item: requestCardData, i: number) => (
+      {sectionData?.map((item: ApplicantCardResponse) => (
         <Card.Grid
           className="review-content-cards-card"
-          key={i.toString()}
+          key={item.applicationId}
           style={{width: '100%'}}>
-          <RequestCard
-            logo={item.logo}
-            name={item.name}
-            description={item.description}
-            closable={false}
+          <ApplicantCard
+            jobId={jobId}
+            applicationId={item.applicationId!}
+            avatar={item.avatar ?? Person_logo}
+            name={item.username}
+            description={''}
           />
         </Card.Grid>
       ))}
@@ -78,11 +83,19 @@ const Review = () => {
   const {id} = useParams();
   const [getJob, job] = useRequest(getJobByIdUsingGet);
   const [getNumUsers, numUsers] = useRequest(getInterestedUsersCountUsingGet);
+  const [getNumReferred, numReferred] = useRequest(
+    getAcceptedApplicationsCountUsingGet,
+  );
+  const [getApplicationCards, applicationCards] = useRequest(
+    getApplicantCardsUsingGet,
+  );
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
-      await getJob({id: id});
-      await getNumUsers({jobId: id});
+      getJob({id: id});
+      getNumUsers({jobId: id});
+      getNumReferred({jobId: id});
+      getApplicationCards({jobId: id});
     };
     fetchData();
   }, []);
@@ -118,7 +131,7 @@ const Review = () => {
         <div className="review-content">
           <div className="review-content-wrapper">
             <p className="review-content-title">Interested</p>
-            {RenderRequestCards(dummuRequestSectionData)}
+            {RenderRequestCards(applicationCards?.data ?? [], id)}
           </div>
 
           <div className="review-summary">
@@ -134,7 +147,7 @@ const Review = () => {
               <div className="review-summary-box-refer">
                 <SummaryCard
                   logo={Check}
-                  numInterst={0}
+                  numInterst={numReferred?.data ?? 0}
                   description={'Referred'}
                 />
               </div>

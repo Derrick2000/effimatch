@@ -1,19 +1,20 @@
 import React from 'react';
-import './RequestCardStyle.less';
 import {Button} from 'antd/lib';
-interface requestCardData {
+interface ApplicationCardProps {
   jobId: number;
+  applicationId: number;
   avatar: string;
   name?: string;
   description: string;
-  closable: boolean;
 }
 
-const RequestCard = (props: requestCardData) => {
-  const {jobId, avatar, name, description, closable} = props;
+const ApplicantCard = (props: ApplicationCardProps) => {
+  const {jobId, avatar, name, description, applicationId} = props;
 
   return (
-    <a className="request-card-block-group" href={`/postings/${jobId}`}>
+    <a
+      className="request-card-block-group"
+      href={`/postings/${jobId}/applications/${applicationId}`}>
       <div className="request-card-info-wrapper">
         <div className="request-card-info-block">
           <img
@@ -32,15 +33,10 @@ const RequestCard = (props: requestCardData) => {
           <Button type="default" className="request-card-info-section-button">
             View
           </Button>
-          {closable ? (
-            <Button type="default" className="request-card-info-section-button">
-              Close
-            </Button>
-          ) : null}
         </div>
       </div>
     </a>
   );
 };
 
-export default RequestCard;
+export default ApplicantCard;

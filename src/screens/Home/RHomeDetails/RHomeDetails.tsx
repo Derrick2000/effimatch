@@ -73,7 +73,8 @@ const RenderRequestCards: React.FC<requestCardData[]> = (
             key={i.toString()}
             hoverable={true}>
             <RequestCard
-              logo={item.logo}
+              jobId={1}
+              avatar={item.logo}
               name={item.name}
               description={item.description}
               closable={false}

@@ -107,6 +107,19 @@ export const finishedTutorialUsingPost = createRequestConfig(
 );
 
 /**
+ * getAcceptedApplicationsCount
+ */
+export const getAcceptedApplicationsCountUsingGet = createRequestConfig<
+  {
+    jobId: number;
+  },
+  number
+>('getAcceptedApplicationsCountUsingGet', ({jobId}) => ({
+  url: `/v1/applications/jobs/${jobId}/referred-count`,
+  method: 'GET',
+}));
+
+/**
  * getAllApplications
  */
 export const getAllApplicationsUsingGet = createRequestConfig<
@@ -140,6 +153,19 @@ export const getAllJobsUsingGet = createRequestConfig<
     pageSize,
     search,
   },
+}));
+
+/**
+ * getApplicantCards
+ */
+export const getApplicantCardsUsingGet = createRequestConfig<
+  {
+    jobId: number;
+  },
+  ApplicantCardResponse[]
+>('getApplicantCardsUsingGet', ({jobId}) => ({
+  url: `/v1/applications/jobs/${jobId}/applicants`,
+  method: 'GET',
 }));
 
 /**
@@ -285,6 +311,13 @@ export const updateJobByIdUsingPut = createRequestConfig<{
   data: requestBody,
   headers: {'Content-Type': 'application/json'},
 }));
+
+export interface ApplicantCardResponse {
+  applicationId?: number;
+  avatar?: string;
+  userId?: number;
+  username?: string;
+}
 
 export interface ApplicationDetailsResponse {
   applicationStatus?: keyof typeof ApplicationDetailsResponseApplicationStatus;
