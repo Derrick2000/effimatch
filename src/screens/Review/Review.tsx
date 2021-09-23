@@ -25,7 +25,6 @@ import Person_logo from 'images/person.png';
 // style
 import './styles/review.less';
 
-// test husky
 interface requestCardData {
   logo: string;
   name: string;
