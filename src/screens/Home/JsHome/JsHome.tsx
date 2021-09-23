@@ -20,9 +20,9 @@ import {
 
 const RenderCards = (cardsData?: JobCardResponse[]) => {
   return (
-    <div className="home-cards-wrapper">
-      <div className="home-cards-title">
-        <h1 className="home-cards-title-h1">
+    <div className="jsHome-cards-wrapper">
+      <div className="jsHome-cards-title">
+        <h1 className="jsHome-cards-title-h1">
           Positions you might be interested in
         </h1>
       </div>
@@ -32,7 +32,7 @@ const RenderCards = (cardsData?: JobCardResponse[]) => {
               <Col
                 md={6}
                 xs={24}
-                className="home-card-block"
+                className="jsHome-card-block"
                 key={i.toString()}>
                 <Card
                   title={item.job_title}
@@ -45,7 +45,7 @@ const RenderCards = (cardsData?: JobCardResponse[]) => {
               </Col>
             ))
           : [1, 2, 3].map(ii => (
-              <Col md={6} xs={24} className="home-card-block" key={ii}>
+              <Col md={6} xs={24} className="jsHome-card-block" key={ii}>
                 <LoadCard key={ii} />
               </Col>
             ))}
@@ -59,7 +59,7 @@ const RenderApplicationCards = (cardsData?: Application[]) => {
     <div className="application-cards-wrapper">
       <Row justify="space-between" gutter={[16, 16]}>
         {cardsData?.map((item: Application, i: number) => (
-          <Col md={12} xs={24} className="home-card-block" key={i.toString()}>
+          <Col md={12} xs={24} className="jsHome-card-block" key={i.toString()}>
             <ApplicationCard
               id={item.jobId}
               title={item.jobTitle}
@@ -112,12 +112,12 @@ const JsHome = () => {
 
   return (
     <div className="JsHome-wrapper">
-      <div className="home-content-wrapper">
+      <div className="jsHome-content-wrapper">
         <TweenOne animation={{x: -200, type: 'from', ease: 'easeOutQuad'}}>
           {RenderCards(positionsData?.data)}
 
-          <div className="home-cards-title">
-            <h1 className="home-cards-title-h1">Your Applications</h1>
+          <div className="jsHome-cards-title">
+            <h1 className="jsHome-cards-title-h1">Your Applications</h1>
           </div>
           <div className="application-button-row">
             <Row justify="start">

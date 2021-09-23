@@ -1,13 +1,14 @@
 @import '../../styles/homeHeader.less';
 @import '../../styles/companies.less';
 
-@home: home;
+@page: jsHome;
 @application: application;
-.@{home}-content-wrapper {
+.@{page}-content-wrapper {
     height: 95vh;
     width: 100%;
     max-width: 1200px;
     padding: 0 60px;
+    margin: auto;
     margin-bottom: 40px;
     will-change: transform;
     background-color: transparent;
@@ -39,7 +40,7 @@
   background-color: @background-color;
 }
 
-.@{home}-cards {
+.@{page}-cards {
     &-wrapper {
         margin-top: 10vh;
     }

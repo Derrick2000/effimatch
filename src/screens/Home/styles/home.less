@@ -4,35 +4,35 @@
 @home: home;
 
 .@{home}-content-wrapper {
-    height: 100%;
-    max-width: 1200px;
-    position: relative;
-    margin: auto;
-    padding: 0 60px;
-    will-change: transform;
-    background-color: transparent;
+  height: 100%;
+  max-width: 1200px;
+  position: relative;
+  margin: auto;
+  padding: 0 60px;
+  will-change: transform;
+  background-color: transparent;
 }
 
 .@{home}-wrapper {
-    background-color: @background-color;
+  background-color: @background-color;
 }
 
 .@{home}-cards {
-    &-wrapper {
-        margin-top: 10vh;
+  &-wrapper {
+    margin-top: 10vh;
+  }
+
+  &-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+
+    &-h1 {
+      font-size: 2.7em;
     }
 
-    &-title {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        
-        &-h1 {
-            font-size: 2.7em;
-        }
-
-        &-link {
-            color: black;
-        }
+    &-link {
+      color: black;
     }
+  }
 }
