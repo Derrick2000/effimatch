@@ -223,6 +223,12 @@ const Signup = () => {
         {/* <Button className="signup-box-linkedinBut" onClick={signWithLinkedIn}>
           Continue with LinkedIn
         </Button> */}
+        <a
+          className="signup-box-forgot"
+          href="/reset-password"
+          style={{paddingLeft: 0, zIndex: 2}}>
+          Already have account? Sign in
+        </a>
       </div>
     </div>
   );
