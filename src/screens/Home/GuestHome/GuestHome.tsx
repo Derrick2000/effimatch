@@ -38,12 +38,13 @@ const RenderCards = (cardsData?: JobCardResponse[]) => {
                   className="home-card-block"
                   key={i.toString()}>
                   <Card
-                    title={item.job_title}
-                    company={item.company_name}
-                    logo={item.company_logo ?? MS_logo}
+                    title={item.jobTitle}
+                    company={item.companyName}
+                    logo={item.companyLogo ?? MS_logo}
                     avatar={item.avatar}
                     name={item.username ?? 'Referrer name'}
                     id={item.id}
+                    applied={item.applicationStatus !== null ? true : false}
                   />
                 </Col>
               ))
@@ -63,7 +64,7 @@ const GuestHome = () => {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      await getCardData({pageNum: undefined, pageSize: 3, search: undefined});
+      await getCardData({limit: 3});
     };
     fetchData();
   }, [getCardData]);

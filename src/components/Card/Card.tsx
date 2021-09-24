@@ -11,10 +11,12 @@ interface CardProps {
   avatar?: string;
   name?: string;
   id?: number;
+  applied: boolean;
 }
 
 const Card = (props: CardProps) => {
   const history = useHistory();
+  const {title, company, logo, avatar, name, id, applied} = props;
 
   const handleClickGetReferred = ev => {
     ev.preventDefault();
@@ -29,11 +31,11 @@ const Card = (props: CardProps) => {
     <a className="card-block-group" href={getRedirectPath()}>
       <div className="card-header-wrapper">
         <div className="card-header-title">
-          <h1>{props.title}</h1>
-          <p>@{props.company}</p>
+          <h1>{title}</h1>
+          <p>@{company}</p>
         </div>
         <img
-          src={props.logo}
+          src={logo}
           alt="logo"
           className="card-image"
           style={{maxWidth: 60, maxHeight: 40}}
@@ -41,21 +43,22 @@ const Card = (props: CardProps) => {
       </div>
 
       <div className="card-avatar-wrapper">
-        {props.avatar ? (
-          <img src={props.avatar} alt="avatar" className="card-avatar-image" />
+        {avatar ? (
+          <img src={avatar} alt="avatar" className="card-avatar-image" />
         ) : (
           <Avatar style={{borderRadius: 10}} shape="square">
             {'D'}
           </Avatar>
         )}
 
-        <p className="card-avatar-text">{props.name}</p>
+        <p className="card-avatar-text">{name}</p>
       </div>
       <Button
         type="primary"
         className="card-button"
-        onClick={handleClickGetReferred}>
-        Get Referral
+        onClick={handleClickGetReferred}
+        disabled={applied}>
+        {applied ? 'Applied ✔' : 'Get Referral'}
       </Button>
     </a>
   );

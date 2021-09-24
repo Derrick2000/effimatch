@@ -6,6 +6,7 @@ import {
   getJobByIdUsingGet,
   Job,
   RegistrationRequestRole,
+  checkIfCurrentUserHasAppliedToJobByIdUsingGet,
 } from 'apis/effimatch';
 import {useRequest} from 'apis/useRequest';
 import ReferralModal from 'components/ReferralModal/ReferralModal';
@@ -72,13 +73,22 @@ type AvatarAndButtonsProps = {
   showNoteModal: boolean;
   history: any;
   isAuthenticated: boolean;
+  alreadyApplied?: boolean;
 };
 
 const AvatarAndButtons = (props: AvatarAndButtonsProps) => {
-  const {companyLogo, jobLink, showNoteModal, history, isAuthenticated} = props;
+  const {
+    companyLogo,
+    jobLink,
+    showNoteModal,
+    history,
+    isAuthenticated,
+    alreadyApplied,
+  } = props;
   const {id} = useParams();
   const [showNote, setShowNote] = useState(showNoteModal);
   const [addNote] = useRequest(addApplicationUsingPost);
+  const [hasReferred, setHasReferred] = useState(alreadyApplied);
 
   const handleClickGetReferred = jobId => {
     if (!isAuthenticated) {
@@ -111,6 +121,7 @@ const AvatarAndButtons = (props: AvatarAndButtonsProps) => {
       .then(() => {
         openSuccessNotification('bottomLeft');
         setShowNote(false);
+        setHasReferred(true);
       })
       .catch((e: string) => {
         openErrorNotification('bottomLeft', e);
@@ -137,8 +148,9 @@ const AvatarAndButtons = (props: AvatarAndButtonsProps) => {
         type="primary"
         className="post-details-side-button post-details-primary-button"
         onClick={() => handleClickGetReferred(id)}
-        style={{borderRadius: '10px', width: '140px'}}>
-        Get Referred
+        style={{borderRadius: '10px', width: '140px'}}
+        disabled={alreadyApplied || hasReferred}>
+        {alreadyApplied || hasReferred ? 'Applied ✔' : 'Get Referred'}
       </Button>
       <br />
       {jobLink !== '' && (
@@ -160,16 +172,17 @@ const AvatarAndButtons = (props: AvatarAndButtonsProps) => {
 };
 
 const PostDetails = () => {
-  const {id} = useParams();
+  const {id: jobId} = useParams();
   const [getJobData, jobData] = useRequest(getJobByIdUsingGet);
+  const [checkIfApplied, alreadyApplied] = useRequest(
+    checkIfCurrentUserHasAppliedToJobByIdUsingGet,
+  );
   const history = useHistory();
   const auth = useSelector((state: any) => state.auth);
 
   useEffect(() => {
-    const fetchData = async () => {
-      await getJobData({id: id});
-    };
-    fetchData();
+    getJobData({id: jobId});
+    checkIfApplied({jobId: jobId});
   }, []);
 
   return (
@@ -190,6 +203,7 @@ const PostDetails = () => {
                   }
                   history={history}
                   isAuthenticated={auth.isAuthenticated}
+                  alreadyApplied={alreadyApplied?.data}
                 />
               </div>
             </Grid>

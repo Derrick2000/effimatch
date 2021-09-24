@@ -24,8 +24,8 @@ const RenderRequestCards = (jobs?: JobCardResponse[]) => {
           style={{width: '100%', height: '100%'}}>
           <RequestCard
             jobId={item.id!}
-            avatar={item.company_logo ?? MS_logo}
-            name={item.job_title ?? 'Job title'}
+            avatar={item.companyLogo ?? MS_logo}
+            name={item.jobTitle ?? 'Job title'}
             description={'Open now'}
             closable={true}
           />

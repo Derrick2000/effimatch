@@ -73,6 +73,19 @@ export const changeRoleUsingPost = createRequestConfig<{
 }));
 
 /**
+ * checkIfCurrentUserHasAppliedToJobById
+ */
+export const checkIfCurrentUserHasAppliedToJobByIdUsingGet = createRequestConfig<
+  {
+    jobId: number;
+  },
+  boolean
+>('checkIfCurrentUserHasAppliedToJobByIdUsingGet', ({jobId}) => ({
+  url: `/v1/applications/jobs/${jobId}/applied-status`,
+  method: 'GET',
+}));
+
+/**
  * deleteJob
  */
 export const deleteJobUsingDelete = createRequestConfig<{
@@ -140,18 +153,18 @@ export const getAllApplicationsUsingGet = createRequestConfig<
  */
 export const getAllJobsUsingGet = createRequestConfig<
   {
-    pageNum?: number;
-    pageSize?: number;
+    limit?: number;
     search?: string;
+    skip?: number;
   },
   JobCardResponse[]
->('getAllJobsUsingGet', ({pageNum, pageSize, search}) => ({
+>('getAllJobsUsingGet', ({limit, search, skip}) => ({
   url: `/v1/jobs`,
   method: 'GET',
   params: {
-    pageNum,
-    pageSize,
+    limit,
     search,
+    skip,
   },
 }));
 
@@ -416,12 +429,19 @@ export interface Job {
 }
 
 export interface JobCardResponse {
+  applicationStatus?: keyof typeof JobCardResponseApplicationStatus;
   avatar?: string;
-  company_logo?: string;
-  company_name?: string;
+  companyLogo?: string;
+  companyName?: string;
   id?: number;
-  job_title?: string;
+  jobTitle?: string;
   username?: string;
+}
+
+export enum JobCardResponseApplicationStatus {
+  'SENT' = 'SENT',
+  'ACCEPTED' = 'ACCEPTED',
+  'CLOSED' = 'CLOSED',
 }
 
 export interface JobSeeker {
