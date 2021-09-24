@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button} from 'antd/lib';
-import {useSelector} from 'react-redux';
 import {Avatar} from 'antd';
+import {useHistory} from 'react-router-dom';
 import './cardStyle.less';
 
 interface CardProps {
@@ -13,15 +13,16 @@ interface CardProps {
   id?: number;
 }
 
-type authState = {
-  isAuthenticated: boolean;
-};
-
 const Card = (props: CardProps) => {
-  const auth: authState = useSelector((state: any) => state.auth);
+  const history = useHistory();
+
+  const handleClickGetReferred = ev => {
+    ev.preventDefault();
+    history.push(`/jobs/${props.id}`, {showNoteModal: true});
+  };
 
   const getRedirectPath = () => {
-    return auth.isAuthenticated ? '/jobs/' + props.id : '/sign-up';
+    return '/jobs/' + props.id;
   };
 
   return (
@@ -50,8 +51,10 @@ const Card = (props: CardProps) => {
 
         <p className="card-avatar-text">{props.name}</p>
       </div>
-
-      <Button type="primary" className="card-button">
+      <Button
+        type="primary"
+        className="card-button"
+        onClick={handleClickGetReferred}>
         Get Referral
       </Button>
     </a>

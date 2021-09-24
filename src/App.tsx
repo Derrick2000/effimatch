@@ -1,9 +1,6 @@
 import './styles/index.less';
 import {useLayoutEffect} from 'react';
-import {getOwnInformationUsingGet} from 'apis/effimatch';
-import {useRequest} from 'apis/useRequest';
 import {enquireScreen} from 'enquire-js';
-import {createBrowserHistory} from 'history';
 import jwt_decode from 'jwt-decode';
 import React from 'react';
 import {Provider} from 'react-redux';
@@ -25,17 +22,10 @@ import SignUp from './screens/SignUp/SignUp';
 import store from './store';
 import setAuthToken from './utils/setAuthToken';
 import ForgotPassword from 'screens/ForgotPassword/ForgotPassword';
+import ScrollToTop from 'utils/ScrollToTop';
 
 function App() {
   const [isMobile, setIsMobile] = React.useState(false);
-  const history = createBrowserHistory();
-
-  const [checkIfNeedsRedirection] = useRequest(getOwnInformationUsingGet, {
-    onSuccess: r => {
-      const finishedInitialSettings = r.data.finishedInitialSettings;
-      if (!finishedInitialSettings) window.location.href = '/onboard';
-    },
-  });
 
   useLayoutEffect(() => {
     // responsive to mobile screen
@@ -54,16 +44,6 @@ function App() {
       const userInfo = JSON.parse(localStorage.getItem('userInfo')!);
       store.dispatch(setCurrentUser({...decoded, ...userInfo}));
 
-      // if the user have not set his role
-      if (
-        decoded !== null &&
-        decoded.authorities.length === 0 &&
-        history.location.pathname !== '/onboard' &&
-        history.location.pathname !== '/sign-in'
-      ) {
-        checkIfNeedsRedirection(undefined);
-      }
-
       // Check for expired token
       const currentTime = Date.now() / 1000;
 
@@ -78,6 +58,7 @@ function App() {
     <Provider store={store}>
       <NavBar isMobile={isMobile} />
       <BrowserRouter>
+        <ScrollToTop />
         <Switch>
           <Route exact={true} path="/" component={Home} />
         </Switch>

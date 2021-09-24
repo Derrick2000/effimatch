@@ -1,28 +1,22 @@
-import React from 'react';
-import './styles/post-details-Style.less';
-// screens and componets
-import ReferralModal from 'components/ReferralModal/ReferralModal';
-import TweenOne from 'rc-tween-one';
-import {useRequest} from 'apis/useRequest';
+import Grid from '@material-ui/core/Grid';
+import {Button, Card, notification} from 'antd';
 import {
-  getJobByIdUsingGet,
   addApplicationUsingPost,
   CreateApplicationRequest,
+  getJobByIdUsingGet,
   Job,
+  RegistrationRequestRole,
 } from 'apis/effimatch';
-
-// antd
-import {Button, Card, notification} from 'antd';
-
-// material ui
-import Grid from '@material-ui/core/Grid';
+import {useRequest} from 'apis/useRequest';
+import ReferralModal from 'components/ReferralModal/ReferralModal';
 import parse from 'html-react-parser';
-
-// assets (temp)
 import icon from 'images/avatar.png';
 import share from 'images/share.png';
-
-import {useParams} from 'react-router-dom';
+import TweenOne from 'rc-tween-one';
+import React, {useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
+import {useHistory, useParams} from 'react-router-dom';
+import './styles/post-details-Style.less';
 
 const openErrorNotification = (placement: any, errorMsg: string) => {
   notification.info({
@@ -72,21 +66,37 @@ const RenderDetailSection = (postInfo?: Job) => {
   );
 };
 
-const AvatarAndButtons = (companyLogo: string, jobLink: string) => {
+type AvatarAndButtonsProps = {
+  companyLogo: string;
+  jobLink: string;
+  showNoteModal: boolean;
+  history: any;
+  isAuthenticated: boolean;
+};
+
+const AvatarAndButtons = (props: AvatarAndButtonsProps) => {
+  const {companyLogo, jobLink, showNoteModal, history, isAuthenticated} = props;
   const {id} = useParams();
-  const [showNote, setNote] = React.useState(false);
+  const [showNote, setShowNote] = useState(showNoteModal);
   const [addNote] = useRequest(addApplicationUsingPost);
 
-  const setShow = () => {
-    setNote(!showNote);
+  const handleClickGetReferred = jobId => {
+    if (!isAuthenticated) {
+      history.push('/sign-up', {
+        fromJob: jobId,
+        role: RegistrationRequestRole.JS,
+      });
+      return;
+    }
+    setShowNote(!showNote);
   };
 
   const goToOfficialJobPage = () => {
-    jobLink =
+    const toOpen =
       jobLink.startsWith('http://') || jobLink.startsWith('https://')
         ? jobLink
         : 'http://' + jobLink;
-    window.open(jobLink, '_blank');
+    window.open(toOpen, '_blank');
   };
 
   const submitNote = (note: string) => {
@@ -100,11 +110,10 @@ const AvatarAndButtons = (companyLogo: string, jobLink: string) => {
     addNote({requestBody: application})
       .then(() => {
         openSuccessNotification('bottomLeft');
-        setShow();
+        setShowNote(false);
       })
       .catch((e: string) => {
         openErrorNotification('bottomLeft', e);
-        setShow();
       });
   };
 
@@ -127,7 +136,7 @@ const AvatarAndButtons = (companyLogo: string, jobLink: string) => {
       <Button
         type="primary"
         className="post-details-side-button post-details-primary-button"
-        onClick={setShow}
+        onClick={() => handleClickGetReferred(id)}
         style={{borderRadius: '10px', width: '140px'}}>
         Get Referred
       </Button>
@@ -143,21 +152,22 @@ const AvatarAndButtons = (companyLogo: string, jobLink: string) => {
 
       <ReferralModal
         visiable={showNote}
-        setClose={setShow}
+        setClose={() => handleClickGetReferred(id)}
         onSubmit={submitNote}
       />
     </div>
   );
 };
 
-const Referers = () => {
+const PostDetails = () => {
   const {id} = useParams();
   const [getJobData, jobData] = useRequest(getJobByIdUsingGet);
+  const history = useHistory();
+  const auth = useSelector((state: any) => state.auth);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       await getJobData({id: id});
-      console.log(jobData);
     };
     fetchData();
   }, []);
@@ -169,10 +179,18 @@ const Referers = () => {
           <Grid container>
             <Grid item md={4} className="post-details-side-wrapper">
               <div>
-                {AvatarAndButtons(
-                  jobData?.data.companyLogo ?? '',
-                  jobData?.data.jobLink ?? '',
-                )}
+                <AvatarAndButtons
+                  companyLogo={jobData?.data.companyLogo ?? ''}
+                  jobLink={jobData?.data.jobLink ?? ''}
+                  showNoteModal={
+                    (history.location.state?.showNoteModal &&
+                      (auth.isAuthenticated ||
+                        history.location.state?.isAuthenticated)) ??
+                    false
+                  }
+                  history={history}
+                  isAuthenticated={auth.isAuthenticated}
+                />
               </div>
             </Grid>
 
@@ -186,4 +204,4 @@ const Referers = () => {
   );
 };
 
-export default Referers;
+export default PostDetails;

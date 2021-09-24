@@ -453,7 +453,15 @@ export interface RegistrationRequest {
   code?: string;
   email?: string;
   password?: string;
+  role?: keyof typeof RegistrationRequestRole;
   username?: string;
+}
+
+export enum RegistrationRequestRole {
+  'USER' = 'USER',
+  'ADMIN' = 'ADMIN',
+  'R' = 'R',
+  'JS' = 'JS',
 }
 
 export interface SendVerificationCodeRequest {

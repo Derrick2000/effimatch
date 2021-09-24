@@ -2,7 +2,7 @@ import React from 'react';
 import './referralModal.less';
 
 import {Modal, Button} from 'antd';
-import ReactQuill, {Quill} from 'react-quill';
+import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 interface Props {
@@ -41,7 +41,7 @@ const ReferralModal: React.FC<Props> = (props: Props) => {
         }}>
         <div className="referralModal-content-wrapper">
           <p className="referralModal-content-text">
-            Leave your referrer a note
+            Leave your referrer a note 📝
           </p>
           <ReactQuill
             theme="snow"

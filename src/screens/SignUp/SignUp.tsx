@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import SignUpBackGround from '../../images/sign_bg.svg';
 import {ReactComponent as SignUpPerson} from '../../images/sign_up_person.svg';
 import {Input, Button, notification} from 'antd';
@@ -7,6 +7,8 @@ import {registerUsingPost, sendVerificationUsingPost} from 'apis/effimatch';
 import {useRequest} from 'apis/useRequest';
 import {loginUser} from '../../actions/authAction';
 import {useEventListener} from 'utils/useEventListener';
+import {RegistrationRequestRole} from 'apis/effimatch';
+import {useHistory} from 'react-router-dom';
 
 const {Search} = Input;
 
@@ -35,14 +37,15 @@ const openCodeNotification = (placement: any) => {
 };
 
 const Signup = () => {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [username, setUsername] = React.useState('');
-  const [confirmPassword, setConfirmPW] = React.useState('');
-  const [code, setCode] = React.useState('');
-  const [loading, setLoading] = React.useState(false);
-  const [sendVal, setSendVal] = React.useState('Get OTP');
-  const [codeSent, setSent] = React.useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [confirmPassword, setConfirmPW] = useState('');
+  const [code, setCode] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [sendVal, setSendVal] = useState('Get OTP');
+  const [codeSent, setSent] = useState(false);
+  const history = useHistory();
 
   const [register] = useRequest(registerUsingPost, {
     onSuccess: () => {
@@ -50,7 +53,16 @@ const Signup = () => {
       setLoading(false);
       loginUser({email, password})
         .then(() => {
-          window.location.href = '/';
+          const fromJob = history.location.state.fromJob ?? undefined;
+
+          if (fromJob) {
+            history.push(`/jobs/${fromJob}`, {
+              showNoteModal: true,
+              isAuthenticated: true,
+            });
+          } else {
+            history.push(`/`);
+          }
         })
         .catch(() => {
           openErrorNotification('bottomLeft', 'Invalid login');
@@ -140,6 +152,7 @@ const Signup = () => {
       email: email,
       password: password,
       code: code,
+      role: history.location.state.role ?? RegistrationRequestRole.JS,
     };
 
     register({requestBody: userInfo});
