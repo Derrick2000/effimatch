@@ -225,7 +225,7 @@ const Signup = () => {
         </Button> */}
         <a
           className="signup-box-forgot"
-          href="/reset-password"
+          href="/sign-in"
           style={{paddingLeft: 0, zIndex: 2}}>
           Already have account? Sign in
         </a>
