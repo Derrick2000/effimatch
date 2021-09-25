@@ -19,6 +19,7 @@ import Referers from './screens/Referers/Referers';
 import Search from './screens/Search/Search';
 import SignIn from './screens/SignIn/SignIn';
 import SignUp from './screens/SignUp/SignUp';
+import AccountSetting from './screens/AccountSetting/AccountSetting';
 import store from './store';
 import setAuthToken from './utils/setAuthToken';
 import ForgotPassword from 'screens/ForgotPassword/ForgotPassword';
@@ -112,6 +113,10 @@ function App() {
             path="/postings/:jobId/applications/:applicationId"
             component={ApplicationDetails}
           />
+        </Switch>
+
+        <Switch>
+          <Route exact={true} path="/setting" component={AccountSetting} />
         </Switch>
 
         <Switch>

@@ -1,0 +1,57 @@
+@accountSetting: accountSetting;
+
+.@{accountSetting} {
+  &-wrapper {
+    background-color: @background-color;
+    width: 100vw;
+    height: 93vh;
+  }
+
+  &-content {
+    position: fixed;
+    right: 5%;
+    left: 5%;
+    margin-right: auto;
+    margin-left: auto;
+    /* just for example presentation */
+    top: 10em;
+    display: flex;
+
+    &-title {
+      font-weight: bold;
+      font-size: 24px;
+    }
+
+    &-input {
+      margin-bottom: 15px;
+    }
+
+    &-sidebar {
+      margin-right: 50px;
+      width: 20%;
+      flex: initial;
+
+      &-list {
+        list-style-type: none;
+        background-color: @background-color;
+      }
+    }
+
+    &-info {
+      display: flex;
+
+      &-avatar {
+        margin-left: 100px;
+      }
+    }
+
+    &-button {
+      margin-top: 15px;
+    }
+
+    &-change {
+      flex: 2;
+      padding-bottom: 10px;
+    }
+  }
+}
