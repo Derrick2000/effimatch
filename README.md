@@ -57,6 +57,7 @@ Note that we are only making our frontend open-source due to security reasons. I
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
+- [Important Links](#important-links)
 
 <!-- ABOUT THE PROJECT -->
 
@@ -225,6 +226,8 @@ This means that you may copy, distribute and modify the software as long as you 
 ## Contact
 
 Dekun Ma (Tech Lead) - William@dekun.me
+
+## Important Links
 
 GitLab Repository Links (for EffiMatch team internal developers):
 
