@@ -226,8 +226,13 @@ This means that you may copy, distribute and modify the software as long as you 
 
 Dekun Ma (Tech Lead) - William@dekun.me
 
-GitLab Repository Links (for Triple C internal developers):
+GitLab Repository Links (for EffiMatch team internal developers):
 
 - [frontend repo](https://gitlab.com/ucsd-triple-c/referral-frontend)
 - [backend repo](https://gitlab.com/ucsd-triple-c/referral-backend)
-- [mailer service](https://gitlab.com/ucsd-triple-c/referral-mailer)
+- [mailer service repo](https://gitlab.com/ucsd-triple-c/referral-mailer)
+
+Atlassian Links (for EffiMatch team internal members):
+
+- [Jira](https://effimatch.atlassian.net/jira/software/projects/EM)
+- [Confluence](https://effimatch.atlassian.net/wiki/spaces/EM/pages)
